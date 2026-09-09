@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AnimeHindi123 - Hindi Dubbed Anime</title>
+  <meta name="description" content="AnimeHindi123 - Discover Hindi dubbed anime, latest releases and popular anime.">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #080b12;
+      color: white;
+    }
+
+    /* NAVBAR */
+    nav {
+      height: 70px;
+      background: #10141f;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6%;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #252a38;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+      color: #ff3d71;
+    }
+
+    .logo span {
+      color: white;
+    }
+
+    .menu {
+      display: flex;
+      gap: 25px;
+    }
+
+    .menu a {
+      color: #ddd;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .menu a:hover {
+      color: #ff3d71;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 520px;
+      padding: 100px 8%;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(90deg, #080b12 15%, rgba(8,11,18,.75), rgba(8,11,18,.2)),
+        linear-gradient(135deg, #24112c, #101827);
+    }
+
+    .hero-content {
+      max-width: 650px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #ff3d71;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: 55px;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: #ff3d71;
+    }
+
+    .hero p {
+      color: #c6c8d0;
+      font-size: 17px;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 13px 23px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .primary {
+      background: #ff3d71;
+      color: white;
+    }
+
+    .secondary {
+      background: #252b3a;
+      color: white;
+    }
+
+    /* SECTION */
+    .section {
+      padding: 45px 6%;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .section-title h2 {
+      font-size: 25px;
+    }
+
+    .section-title a {
+      color: #ff3d71;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    /* ANIME CARDS */
+    .anime-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: #111620;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: .3s;
+      border: 1px solid #202635;
+    }
+
+    .card:hover {
+      transform: translateY(-7px);
+      border-color: #ff3d71;
+    }
+
+    .poster {
+      height: 270px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 15px;
+      font-size: 21px;
+      font-weight: bold;
+      background: linear-gradient(145deg, #2b1740, #18233a);
+    }
+
+    .poster.two {
+      background: linear-gradient(145deg, #32172a, #142d3c);
+    }
+
+    .poster.three {
+      background: linear-gradient(145deg, #182d2b, #302018);
+    }
+
+    .poster.four {
+      background: linear-gradient(145deg, #25213b, #401a27);
+    }
+
+    .poster.five {
+      background: linear-gradient(145deg, #192d42, #332019);
+    }
+
+    .card-info {
+      padding: 13px;
+    }
+
+    .card-info h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background: #252b3a;
+      color: #bbb;
+      padding: 4px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+
+    .hindi {
+      background: #ff3d71;
+      color: white;
+    }
+
+    /* FEATURES */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature {
+      background: #111620;
+      padding: 25px;
+      border-radius: 12px;
+      border: 1px solid #202635;
+    }
+
+    .feature-icon {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .feature h3 {
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      color: #9da2b0;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 30px;
+      background: #10141f;
+      padding: 35px 6%;
+      text-align: center;
+      border-top: 1px solid #252a38;
+    }
+
+    footer .logo {
+      margin-bottom: 10px;
+    }
+
+    footer p {
+      color: #858b9b;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .anime-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .hero h1 {
+        font-size: 43px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        padding: 0 20px;
+      }
+
+      .menu {
+        display: none;
+      }
+
+      .hero {
+        min-height: 470px;
+        padding: 70px 25px;
+      }
+
+      .hero h1 {
+        font-size: 38px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .anime-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .poster {
+        height: 220px;
+        font-size: 17px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 35px 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">Anime<span>Hindi123</span></div>
+
+    <div class="menu">
+      <a href="#">Home</a>
+      <a href="#popular">Popular</a>
+      <a href="#latest">Latest</a>
+      <a href="#about">About</a>
+    </div>
+  </nav>
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+
+      <div class="badge">🔥 ANIME HINDI COMMUNITY</div>
+
+      <h1>
+        Your World of <span>Anime</span>
+      </h1>
+
+      <p>
+        Discover popular anime, upcoming releases and
+        Hindi dubbed anime updates — all in one place.
+      </p>
+
+      <div class="buttons">
+        <a href="#popular" class="btn primary">Explore Anime</a>
+        <a href="#latest" class="btn secondary">Latest Updates</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- POPULAR -->
+  <section class="section" id="popular">
+
+    <div class="section-title">
+      <h2>🔥 Popular Anime</h2>
+      <a href="#">View All →</a>
+    </div>
+
+    <div class="anime-grid">
+
+      <div class="card">
+        <div class="poster">ONE<br>PIECE</div>
+        <div class="card-info">
+          <h3>One Piece</h3>
+          <div class="tags">
+            <span class="tag hindi">Hindi</span>
+            <span class="tag">Adventure</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="poster two">SOLO<br>LEVELING</div>
+        <div class="card-info">
+          <h3>Solo Leveling</h3>
+          <div class="tags">
+            <span class="tag hindi">Hindi</span>
+            <span class="tag">Action</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="poster three">ATTACK<br>ON TITAN</div>
+        <div class="card-info">
+          <h3>Attack on Titan</h3>
+          <div class="tags">
+            <span class="tag hindi">Hindi</span>
+            <span class="tag">Dark</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="poster four">CLASSROOM<br>OF THE ELITE</div>
+        <div class="card-info">
+          <h3>Classroom of the Elite</h3>
+          <div class="tags">
+            <span class="tag hindi">Hindi</span>
+            <span class="tag">Psychological</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="poster five">DEMON<br>SLAYER</div>
+        <div class="card-info">
+          <h3>Demon Slayer</h3>
+          <div class="tags">
+            <span class="tag hindi">Hindi</span>
+            <span class="tag">Action</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- LATEST -->
+  <section class="section" id="latest">
+
+    <div class="section-title">
+      <h2>⚡ Latest Anime</h2>
+      <a href="#">View All →</a>
+    </div>
+
+    <div class="anime-grid">
+
+      <div class="card">
+        <div class="poster two">NEW<br>RELEASE</div>
+        <div class="card-info">
+          <h3>Latest Anime</h3>
+          <div class="tags">
+            <span class="tag hindi">Hindi</span>
+            <span class="tag">2026</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="poster three">ANIME<br>UPDATE</div>
+        <div class="card-info">
+          <h3>Upcoming Anime</h3>
+          <div class="tags">
+            <span class="tag">Update</span>
+            <span class="tag">News</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="poster four">HINDI<br>DUB</div>
+        <div class="card-info">
+          <h3>Hindi Dub Update</h3>
+          <div class="tags">
+            <span class="tag hindi">Hindi</span>
+            <span class="tag">Dub</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="poster">NEW<br>SEASON</div>
+        <div class="card-info">
+          <h3>New Season</h3>
+          <div class="tags">
+            <span class="tag">Season</span>
+            <span class="tag">2026</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="poster five">COMING<br>SOON</div>
+        <div class="card-info">
+          <h3>Coming Soon</h3>
+          <div class="tags">
+            <span class="tag">Upcoming</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FEATURES -->
+  <section class="section" id="about">
+
+    <div class="section-title">
+      <h2>✨ Why AnimeHindi123?</h2>
+    </div>
+
+    <div class="features">
+
+      <div class="feature">
+        <div class="feature-icon">🇮🇳</div>
+        <h3>Hindi Dub Updates</h3>
+        <p>
+          Find information about Hindi dubbed anime
+          and new Hindi releases.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <h3>Latest News</h3>
+        <p>
+          Stay updated with upcoming anime seasons,
+          releases and announcements.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🎌</div>
+        <h3>Anime Collection</h3>
+        <p>
+          Explore different anime genres including
+          action, romance, comedy and more.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="logo">Anime<span>Hindi123</span></div>
+
+    <p>
+      © 2026 AnimeHindi123. Made for anime fans.
+      <br>
+      This website is an anime information and updates platform.
+    </p>
+
+  </footer>
+
+</body>
+  </html>
