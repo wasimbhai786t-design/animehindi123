@@ -2,20 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AnimeHindi123</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
 body{
   background:#08080d;
   color:#fff;
-  font-family:Arial,sans-serif;
 }
+
 header{
   position:sticky;
   top:0;
-  z-index:10;
+  z-index:1000;
   background:#101018;
   border-bottom:1px solid #292936;
   padding:15px 5%;
@@ -23,147 +30,249 @@ header{
   justify-content:space-between;
   align-items:center;
 }
+
 .logo{
   color:#ff326d;
   font-size:25px;
   font-weight:900;
 }
+
 nav a{
   color:#ddd;
   text-decoration:none;
   margin-left:18px;
+  font-size:14px;
 }
+
+nav a:hover{
+  color:#ff326d;
+}
+
 .hero{
-  padding:80px 7%;
-  min-height:350px;
+  min-height:390px;
+  padding:70px 7%;
   display:flex;
   align-items:center;
   background:
-  linear-gradient(90deg,#08080d 15%,transparent),
+  linear-gradient(90deg,#08080d 15%,rgba(8,8,13,.7),transparent),
   url("https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1600&q=80")
   center/cover;
 }
+
 .hero h1{
   font-size:clamp(42px,7vw,75px);
 }
-.hero span{color:#ff326d}
+
+.hero h1 span{
+  color:#ff326d;
+}
+
 .hero p{
   max-width:600px;
   color:#ccc;
-  line-height:1.6;
+  line-height:1.7;
   margin:15px 0 25px;
 }
+
 .btn{
+  display:inline-block;
   background:#ff326d;
   color:white;
+  text-decoration:none;
   padding:13px 22px;
   border-radius:8px;
-  text-decoration:none;
   font-weight:bold;
 }
-main{padding:40px 5%}
+
+main{
+  padding:40px 5%;
+}
+
+.heading{
+  font-size:28px;
+  margin-bottom:20px;
+}
+
 .search{
   display:flex;
   gap:10px;
-  margin:20px 0 30px;
+  margin-bottom:30px;
 }
-input{
+
+.search input{
   flex:1;
+  padding:14px 16px;
   background:#15151e;
   border:1px solid #333342;
   color:white;
-  padding:14px;
   border-radius:8px;
   outline:none;
+  font-size:15px;
 }
-button{
+
+.search button{
   border:0;
   background:#ff326d;
   color:white;
   padding:0 22px;
   border-radius:8px;
-  font-weight:bold;
   cursor:pointer;
+  font-weight:bold;
 }
+
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
   gap:20px;
 }
+
 .card{
   background:#15151e;
   border:1px solid #292936;
   border-radius:12px;
   overflow:hidden;
+  transition:.25s;
 }
+
+.card:hover{
+  transform:translateY(-6px);
+  border-color:#ff326d;
+}
+
 .card img{
   width:100%;
   height:270px;
   object-fit:cover;
+  display:block;
 }
-.body{padding:13px}
+
+.body{
+  padding:13px;
+}
+
 .body h3{
+  font-size:16px;
+  margin-bottom:8px;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
-  margin-bottom:7px;
 }
+
 .info{
   color:#aaa;
-  font-size:13px;
+  font-size:12px;
   margin-bottom:12px;
 }
+
 .watch{
   display:block;
-  background:#ff326d;
-  color:white;
   text-align:center;
   padding:10px;
-  text-decoration:none;
   border-radius:7px;
+  background:#ff326d;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:13px;
 }
-.loading,.empty{
+
+.watch:hover{
+  background:#ff1758;
+}
+
+.loading{
   text-align:center;
-  padding:40px;
   color:#aaa;
+  padding:40px;
 }
+
 #episodes{
   display:none;
-  margin-top:40px;
+  margin-top:45px;
+  padding-top:30px;
+  border-top:1px solid #292936;
 }
+
 .episode-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(130px,1fr));
   gap:10px;
   margin-top:20px;
 }
-.ep{
-  background:#191923;
-  border:1px solid #30303d;
-  color:white;
+
+.episode{
+  background:#171720;
+  border:1px solid #30303e;
   padding:13px;
   border-radius:7px;
-  cursor:pointer;
+  text-align:center;
 }
-.ep:hover{
+
+.episode:hover{
   border-color:#ff326d;
 }
-footer{
-  text-align:center;
-  color:#777;
-  padding:35px;
-  border-top:1px solid #252532;
-  margin-top:40px;
+
+.episode a{
+  display:block;
+  color:white;
+  text-decoration:none;
 }
-@media(max-width:600px){
-  header{padding:13px 4%}
-  nav a{font-size:12px;margin-left:8px}
-  .hero{padding:60px 5%}
-  main{padding:30px 4%}
-  .search{flex-direction:column}
-  button{padding:12px}
-  .grid{grid-template-columns:repeat(2,1fr);gap:13px}
-  .card img{height:230px}
+
+.empty{
+  text-align:center;
+  color:#aaa;
+  padding:50px;
+  display:none;
+}
+
+footer{
+  margin-top:50px;
+  padding:35px;
+  text-align:center;
+  border-top:1px solid #292936;
+  color:#777;
+}
+
+@media(max-width:650px){
+
+  header{
+    padding:13px 4%;
+  }
+
+  .logo{
+    font-size:20px;
+  }
+
+  nav a{
+    font-size:12px;
+    margin-left:8px;
+  }
+
+  .hero{
+    min-height:350px;
+    padding:60px 5%;
+  }
+
+  main{
+    padding:30px 4%;
+  }
+
+  .search{
+    flex-direction:column;
+  }
+
+  .search button{
+    padding:12px;
+  }
+
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+  }
+
+  .card img{
+    height:230px;
+  }
 }
 </style>
 </head>
@@ -171,102 +280,163 @@ footer{
 <body>
 
 <header>
+
   <div class="logo">AnimeHindi123</div>
+
   <nav>
     <a href="#home">Home</a>
     <a href="#anime">Anime</a>
   </nav>
+
 </header>
 
+
 <section class="hero" id="home">
+
   <div>
-    <h1>Anime<span>Hindi123</span></h1>
+
+    <h1>
+      Anime<span>Hindi123</span>
+    </h1>
+
     <p>
-      Search anime, explore details and browse available episodes.
+      Explore hundreds of anime, search your favourite
+      series and find official places to watch them.
     </p>
-    <a href="#anime" class="btn">Explore Anime</a>
+
+    <a href="#anime" class="btn">
+      Explore Anime
+    </a>
+
   </div>
+
 </section>
+
 
 <main id="anime">
 
-<h2>Anime Collection</h2>
+<h2 class="heading">
+  Anime Collection
+</h2>
+
 
 <div class="search">
+
   <input
-    id="search"
-    placeholder="Search One Piece, Naruto, Pokémon..."
+    id="searchInput"
+    type="text"
+    placeholder="Search anime..."
   >
-  <button onclick="searchAnime()">Search</button>
+
+  <button onclick="searchAnime()">
+    Search
+  </button>
+
 </div>
+
 
 <div id="loading" class="loading">
   Loading anime...
 </div>
 
+
 <div id="grid" class="grid"></div>
 
-<div id="empty" class="empty" style="display:none">
+
+<div id="empty" class="empty">
   No anime found.
 </div>
 
+
 <section id="episodes">
 
-  <h2 id="episodeTitle">Episodes</h2>
+  <h2 id="episodeTitle">
+    Episodes
+  </h2>
 
-  <div id="episodeLoading" class="loading">
-    Loading episodes...
+  <div
+    id="episodeGrid"
+    class="episode-grid">
   </div>
-
-  <div id="episodeGrid" class="episode-grid"></div>
 
 </section>
 
 </main>
 
+
 <footer>
-© 2026 AnimeHindi123
+  <p>© 2026 AnimeHindi123</p>
+  <p style="margin-top:8px;">
+    Anime information and artwork belong to their respective owners.
+  </p>
 </footer>
+
 
 <script>
 
 const API="https://api.jikan.moe/v4";
 
-const grid=document.getElementById("grid");
-const loading=document.getElementById("loading");
-const empty=document.getElementById("empty");
+const grid=
+document.getElementById("grid");
 
-async function request(url){
+const loading=
+document.getElementById("loading");
 
-  const response=await fetch(url);
+const empty=
+document.getElementById("empty");
 
-  if(!response.ok)
-    throw new Error("API error");
+
+async function getData(url){
+
+  const response=
+  await fetch(url);
+
+  if(!response.ok){
+    throw new Error("API Error");
+  }
 
   return await response.json();
 }
 
 
-/* LOAD POPULAR ANIME */
+/* POPULAR ANIME */
 
-async function loadAnime(){
+async function loadPopular(){
 
   loading.style.display="block";
-  grid.innerHTML="";
   empty.style.display="none";
+  grid.innerHTML="";
 
   try{
 
-    const result=await request(
-      API+"/top/anime?limit=24"
-    );
+    /*
+      5 pages × 25 = up to 125 anime
+    */
 
-    result.data.forEach(createCard);
+    for(let page=1;page<=5;page++){
+
+      const result=
+      await getData(
+        API+
+        "/top/anime?page="+
+        page+
+        "&limit=25"
+      );
+
+      result.data.forEach(createCard);
+
+      /*
+        Small delay prevents API rate-limit problems.
+      */
+
+      await wait(350);
+    }
 
   }catch(error){
 
-    empty.textContent=
-      "Anime could not be loaded. Refresh and try again.";
+    empty.innerHTML=
+    "<h3>Anime loading failed</h3>"+
+    "<p>Refresh the page and try again.</p>";
 
     empty.style.display="block";
 
@@ -280,38 +450,48 @@ async function loadAnime(){
 
 async function searchAnime(){
 
-  const q=
-    document.getElementById("search")
-    .value.trim();
+  const query=
+  document
+  .getElementById("searchInput")
+  .value
+  .trim();
 
-  if(!q){
-    loadAnime();
+  if(!query){
+
+    loadPopular();
+
     return;
   }
 
   loading.style.display="block";
-  grid.innerHTML="";
   empty.style.display="none";
+  grid.innerHTML="";
 
   try{
 
-    const result=await request(
-      API+"/anime?q="+
-      encodeURIComponent(q)+
-      "&limit=24"
+    const result=
+    await getData(
+      API+
+      "/anime?q="+
+      encodeURIComponent(query)+
+      "&limit=25"
     );
 
     if(!result.data.length){
-      empty.textContent="No anime found.";
-      empty.style.display="block";
-    }
 
-    result.data.forEach(createCard);
+      empty.style.display="block";
+
+    }else{
+
+      result.data.forEach(createCard);
+
+    }
 
   }catch(error){
 
-    empty.textContent=
-      "Search failed. Please try again.";
+    empty.innerHTML=
+    "<h3>Search failed</h3>"+
+    "<p>Please try again.</p>";
 
     empty.style.display="block";
 
@@ -325,37 +505,42 @@ async function searchAnime(){
 
 function createCard(anime){
 
-  const card=document.createElement("div");
+  const card=
+  document.createElement("div");
 
   card.className="card";
 
   const image=
-    anime.images?.jpg?.large_image_url ||
-    anime.images?.jpg?.image_url ||
-    "";
+  anime.images?.jpg?.large_image_url ||
+  anime.images?.jpg?.image_url ||
+  "";
+
+  const title=
+  anime.title || "Unknown Anime";
 
   const score=
-    anime.score
-    ? "⭐ "+anime.score
-    : "⭐ N/A";
+  anime.score
+  ? "⭐ "+anime.score
+  : "⭐ N/A";
 
   const episodes=
-    anime.episodes
-    ? anime.episodes+" Episodes"
-    : "Episodes unknown";
+  anime.episodes
+  ? anime.episodes+" Episodes"
+  : "Episodes N/A";
+
 
   card.innerHTML=`
 
     <img
-      src="${image}"
-      alt="${escapeHTML(anime.title)}"
+      src="${safe(image)}"
+      alt="${safe(title)}"
       loading="lazy"
     >
 
     <div class="body">
 
-      <h3 title="${escapeHTML(anime.title)}">
-        ${escapeHTML(anime.title)}
+      <h3 title="${safe(title)}">
+        ${safe(title)}
       </h3>
 
       <div class="info">
@@ -363,14 +548,15 @@ function createCard(anime){
       </div>
 
       <a
-        href="#episodes"
         class="watch"
-        onclick="loadEpisodes(${anime.mal_id}, '${escapeJS(anime.title)}')"
+        href="#episodes"
+        onclick="showEpisodes(${anime.mal_id}, '${safeJS(title)}')"
       >
         ▶ Watch Now
       </a>
 
     </div>
+
   `;
 
   grid.appendChild(card);
@@ -379,126 +565,162 @@ function createCard(anime){
 
 /* EPISODES */
 
-async function loadEpisodes(id,title){
+async function showEpisodes(id,title){
 
-  const section=document.getElementById("episodes");
+  const section=
+  document.getElementById("episodes");
 
   const episodeGrid=
-    document.getElementById("episodeGrid");
-
-  const episodeLoading=
-    document.getElementById("episodeLoading");
+  document.getElementById("episodeGrid");
 
   document.getElementById("episodeTitle")
-    .textContent=title+" — Episodes";
+  .textContent=
+  title+" — Episodes";
+
 
   section.style.display="block";
 
-  episodeGrid.innerHTML="";
-  episodeLoading.style.display="block";
+  episodeGrid.innerHTML=
+  '<div class="loading">Loading episodes...</div>';
+
 
   section.scrollIntoView({
     behavior:"smooth"
   });
 
+
   try{
 
-    const result=await request(
-      API+"/anime/"+id+"/episodes"
+    const result=
+    await getData(
+      API+
+      "/anime/"+
+      id+
+      "/episodes"
     );
+
+
+    episodeGrid.innerHTML="";
+
 
     if(!result.data.length){
 
       episodeGrid.innerHTML=
-        "<p>No episode information available.</p>";
+      "<p>No episode information available.</p>";
 
-    }else{
+      return;
+    }
 
-      result.data.forEach(ep=>{
 
-        const div=document.createElement("div");
+    result.data.forEach(ep=>{
 
-        div.className="ep";
+      const div=
+      document.createElement("div");
+
+      div.className="episode";
+
+
+      /*
+        The official/external episode URL is used when
+        Jikan provides one.
+      */
+
+      if(ep.url){
 
         div.innerHTML=`
-          <b>Episode ${ep.mal_id ? ep.mal_id : ""}</b>
-          <br>
-          <small>
-            ${escapeHTML(ep.title || "Episode")}
-          </small>
+
+          <a
+            href="${safe(ep.url)}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ▶ Episode ${ep.mal_id}
+            <br>
+            <small>
+              ${safe(ep.title || "Watch")}
+            </small>
+          </a>
+
         `;
 
-        /*
-          Jikan provides episode metadata.
-          It does not provide a guaranteed full Hindi
-          streaming URL for every episode.
-        */
+      }else{
 
-        div.onclick=()=>{
+        div.innerHTML=`
+          Episode ${ep.mal_id}
+          <br>
+          <small>Source unavailable</small>
+        `;
 
-          if(ep.url){
+      }
 
-            window.open(
-              ep.url,
-              "_blank",
-              "noopener,noreferrer"
-            );
+      episodeGrid.appendChild(div);
 
-          }else{
-
-            alert(
-              "A video source is not available for this episode."
-            );
-
-          }
-
-        };
-
-        episodeGrid.appendChild(div);
-
-      });
-
-    }
+    });
 
   }catch(error){
 
     episodeGrid.innerHTML=
-      "<p>Episodes could not be loaded. Try again.</p>";
+    "<p>Episodes could not be loaded.</p>";
 
   }
 
-  episodeLoading.style.display="none";
 }
 
 
-/* SECURITY HELPERS */
+/* HELPERS */
 
-function escapeHTML(text){
+function wait(ms){
+
+  return new Promise(
+    resolve=>setTimeout(resolve,ms)
+  );
+
+}
+
+
+function safe(text){
 
   return String(text)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
 
 }
 
-function escapeJS(text){
+
+function safeJS(text){
 
   return String(text)
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'")
-    .replace(/"/g,'\\"');
+  .replace(/\\/g,"\\\\")
+  .replace(/'/g,"\\'")
+  .replace(/"/g,'\\"');
 
 }
+
+
+/* ENTER SEARCH */
+
+document
+.getElementById("searchInput")
+.addEventListener(
+  "keydown",
+  function(e){
+
+    if(e.key==="Enter"){
+      searchAnime();
+    }
+
+  }
+);
 
 
 /* START */
 
-loadAnime();
+loadPopular();
 
 </script>
 
 </body>
-</html>
+  </html>
