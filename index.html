@@ -1,856 +1,1017 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AnimeHindi123 - Anime Discovery</title>
-  <meta name="description" content="AnimeHindi123 - Discover popular anime, search anime and explore anime details.">
+<title>AnimeHindi123</title>
+<meta name="description" content="AnimeHindi123 - Discover 100+ popular anime, search anime and explore details.">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    :root {
-      --bg: #090b12;
-      --card: #111522;
-      --card2: #191e2d;
-      --text: #ffffff;
-      --muted: #a7adbd;
-      --accent: #ff3158;
-      --accent-hover: #ff5475;
-      --border: rgba(255,255,255,0.08);
-    }
+:root{
+  --bg:#080a10;
+  --panel:#111520;
+  --panel2:#181d2a;
+  --text:#fff;
+  --muted:#9da5b7;
+  --accent:#ff3158;
+  --accent2:#ff5576;
+  --border:rgba(255,255,255,.08);
+}
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
 
-    button,
-    input {
-      font: inherit;
-    }
+button,
+input{
+  font:inherit;
+}
 
-    button {
-      cursor: pointer;
-    }
+button{
+  cursor:pointer;
+}
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+a{
+  color:inherit;
+  text-decoration:none;
+}
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(9,11,18,0.94);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-    }
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(8,10,16,.94);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--border);
+}
 
-    .nav {
-      max-width: 1200px;
-      margin: auto;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
+.nav{
+  max-width:1250px;
+  margin:auto;
+  padding:15px 20px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
 
-    .logo {
-      font-size: 24px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
+.logo{
+  font-size:24px;
+  font-weight:900;
+  white-space:nowrap;
+}
 
-    .logo span {
-      color: var(--accent);
-    }
+.logo span{
+  color:var(--accent);
+}
 
-    .search {
-      flex: 1;
-      display: flex;
-      gap: 8px;
-    }
+.search{
+  flex:1;
+  display:flex;
+  gap:8px;
+}
 
-    .search input {
-      width: 100%;
-      min-width: 0;
-      padding: 12px 15px;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      outline: none;
-      background: var(--card);
-      color: white;
-    }
+.search input{
+  width:100%;
+  min-width:0;
+  padding:12px 15px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  outline:none;
+  background:var(--panel);
+  color:white;
+}
 
-    .search input:focus {
-      border-color: var(--accent);
-    }
+.search input:focus{
+  border-color:var(--accent);
+}
 
-    .search button,
-    .primary-btn {
-      border: 0;
-      border-radius: 11px;
-      padding: 11px 17px;
-      background: var(--accent);
-      color: white;
-      font-weight: 700;
-    }
+.search button{
+  border:0;
+  border-radius:11px;
+  padding:11px 18px;
+  background:var(--accent);
+  color:white;
+  font-weight:700;
+}
 
-    .search button:hover,
-    .primary-btn:hover {
-      background: var(--accent-hover);
-    }
+.search button:hover,
+.hero button:hover{
+  background:var(--accent2);
+}
 
-    main {
-      max-width: 1200px;
-      margin: auto;
-      padding: 28px 20px 50px;
-    }
+main{
+  max-width:1250px;
+  margin:auto;
+  padding:25px 20px 50px;
+}
 
-    .hero {
-      min-height: 285px;
-      padding: 35px;
-      border-radius: 22px;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      margin-bottom: 35px;
-      background:
-        radial-gradient(circle at 80% 30%, rgba(255,49,88,0.22), transparent 35%),
-        linear-gradient(135deg, #21101a, #111827);
-    }
+.hero{
+  min-height:285px;
+  padding:38px;
+  border-radius:22px;
+  border:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  margin-bottom:32px;
+  background:
+    radial-gradient(circle at 85% 30%,rgba(255,49,88,.24),transparent 35%),
+    linear-gradient(135deg,#25101a,#111827);
+}
 
-    .hero-content {
-      max-width: 650px;
-    }
+.hero-content{
+  max-width:700px;
+}
 
-    .hero h1 {
-      font-size: clamp(35px, 6vw, 60px);
-      line-height: 1;
-      margin-bottom: 16px;
-    }
+.hero h1{
+  font-size:clamp(36px,6vw,62px);
+  line-height:1;
+  margin-bottom:16px;
+}
 
-    .hero h1 span {
-      color: var(--accent);
-    }
+.hero h1 span{
+  color:var(--accent);
+}
 
-    .hero p {
-      color: #d2d6df;
-      line-height: 1.6;
-      margin-bottom: 22px;
-    }
+.hero p{
+  color:#d2d6df;
+  line-height:1.6;
+  margin-bottom:22px;
+}
 
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin: 28px 0 18px;
-    }
+.hero button{
+  border:0;
+  border-radius:11px;
+  padding:12px 18px;
+  background:var(--accent);
+  color:white;
+  font-weight:700;
+}
 
-    .section-head h2 {
-      font-size: 25px;
-    }
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin:25px 0 18px;
+}
 
-    .status {
-      color: var(--muted);
-      font-size: 13px;
-    }
+.section-head h2{
+  font-size:25px;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 18px;
-    }
+.status{
+  color:var(--muted);
+  font-size:13px;
+}
 
-    .card {
-      overflow: hidden;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:18px;
+}
 
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255,49,88,0.5);
-    }
+.card{
+  overflow:hidden;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;
+  transition:.2s ease;
+}
 
-    .poster-wrap {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 2 / 3;
-      background: #171b25;
-      overflow: hidden;
-    }
+.card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(255,49,88,.55);
+}
 
-    .poster {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+.poster-wrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:2/3;
+  background:#171b25;
+  overflow:hidden;
+}
 
-    .score {
-      position: absolute;
-      top: 9px;
-      right: 9px;
-      padding: 5px 8px;
-      border-radius: 8px;
-      background: rgba(0,0,0,0.78);
-      font-size: 12px;
-      font-weight: 700;
-    }
+.poster{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
 
-    .card-body {
-      padding: 12px;
-    }
+.score{
+  position:absolute;
+  top:9px;
+  right:9px;
+  padding:5px 8px;
+  border-radius:8px;
+  background:rgba(0,0,0,.8);
+  font-size:12px;
+  font-weight:700;
+}
 
-    .title {
-      min-height: 41px;
-      margin-bottom: 7px;
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1.35;
-    }
+.card-body{
+  padding:12px;
+}
 
-    .meta {
-      margin-bottom: 10px;
-      color: var(--muted);
-      font-size: 12px;
-    }
+.title{
+  min-height:41px;
+  margin-bottom:7px;
+  font-size:15px;
+  font-weight:700;
+  line-height:1.35;
+}
 
-    .card-actions {
-      display: flex;
-      gap: 7px;
-    }
+.meta{
+  min-height:17px;
+  margin-bottom:10px;
+  color:var(--muted);
+  font-size:12px;
+}
 
-    .card-actions button,
-    .card-actions a {
-      flex: 1;
-      border: 0;
-      border-radius: 8px;
-      padding: 8px 5px;
-      background: var(--card2);
-      color: white;
-      text-align: center;
-      font-size: 12px;
-    }
+.card-actions{
+  display:flex;
+  gap:7px;
+}
 
-    .card-actions button {
-      background: var(--accent);
-    }
+.card-actions button,
+.card-actions a{
+  flex:1;
+  border:0;
+  border-radius:8px;
+  padding:8px 5px;
+  background:var(--panel2);
+  color:white;
+  text-align:center;
+  font-size:12px;
+}
 
-    .card-actions button:hover {
-      background: var(--accent-hover);
-    }
+.card-actions button{
+  background:var(--accent);
+}
 
-    .loading,
-    .empty,
-    .error {
-      padding: 50px 20px;
-      text-align: center;
-      color: var(--muted);
-    }
+.card-actions button:hover{
+  background:var(--accent2);
+}
 
-    .spinner {
-      width: 38px;
-      height: 38px;
-      margin: 0 auto 15px;
-      border: 4px solid #292e3b;
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
+.loading,
+.empty,
+.error{
+  padding:50px 20px;
+  text-align:center;
+  color:var(--muted);
+}
 
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
+.spinner{
+  width:40px;
+  height:40px;
+  margin:0 auto 15px;
+  border:4px solid #292e3b;
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
 
-    .details {
-      display: none;
-      margin-top: 30px;
-      padding: 25px;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background: var(--card);
-    }
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
 
-    .details.active {
-      display: block;
-    }
+.details{
+  display:none;
+  margin-top:30px;
+  padding:25px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:var(--panel);
+}
 
-    .details-grid {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 25px;
-    }
+.details.active{
+  display:block;
+}
 
-    .details-poster {
-      width: 100%;
-      border-radius: 12px;
-      display: block;
-    }
+.details-grid{
+  display:grid;
+  grid-template-columns:190px 1fr;
+  gap:25px;
+}
 
-    .details h2 {
-      margin-bottom: 12px;
-    }
+.details-poster{
+  width:100%;
+  border-radius:12px;
+  display:block;
+}
 
-    .details p {
-      margin-bottom: 15px;
-      color: #c8ccd6;
-      line-height: 1.65;
-    }
+.details h2{
+  margin-bottom:12px;
+}
 
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin: 12px 0 18px;
-    }
+.details p{
+  margin-bottom:15px;
+  color:#c8ccd6;
+  line-height:1.65;
+}
 
-    .chip {
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: var(--card2);
-      color: #d5d8e0;
-      font-size: 12px;
-    }
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin:12px 0 18px;
+}
 
-    footer {
-      padding: 25px 20px;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-    }
+.chip{
+  padding:6px 10px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:var(--panel2);
+  color:#d5d8e0;
+  font-size:12px;
+}
 
-    @media (max-width: 1000px) {
-      .grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-    }
+.details-link{
+  display:inline-block;
+  padding:11px 15px;
+  border-radius:10px;
+  background:var(--accent);
+  font-weight:700;
+}
 
-    @media (max-width: 720px) {
-      .nav {
-        flex-wrap: wrap;
-      }
+.load-more{
+  display:block;
+  margin:30px auto 0;
+  border:0;
+  border-radius:11px;
+  padding:12px 22px;
+  background:var(--accent);
+  color:white;
+  font-weight:700;
+}
 
-      .logo {
-        width: 100%;
-      }
+.load-more:hover{
+  background:var(--accent2);
+}
 
-      .hero {
-        min-height: 245px;
-        padding: 25px;
-      }
+footer{
+  padding:25px 20px;
+  border-top:1px solid var(--border);
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
 
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-      }
+@media(max-width:1050px){
+  .grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+}
 
-      .details-grid {
-        grid-template-columns: 120px 1fr;
-        gap: 15px;
-      }
-    }
+@media(max-width:750px){
+  .nav{
+    flex-wrap:wrap;
+  }
 
-    @media (max-width: 430px) {
-      main {
-        padding: 20px 12px 40px;
-      }
+  .logo{
+    width:100%;
+  }
 
-      .search button {
-        padding: 10px 12px;
-      }
+  .hero{
+    min-height:240px;
+    padding:25px;
+  }
 
-      .hero {
-        padding: 22px;
-      }
+  .grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:12px;
+  }
 
-      .hero h1 {
-        font-size: 35px;
-      }
+  .details-grid{
+    grid-template-columns:130px 1fr;
+    gap:15px;
+  }
+}
 
-      .details-grid {
-        grid-template-columns: 1fr;
-      }
+@media(max-width:520px){
+  main{
+    padding:20px 12px 40px;
+  }
 
-      .details-poster {
-        width: 170px;
-      }
-    }
-  </style>
+  .grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .section-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .details-grid{
+    grid-template-columns:1fr;
+  }
+
+  .details-poster{
+    width:170px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="nav">
+<header>
+  <div class="nav">
 
-      <a href="#" class="logo">
-        Anime<span>Hindi123</span>
-      </a>
+    <a href="#" class="logo">
+      Anime<span>Hindi123</span>
+    </a>
 
-      <form class="search" id="searchForm">
-        <input
-          id="searchInput"
-          type="search"
-          placeholder="Search anime..."
-          autocomplete="off"
-        >
-        <button type="submit">Search</button>
-      </form>
+    <form class="search" id="searchForm">
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Search anime..."
+        autocomplete="off"
+      >
+      <button type="submit">Search</button>
+    </form>
+
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="hero-content">
+
+    <h1>
+      Discover <span>Anime</span>
+    </h1>
+
+    <p>
+      Explore 100+ popular anime, search your favourite titles,
+      check ratings, genres, episodes and detailed information.
+    </p>
+
+    <button id="exploreBtn">
+      Explore Anime
+    </button>
+
+  </div>
+</section>
+
+<div class="section-head">
+  <h2 id="sectionTitle">Popular Anime</h2>
+  <div class="status" id="status">
+    Loading...
+  </div>
+</div>
+
+<div id="loading" class="loading">
+  <div class="spinner"></div>
+  Loading anime...
+</div>
+
+<div id="error" class="error" hidden></div>
+
+<div id="empty" class="empty" hidden>
+  No anime found.
+</div>
+
+<section id="grid" class="grid"></section>
+
+<button id="loadMore" class="load-more" hidden>
+  Load More Anime
+</button>
+
+<section id="details" class="details"></section>
+
+</main>
+
+<footer>
+  © 2026 AnimeHindi123 · Anime discovery website
+</footer>
+
+<script>
+"use strict";
+
+const API = "https://api.jikan.moe/v4";
+
+const grid = document.getElementById("grid");
+const loading = document.getElementById("loading");
+const errorBox = document.getElementById("error");
+const empty = document.getElementById("empty");
+const status = document.getElementById("status");
+const sectionTitle = document.getElementById("sectionTitle");
+const searchForm = document.getElementById("searchForm");
+const searchInput = document.getElementById("searchInput");
+const exploreBtn = document.getElementById("exploreBtn");
+const loadMoreBtn = document.getElementById("loadMore");
+const details = document.getElementById("details");
+
+let currentPage = 1;
+let currentMode = "popular";
+let currentQuery = "";
+let allAnime = [];
+let requestController = null;
+
+function escapeHTML(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function setLoading(show){
+  loading.hidden = !show;
+}
+
+function clearResults(){
+  grid.innerHTML = "";
+  details.innerHTML = "";
+  details.classList.remove("active");
+  errorBox.hidden = true;
+  empty.hidden = true;
+  loadMoreBtn.hidden = true;
+}
+
+async function getData(url){
+  if(requestController){
+    requestController.abort();
+  }
+
+  requestController = new AbortController();
+
+  const response = await fetch(url,{
+    signal:requestController.signal
+  });
+
+  if(!response.ok){
+    throw new Error("API Error: " + response.status);
+  }
+
+  return await response.json();
+}
+
+function createCard(anime){
+
+  const title = escapeHTML(
+    anime.title_english ||
+    anime.title ||
+    "Unknown Anime"
+  );
+
+  const image =
+    anime.images?.webp?.large_image_url ||
+    anime.images?.jpg?.large_image_url ||
+    "";
+
+  const score =
+    anime.score !== null &&
+    anime.score !== undefined
+      ? Number(anime.score).toFixed(1)
+      : "N/A";
+
+  const type = escapeHTML(
+    anime.type || "Anime"
+  );
+
+  const episodes =
+    anime.episodes !== null &&
+    anime.episodes !== undefined
+      ? anime.episodes
+      : "?";
+
+  const malUrl =
+    typeof anime.url === "string"
+      ? anime.url
+      : "#";
+
+  const card = document.createElement("article");
+
+  card.className = "card";
+
+  card.innerHTML = `
+    <div class="poster-wrap">
+
+      <img
+        class="poster"
+        src="${image}"
+        alt="${title}"
+        loading="lazy"
+      >
+
+      <div class="score">
+        ★ ${score}
+      </div>
 
     </div>
-  </header>
 
-  <main>
+    <div class="card-body">
 
-    <section class="hero">
-      <div class="hero-content">
-        <h1>Discover <span>Anime</span></h1>
+      <div class="title">
+        ${title}
+      </div>
+
+      <div class="meta">
+        ${type} · ${episodes} episode${episodes == 1 ? "" : "s"}
+      </div>
+
+      <div class="card-actions">
+
+        <button
+          type="button"
+          class="details-btn"
+        >
+          Details
+        </button>
+
+        <a
+          href="${malUrl}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          MAL
+        </a>
+
+      </div>
+
+    </div>
+  `;
+
+  const poster = card.querySelector(".poster");
+
+  poster.addEventListener("error",function(){
+    this.src =
+      "https://placehold.co/400x600/171b25/ffffff?text=No+Image";
+  });
+
+  card
+    .querySelector(".details-btn")
+    .addEventListener("click",function(){
+      showDetails(anime);
+    });
+
+  return card;
+}
+
+function renderAnime(list,append=false){
+
+  if(!append){
+    grid.innerHTML = "";
+  }
+
+  if(!Array.isArray(list) || list.length === 0){
+
+    if(!append){
+      empty.hidden = false;
+    }
+
+    return;
+  }
+
+  const fragment =
+    document.createDocumentFragment();
+
+  list.forEach(function(anime){
+    fragment.appendChild(
+      createCard(anime)
+    );
+  });
+
+  grid.appendChild(fragment);
+}
+
+async function loadPopular(append=false){
+
+  if(!append){
+    clearResults();
+    allAnime = [];
+    currentPage = 1;
+  }
+
+  setLoading(true);
+
+  sectionTitle.textContent =
+    "Popular Anime";
+
+  status.textContent =
+    "100+ anime available";
+
+  try{
+
+    const result = await getData(
+      API +
+      "/top/anime?page=" +
+      currentPage +
+      "&limit=25"
+    );
+
+    const list = Array.isArray(result.data)
+      ? result.data
+      : [];
+
+    allAnime = allAnime.concat(list);
+
+    renderAnime(list,append);
+
+    if(result.pagination?.has_next_page){
+      loadMoreBtn.hidden = false;
+    }else{
+      loadMoreBtn.hidden = true;
+    }
+
+    status.textContent =
+      allAnime.length + "+ anime loaded";
+
+  }catch(error){
+
+    if(error.name !== "AbortError"){
+      showError(
+        "Anime load nahi ho saka. Internet check karke dobara try karo."
+      );
+    }
+
+  }finally{
+    setLoading(false);
+  }
+}
+
+async function searchAnime(query){
+
+  const cleanQuery = query.trim();
+
+  if(!cleanQuery){
+    currentMode = "popular";
+    currentQuery = "";
+    loadPopular();
+    return;
+  }
+
+  currentMode = "search";
+  currentQuery = cleanQuery;
+  currentPage = 1;
+
+  clearResults();
+  setLoading(true);
+
+  sectionTitle.textContent =
+    "Search Results";
+
+  status.textContent =
+    'Searching "' + cleanQuery + '"...';
+
+  try{
+
+    const result = await getData(
+      API +
+      "/anime?q=" +
+      encodeURIComponent(cleanQuery) +
+      "&page=1&limit=25"
+    );
+
+    const list = Array.isArray(result.data)
+      ? result.data
+      : [];
+
+    renderAnime(list);
+
+    if(list.length === 0){
+      empty.hidden = false;
+    }
+
+    if(result.pagination?.has_next_page){
+      loadMoreBtn.hidden = false;
+    }
+
+    status.textContent =
+      list.length + " results";
+
+  }catch(error){
+
+    if(error.name !== "AbortError"){
+      showError(
+        "Search failed. Thodi der baad try karo."
+      );
+    }
+
+  }finally{
+    setLoading(false);
+  }
+}
+
+function showDetails(anime){
+
+  const title = escapeHTML(
+    anime.title_english ||
+    anime.title ||
+    "Unknown Anime"
+  );
+
+  const image =
+    anime.images?.webp?.large_image_url ||
+    anime.images?.jpg?.large_image_url ||
+    "";
+
+  const synopsis = escapeHTML(
+    anime.synopsis ||
+    "No synopsis available."
+  );
+
+  const genres =
+    Array.isArray(anime.genres)
+      ? anime.genres
+      : [];
+
+  const genreHTML = genres
+    .map(function(genre){
+      return `
+        <span class="chip">
+          ${escapeHTML(genre.name)}
+        </span>
+      `;
+    })
+    .join("");
+
+  details.innerHTML = `
+    <div class="details-grid">
+
+      <div>
+        <img
+          class="details-poster"
+          src="${image}"
+          alt="${title}"
+        >
+      </div>
+
+      <div>
+
+        <h2>${title}</h2>
 
         <p>
-          Search anime, explore popular titles, check ratings,
-          genres, episodes and detailed information.
+          ${synopsis}
         </p>
 
-        <button class="primary-btn" id="popularBtn">
-          Explore Popular
-        </button>
-      </div>
-    </section>
-
-    <div class="section-head">
-      <h2 id="sectionTitle">Popular Anime</h2>
-      <div class="status" id="status">Loading...</div>
-    </div>
-
-    <div id="loading" class="loading">
-      <div class="spinner"></div>
-      Loading anime...
-    </div>
-
-    <div id="error" class="error" hidden></div>
-
-    <div id="empty" class="empty" hidden>
-      No anime found.
-    </div>
-
-    <section id="grid" class="grid"></section>
-
-    <section id="details" class="details"></section>
-
-  </main>
-
-  <footer>
-    © 2026 AnimeHindi123 · Anime discovery website
-  </footer>
-
-  <script>
-    "use strict";
-
-    const API = "https://api.jikan.moe/v4";
-
-    const grid = document.getElementById("grid");
-    const loading = document.getElementById("loading");
-    const errorBox = document.getElementById("error");
-    const empty = document.getElementById("empty");
-    const status = document.getElementById("status");
-    const sectionTitle = document.getElementById("sectionTitle");
-    const searchForm = document.getElementById("searchForm");
-    const searchInput = document.getElementById("searchInput");
-    const popularBtn = document.getElementById("popularBtn");
-    const details = document.getElementById("details");
-
-    let requestController = null;
-
-    function setLoading(value) {
-      loading.hidden = !value;
-    }
-
-    function clearPage() {
-      grid.innerHTML = "";
-      details.innerHTML = "";
-      details.classList.remove("active");
-      errorBox.hidden = true;
-      empty.hidden = true;
-    }
-
-    function escapeHTML(value) {
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    async function getData(url) {
-      if (requestController) {
-        requestController.abort();
-      }
-
-      requestController = new AbortController();
-
-      const response = await fetch(url, {
-        signal: requestController.signal
-      });
-
-      if (!response.ok) {
-        throw new Error("API Error: " + response.status);
-      }
-
-      return await response.json();
-    }
-
-    function createCard(anime) {
-      const title = escapeHTML(
-        anime.title_english ||
-        anime.title ||
-        "Unknown Anime"
-      );
-
-      const image =
-        anime.images?.webp?.large_image_url ||
-        anime.images?.jpg?.large_image_url ||
-        "";
-
-      const score =
-        anime.score !== null &&
-        anime.score !== undefined
-          ? Number(anime.score).toFixed(1)
-          : "N/A";
-
-      const type = escapeHTML(
-        anime.type || "Anime"
-      );
-
-      const episodes =
-        anime.episodes !== null &&
-        anime.episodes !== undefined
-          ? anime.episodes
-          : "?";
-
-      const malUrl =
-        typeof anime.url === "string"
-          ? anime.url
-          : "#";
-
-      const card = document.createElement("article");
-
-      card.className = "card";
-
-      card.innerHTML = `
-        <div class="poster-wrap">
-
-          <img
-            class="poster"
-            src="${image}"
-            alt="${title}"
-            loading="lazy"
-          >
-
-          <div class="score">
-            ★ ${score}
-          </div>
-
+        <div class="chips">
+          ${
+            genreHTML ||
+            '<span class="chip">No genres</span>'
+          }
         </div>
 
-        <div class="card-body">
+        <p>
+          <strong>Score:</strong>
+          ${anime.score ?? "N/A"}
+          <br>
 
-          <div class="title">
-            ${title}
-          </div>
+          <strong>Status:</strong>
+          ${escapeHTML(anime.status || "Unknown")}
+          <br>
 
-          <div class="meta">
-            ${type} · ${episodes} episode${episodes == 1 ? "" : "s"}
-          </div>
+          <strong>Episodes:</strong>
+          ${anime.episodes ?? "Unknown"}
+          <br>
 
-          <div class="card-actions">
+          <strong>Type:</strong>
+          ${escapeHTML(anime.type || "Unknown")}
+        </p>
 
-            <button type="button" class="details-btn">
-              Details
-            </button>
-
-            <a
-              href="${malUrl}"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              MAL
-            </a>
-
-          </div>
-
-        </div>
-      `;
-
-      const poster = card.querySelector(".poster");
-
-      poster.addEventListener("error", function() {
-        this.src =
-          "https://placehold.co/400x600/171b25/ffffff?text=No+Image";
-      });
-
-      const detailsButton =
-        card.querySelector(".details-btn");
-
-      detailsButton.addEventListener("click", function() {
-        showDetails(anime);
-      });
-
-      return card;
-    }
-
-    function renderAnime(animeList) {
-      grid.innerHTML = "";
-
-      if (
-        !Array.isArray(animeList) ||
-        animeList.length === 0
-      ) {
-        empty.hidden = false;
-        return;
-      }
-
-      const fragment =
-        document.createDocumentFragment();
-
-      animeList.forEach(function(anime) {
-        fragment.appendChild(
-          createCard(anime)
-        );
-      });
-
-      grid.appendChild(fragment);
-    }
-
-    async function loadPopular() {
-      clearPage();
-      setLoading(true);
-
-      sectionTitle.textContent =
-        "Popular Anime";
-
-      status.textContent =
-        "Top anime";
-
-      try {
-        const result = await getData(
-          API + "/top/anime?limit=20"
-        );
-
-        renderAnime(result.data || []);
-
-      } catch (error) {
-
-        if (error.name !== "AbortError") {
-          showError(
-            "Anime load nahi ho saka. Internet connection check karke dobara try karo."
-          );
+        ${
+          anime.url
+            ? `
+              <a
+                class="details-link"
+                href="${anime.url}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open Anime Info
+              </a>
+            `
+            : ""
         }
 
-      } finally {
-        setLoading(false);
+      </div>
+
+    </div>
+  `;
+
+  const poster =
+    details.querySelector(".details-poster");
+
+  if(poster){
+    poster.addEventListener(
+      "error",
+      function(){
+        this.src =
+          "https://placehold.co/400x600/171b25/ffffff?text=No+Image";
       }
-    }
+    );
+  }
 
-    async function searchAnime(query) {
-      const cleanQuery = query.trim();
+  details.classList.add("active");
 
-      if (!cleanQuery) {
-        loadPopular();
-        return;
-      }
+  details.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+}
 
-      clearPage();
-      setLoading(true);
+function showError(message){
+  errorBox.hidden = false;
+  errorBox.textContent = message;
+}
 
-      sectionTitle.textContent =
-        "Search Results";
+searchForm.addEventListener(
+  "submit",
+  function(event){
+    event.preventDefault();
 
-      status.textContent =
-        'For "' + cleanQuery + '"';
+    searchAnime(
+      searchInput.value
+    );
+  }
+);
 
-      try {
+exploreBtn.addEventListener(
+  "click",
+  function(){
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+    loadPopular();
+  }
+);
+
+loadMoreBtn.addEventListener(
+  "click",
+  async function(){
+
+    loadMoreBtn.hidden = true;
+
+    currentPage++;
+
+    if(currentMode === "search"){
+      try{
+
+        setLoading(true);
+
         const result = await getData(
           API +
           "/anime?q=" +
-          encodeURIComponent(cleanQuery) +
-          "&limit=20"
+          encodeURIComponent(currentQuery) +
+          "&page=" +
+          currentPage +
+          "&limit=25"
         );
 
-        renderAnime(result.data || []);
+        const list = Array.isArray(result.data)
+          ? result.data
+          : [];
 
-      } catch (error) {
+        renderAnime(list,true);
 
-        if (error.name !== "AbortError") {
+        if(result.pagination?.has_next_page){
+          loadMoreBtn.hidden = false;
+        }
+
+      }catch(error){
+
+        if(error.name !== "AbortError"){
           showError(
-            "Search failed. Thodi der baad dobara try karo."
+            "More anime load nahi ho sake."
           );
         }
 
-      } finally {
+      }finally{
         setLoading(false);
       }
+
+    }else{
+      await loadPopular(true);
     }
+  }
+);
 
-    function showDetails(anime) {
-      const title = escapeHTML(
-        anime.title_english ||
-        anime.title ||
-        "Unknown Anime"
-      );
+/*
+  Start website
+*/
+loadPopular();
 
-      const image =
-        anime.images?.webp?.large_image_url ||
-        anime.images?.jpg?.large_image_url ||
-        "";
-
-      const synopsis = escapeHTML(
-        anime.synopsis ||
-        "No synopsis available."
-      );
-
-      const genres =
-        Array.isArray(anime.genres)
-          ? anime.genres
-          : [];
-
-      const genreHTML = genres
-        .map(function(genre) {
-          return `
-            <span class="chip">
-              ${escapeHTML(genre.name)}
-            </span>
-          `;
-        })
-        .join("");
-
-      details.innerHTML = `
-        <div class="details-grid">
-
-          <div>
-            <img
-              class="details-poster"
-              src="${image}"
-              alt="${title}"
-            >
-          </div>
-
-          <div>
-
-            <h2>${title}</h2>
-
-            <p>
-              ${synopsis}
-            </p>
-
-            <div class="chips">
-              ${
-                genreHTML ||
-                '<span class="chip">No genres</span>'
-              }
-            </div>
-
-            <p>
-              <strong>Score:</strong>
-              ${anime.score ?? "N/A"}
-              <br>
-
-              <strong>Status:</strong>
-              ${escapeHTML(anime.status || "Unknown")}
-              <br>
-
-              <strong>Episodes:</strong>
-              ${anime.episodes ?? "Unknown"}
-              <br>
-
-              <strong>Type:</strong>
-              ${escapeHTML(anime.type || "Unknown")}
-            </p>
-
-            ${
-              anime.url
-                ? `
-                  <a
-                    class="primary-btn"
-                    href="${anime.url}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Open Anime Info
-                  </a>
-                `
-                : ""
-            }
-
-          </div>
-
-        </div>
-      `;
-
-      const detailPoster =
-        details.querySelector(".details-poster");
-
-      detailPoster.addEventListener(
-        "error",
-        function() {
-          this.src =
-            "https://placehold.co/400x600/171b25/ffffff?text=No+Image";
-        }
-      );
-
-      details.classList.add("active");
-
-      details.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
-
-    function showError(message) {
-      errorBox.hidden = false;
-      errorBox.textContent = message;
-    }
-
-    searchForm.addEventListener(
-      "submit",
-      function(event) {
-        event.preventDefault();
-        searchAnime(searchInput.value);
-      }
-    );
-
-    popularBtn.addEventListener(
-      "click",
-      function() {
-        loadPopular();
-
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-      }
-    );
-
-    loadPopular();
-  </script>
+</script>
 
 </body>
-  </html> 
+  </html>
