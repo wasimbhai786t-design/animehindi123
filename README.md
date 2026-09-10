@@ -1,2 +1,445 @@
-# animehindi123
-Anime Hindi - Watch Anime in Hindi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Pro Anime Hindi - Discover your next anime adventure.">
+<title>Pro Anime Hindi</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#08090d;
+    color:#fff;
+}
+
+/* NAVBAR */
+.navbar{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    background:#0c0d12;
+    border-bottom:1px solid #20222b;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:.5px;
+}
+
+.logo span{
+    color:#8b5cf6;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+}
+
+.nav-links a{
+    color:#bbb;
+    text-decoration:none;
+    font-size:14px;
+    transition:.2s;
+}
+
+.nav-links a:hover{
+    color:#fff;
+}
+
+.search-btn{
+    background:#171922;
+    border:1px solid #292c38;
+    color:#fff;
+    padding:10px 15px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* HERO */
+.hero{
+    min-height:500px;
+    display:flex;
+    align-items:center;
+    padding:70px 8%;
+    position:relative;
+    overflow:hidden;
+    background:
+    radial-gradient(circle at 80% 40%,rgba(124,58,237,.35),transparent 35%),
+    linear-gradient(90deg,#08090d 20%,rgba(8,9,13,.75),rgba(8,9,13,.2));
+}
+
+.hero-content{
+    max-width:620px;
+    z-index:2;
+}
+
+.badge{
+    display:inline-block;
+    background:#171321;
+    border:1px solid #3b2b63;
+    color:#b794ff;
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:clamp(42px,7vw,75px);
+    line-height:1;
+    margin-bottom:20px;
+}
+
+.hero h1 span{
+    color:#9b6cff;
+}
+
+.hero p{
+    color:#b8b8c2;
+    line-height:1.7;
+    margin-bottom:28px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:12px;
+}
+
+.btn{
+    padding:13px 22px;
+    border-radius:10px;
+    border:none;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.primary{
+    background:#8b5cf6;
+    color:#fff;
+}
+
+.secondary{
+    background:#181a22;
+    color:#fff;
+    border:1px solid #2c2f3a;
+}
+
+/* SECTIONS */
+section{
+    padding:35px 6%;
+}
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.section-title h2{
+    font-size:22px;
+}
+
+.view{
+    color:#9b6cff;
+    font-size:13px;
+}
+
+/* CARDS */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:18px;
+}
+
+.card{
+    background:#111219;
+    border:1px solid #20222b;
+    border-radius:13px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    border-color:#7650ca;
+}
+
+.poster{
+    width:100%;
+    aspect-ratio:2/3;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(145deg,#171922,#272a38);
+    color:#777;
+    font-size:13px;
+}
+
+.card-info{
+    padding:12px;
+}
+
+.card-title{
+    font-weight:700;
+    font-size:14px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.meta{
+    color:#8e909b;
+    font-size:11px;
+    margin-top:7px;
+}
+
+/* GENRES */
+.genres{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.genre{
+    padding:10px 16px;
+    background:#111219;
+    border:1px solid #242632;
+    border-radius:9px;
+    color:#bbb;
+    cursor:pointer;
+}
+
+.genre:hover{
+    border-color:#8b5cf6;
+    color:#fff;
+}
+
+/* FOOTER */
+footer{
+    margin-top:30px;
+    padding:35px 6%;
+    background:#0c0d12;
+    border-top:1px solid #20222b;
+    color:#777;
+    text-align:center;
+    font-size:13px;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+    .cards{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .navbar{
+        padding:0 4%;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
+    .hero{
+        min-height:450px;
+        padding:55px 6%;
+    }
+
+    .hero h1{
+        font-size:48px;
+    }
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
+    }
+
+    section{
+        padding:28px 4%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">PRO <span>ANIME HINDI</span></div>
+
+    <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Anime</a>
+        <a href="#">Genres</a>
+        <a href="#">My List</a>
+    </div>
+
+    <button class="search-btn">🔍 Search</button>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="hero-content">
+        <div class="badge">✦ YOUR ANIME UNIVERSE</div>
+
+        <h1>Discover Your <span>Next Story.</span></h1>
+
+        <p>
+            Explore anime, discover new worlds and keep track of
+            the stories you love — all in one place.
+        </p>
+
+        <div class="hero-buttons">
+            <button class="btn primary">Explore Anime</button>
+            <button class="btn secondary">♡ My List</button>
+        </div>
+    </div>
+</header>
+
+<!-- TRENDING -->
+<section>
+    <div class="section-title">
+        <h2>🔥 Trending Anime</h2>
+        <span class="view">View All →</span>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="poster">POSTER</div>
+            <div class="card-info">
+                <div class="card-title">Anime Title One</div>
+                <div class="meta">TV • 24 Episodes</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="poster">POSTER</div>
+            <div class="card-info">
+                <div class="card-title">Anime Title Two</div>
+                <div class="meta">TV • 12 Episodes</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="poster">POSTER</div>
+            <div class="card-info">
+                <div class="card-title">Anime Title Three</div>
+                <div class="meta">TV • 24 Episodes</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="poster">POSTER</div>
+            <div class="card-info">
+                <div class="card-title">Anime Title Four</div>
+                <div class="meta">Movie • 1h 55m</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="poster">POSTER</div>
+            <div class="card-info">
+                <div class="card-title">Anime Title Five</div>
+                <div class="meta">TV • 13 Episodes</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- LATEST -->
+<section>
+    <div class="section-title">
+        <h2>🆕 Latest Releases</h2>
+        <span class="view">View All →</span>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="poster">POSTER</div>
+            <div class="card-info">
+                <div class="card-title">Latest Anime 01</div>
+                <div class="meta">Episode 12 • HD</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="poster">POSTER</div>
+            <div class="card-info">
+                <div class="card-title">Latest Anime 02</div>
+                <div class="meta">Episode 08 • HD</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="poster">POSTER</div>
+            <div class="card-info">
+                <div class="card-title">Latest Anime 03</div>
+                <div class="meta">Episode 06 • HD</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="poster">POSTER</div>
+            <div class="card-info">
+                <div class="card-title">Latest Anime 04</div>
+                <div class="meta">Episode 03 • HD</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="poster">POSTER</div>
+            <div class="card-info">
+                <div class="card-title">Latest Anime 05</div>
+                <div class="meta">Episode 01 • HD</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- GENRES -->
+<section>
+    <div class="section-title">
+        <h2>🎭 Explore Genres</h2>
+    </div>
+
+    <div class="genres">
+        <div class="genre">Action</div>
+        <div class="genre">Adventure</div>
+        <div class="genre">Romance</div>
+        <div class="genre">Comedy</div>
+        <div class="genre">Fantasy</div>
+        <div class="genre">Drama</div>
+        <div class="genre">Psychological</div>
+        <div class="genre">Sports</div>
+        <div class="genre">Mystery</div>
+        <div class="genre">Sci-Fi</div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 Pro Anime Hindi • Your Anime Universe</p>
+</footer>
+
+</body>
+</html>
