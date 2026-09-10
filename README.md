@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AnimeHindi123 — Anime Discovery</title>
-<meta name="description" content="AnimeHindi123 — Discover trending, popular and latest anime.">
+<title>AnimeHindi123 — Hindi Dubbed Anime</title>
+<meta name="description" content="AnimeHindi123 — Discover Hindi dubbed anime, trending series and latest releases.">
 
 <style>
 *{
@@ -14,14 +14,28 @@
   box-sizing:border-box;
 }
 
+:root{
+  --bg:#07070d;
+  --card:#11111b;
+  --card2:#171725;
+  --text:#fff;
+  --muted:#aaaabd;
+  --purple:#8b5cf6;
+  --purple2:#6d28d9;
+  --border:rgba(255,255,255,.08);
+}
+
 html{
   scroll-behavior:smooth;
 }
 
 body{
   font-family:Arial,Helvetica,sans-serif;
-  background:#070711;
-  color:#fff;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(139,92,246,.12),transparent 28%),
+    radial-gradient(circle at 85% 25%,rgba(109,40,217,.10),transparent 25%),
+    var(--bg);
+  color:var(--text);
   min-height:100vh;
 }
 
@@ -30,440 +44,444 @@ body{
   position:sticky;
   top:0;
   z-index:1000;
-  background:rgba(7,7,17,.88);
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.nav-inner{
-  max-width:1200px;
-  margin:auto;
-  height:70px;
-  padding:0 20px;
+  height:72px;
   display:flex;
   align-items:center;
   justify-content:space-between;
+  padding:0 6%;
+  background:rgba(7,7,13,.86);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
 }
 
 .logo{
-  font-size:25px;
+  color:white;
+  text-decoration:none;
+  font-size:23px;
   font-weight:900;
-  color:#fff;
+  letter-spacing:-.5px;
 }
 
 .logo span{
-  color:#a855f7;
+  color:var(--purple);
 }
 
 .nav-links{
   display:flex;
-  gap:28px;
+  gap:25px;
+  align-items:center;
 }
 
 .nav-links a{
-  color:#c9c9d8;
+  color:#d8d8e5;
   text-decoration:none;
   font-size:14px;
-  font-weight:600;
-  transition:.3s;
+  font-weight:700;
+  transition:.25s;
 }
 
 .nav-links a:hover{
-  color:#c084fc;
+  color:white;
+}
+
+.search-box{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.search-box input{
+  width:180px;
+  padding:10px 14px;
+  border-radius:25px;
+  border:1px solid var(--border);
+  outline:none;
+  background:#12121d;
+  color:white;
+}
+
+.search-box button{
+  border:0;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  cursor:pointer;
+  background:var(--purple);
+  color:white;
+  font-size:16px;
 }
 
 /* HERO */
 .hero{
-  min-height:520px;
+  min-height:500px;
+  padding:90px 7%;
   display:flex;
   align-items:center;
   position:relative;
   overflow:hidden;
-  background:
-    radial-gradient(circle at 80% 30%,rgba(168,85,247,.25),transparent 35%),
-    radial-gradient(circle at 20% 70%,rgba(79,70,229,.18),transparent 35%);
 }
 
-.hero-inner{
-  width:100%;
-  max-width:1200px;
-  margin:auto;
-  padding:70px 20px;
+.hero:before{
+  content:"";
+  position:absolute;
+  width:450px;
+  height:450px;
+  border-radius:50%;
+  background:rgba(139,92,246,.16);
+  filter:blur(100px);
+  right:-120px;
+  top:30px;
 }
 
-.hero-badge{
+.hero-content{
+  max-width:700px;
+  position:relative;
+  z-index:2;
+}
+
+.badge{
   display:inline-block;
-  padding:8px 14px;
-  border:1px solid rgba(192,132,252,.4);
-  background:rgba(168,85,247,.1);
-  border-radius:30px;
-  color:#d8b4fe;
+  padding:8px 13px;
+  border-radius:20px;
+  background:rgba(139,92,246,.13);
+  border:1px solid rgba(139,92,246,.35);
+  color:#c4a7ff;
   font-size:12px;
+  font-weight:800;
   margin-bottom:20px;
 }
 
 .hero h1{
-  max-width:750px;
-  font-size:clamp(42px,7vw,78px);
-  line-height:1;
-  margin-bottom:22px;
+  font-size:clamp(42px,7vw,76px);
+  line-height:.98;
+  letter-spacing:-3px;
+  margin-bottom:20px;
 }
 
 .hero h1 span{
-  color:#a855f7;
+  color:var(--purple);
 }
 
 .hero p{
-  max-width:600px;
-  color:#a9a9ba;
-  font-size:17px;
+  max-width:590px;
+  color:var(--muted);
   line-height:1.7;
-  margin-bottom:30px;
+  font-size:16px;
 }
 
 .hero-buttons{
   display:flex;
   gap:12px;
+  margin-top:30px;
   flex-wrap:wrap;
 }
 
 .btn{
-  border:0;
   padding:13px 20px;
-  border-radius:12px;
+  border-radius:10px;
   text-decoration:none;
-  font-weight:700;
-  cursor:pointer;
+  border:1px solid var(--border);
+  color:white;
+  font-weight:800;
+  font-size:14px;
+  transition:.25s;
 }
 
 .btn-primary{
-  background:#9333ea;
-  color:white;
+  background:var(--purple);
+  border-color:var(--purple);
+}
+
+.btn:hover{
+  transform:translateY(-2px);
 }
 
 .btn-primary:hover{
-  background:#a855f7;
-}
-
-.btn-secondary{
-  background:rgba(255,255,255,.07);
-  color:white;
-  border:1px solid rgba(255,255,255,.1);
+  background:var(--purple2);
 }
 
 /* MAIN */
-.container{
-  max-width:1200px;
+main{
+  width:86%;
+  max-width:1250px;
   margin:auto;
-  padding:70px 20px;
+}
+
+.section{
+  padding:45px 0;
 }
 
 .section-head{
   display:flex;
-  align-items:end;
   justify-content:space-between;
-  gap:20px;
-  margin-bottom:25px;
+  align-items:center;
+  margin-bottom:22px;
 }
 
 .section-head h2{
-  font-size:30px;
+  font-size:26px;
 }
 
-.section-head p{
-  color:#858596;
-  font-size:14px;
-}
-
-/* SEARCH */
-.search-box{
-  display:flex;
-  gap:12px;
-  margin-bottom:35px;
-}
-
-.search-box input,
-.search-box select{
-  width:100%;
-  padding:15px 16px;
-  background:#11111d;
-  border:1px solid #29293a;
-  border-radius:12px;
-  color:#fff;
-  outline:none;
-}
-
-.search-box input:focus,
-.search-box select:focus{
-  border-color:#9333ea;
+.section-head span{
+  color:#aaaabd;
+  font-size:13px;
 }
 
 /* CARDS */
 .grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:20px;
+  grid-template-columns:repeat(5,1fr);
+  gap:18px;
 }
 
 .card{
-  background:#10101b;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:17px;
+  background:linear-gradient(145deg,var(--card),var(--card2));
+  border:1px solid var(--border);
+  border-radius:15px;
   overflow:hidden;
-  transition:.35s;
+  cursor:pointer;
+  transition:.3s ease;
 }
 
 .card:hover{
-  transform:translateY(-8px);
-  border-color:rgba(168,85,247,.55);
-  box-shadow:0 18px 45px rgba(0,0,0,.45);
+  transform:translateY(-7px);
+  border-color:rgba(139,92,246,.5);
+  box-shadow:0 15px 40px rgba(0,0,0,.35);
 }
 
 .poster{
-  height:285px;
+  height:260px;
   position:relative;
   overflow:hidden;
-  background:#191928;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    linear-gradient(145deg,#21144a,#090912);
 }
 
-.poster img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  transition:.5s;
+.poster:after{
+  content:"ANIME";
+  font-size:32px;
+  font-weight:900;
+  color:rgba(255,255,255,.12);
+  letter-spacing:4px;
 }
 
-.card:hover .poster img{
-  transform:scale(1.07);
-}
+.poster.one{background:linear-gradient(145deg,#40145e,#12091c)}
+.poster.two{background:linear-gradient(145deg,#102e5c,#080d1b)}
+.poster.three{background:linear-gradient(145deg,#5a2114,#170907)}
+.poster.four{background:linear-gradient(145deg,#14523d,#07140f)}
+.poster.five{background:linear-gradient(145deg,#38205c,#0d0917)}
 
-.poster::after{
-  content:"";
+.tag{
   position:absolute;
-  inset:0;
-  background:linear-gradient(transparent 45%,rgba(0,0,0,.9));
+  left:10px;
+  top:10px;
+  padding:5px 8px;
+  border-radius:6px;
+  background:var(--purple);
+  font-size:10px;
+  font-weight:900;
 }
 
-.poster-title{
-  position:absolute;
-  left:15px;
-  bottom:15px;
-  z-index:2;
-  font-size:19px;
-  font-weight:800;
+.card-info{
+  padding:13px;
 }
 
-.rating{
-  position:absolute;
-  top:12px;
-  right:12px;
-  z-index:3;
-  background:rgba(0,0,0,.7);
-  padding:7px 9px;
-  border-radius:8px;
+.card-info h3{
+  font-size:15px;
+  margin-bottom:6px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.meta{
+  color:#9898aa;
   font-size:12px;
 }
 
-.card-body{
-  padding:15px;
-}
-
-.card-meta{
+/* GENRES */
+.genres{
   display:flex;
-  gap:7px;
   flex-wrap:wrap;
-  margin-bottom:12px;
+  gap:10px;
 }
 
-.tag{
-  padding:5px 8px;
-  border-radius:6px;
-  background:#1d1d2c;
-  color:#bdbdce;
-  font-size:11px;
-}
-
-.card-body p{
-  color:#89899a;
+.genre{
+  padding:11px 16px;
+  border-radius:25px;
+  background:#11111b;
+  border:1px solid var(--border);
+  color:#c9c9d6;
   font-size:13px;
-  line-height:1.5;
-  margin-bottom:14px;
-}
-
-.details-btn{
-  width:100%;
-  padding:10px;
-  border:0;
-  border-radius:9px;
-  background:#181827;
-  color:#ddd;
   cursor:pointer;
+  transition:.25s;
 }
 
-.details-btn:hover{
-  background:#9333ea;
-  color:#fff;
+.genre:hover{
+  background:var(--purple);
+  color:white;
+  border-color:var(--purple);
 }
 
-/* FEATURE */
-.feature{
-  margin-top:70px;
-  border:1px solid rgba(168,85,247,.2);
-  border-radius:22px;
-  padding:35px;
-  background:
-    linear-gradient(135deg,rgba(88,28,135,.18),rgba(30,27,75,.15));
+/* FOOTER */
+footer{
+  margin-top:50px;
+  border-top:1px solid var(--border);
+  padding:35px 7%;
+  text-align:center;
+  color:#888899;
+  font-size:13px;
 }
 
-.feature h2{
-  font-size:30px;
-  margin-bottom:12px;
-}
-
-.feature p{
-  color:#9999aa;
-  line-height:1.7;
-}
-
-/* ABOUT */
-.about{
-  max-width:800px;
-}
-
-.about p{
-  color:#9999aa;
-  line-height:1.8;
-  margin-top:15px;
+footer strong{
+  color:white;
 }
 
 /* MODAL */
 .modal{
-  display:none;
   position:fixed;
   inset:0;
   z-index:2000;
-  background:rgba(0,0,0,.8);
+  background:rgba(0,0,0,.75);
   backdrop-filter:blur(8px);
+  display:none;
   align-items:center;
   justify-content:center;
   padding:20px;
 }
 
+.modal.active{
+  display:flex;
+}
+
 .modal-box{
   width:100%;
-  max-width:650px;
-  max-height:90vh;
-  overflow:auto;
-  background:#11111d;
-  border:1px solid #303044;
+  max-width:600px;
+  background:#11111b;
+  border:1px solid var(--border);
   border-radius:20px;
-  padding:25px;
+  padding:28px;
+  position:relative;
+  animation:pop .25s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(.94);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
 .close{
-  float:right;
-  background:#222232;
-  color:#fff;
+  position:absolute;
+  right:18px;
+  top:15px;
+  background:none;
   border:0;
-  width:35px;
-  height:35px;
-  border-radius:50%;
+  color:white;
+  font-size:25px;
   cursor:pointer;
 }
 
-.modal h2{
-  margin:10px 0;
+.modal-box h2{
   font-size:28px;
+  margin-bottom:10px;
 }
 
-.modal p{
-  color:#9999aa;
-  line-height:1.6;
+.modal-box p{
+  color:#aaaabd;
+  line-height:1.7;
+  font-size:14px;
 }
 
-.episodes{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-  margin-top:20px;
-}
-
-.episode{
-  padding:10px;
-  border:1px solid #29293a;
-  background:#191927;
-  color:#ddd;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.episode:hover{
-  background:#9333ea;
-}
-
-/* FOOTER */
-footer{
-  border-top:1px solid rgba(255,255,255,.07);
-  padding:35px 20px;
+/* NO RESULTS */
+.no-results{
+  display:none;
   text-align:center;
-  color:#666678;
-  font-size:13px;
+  padding:50px 10px;
+  color:#9999aa;
 }
 
-/* MOBILE */
-@media(max-width:900px){
+/* RESPONSIVE */
+@media(max-width:1000px){
   .grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .nav-links{
-    display:none;
-  }
-}
-
-@media(max-width:600px){
-  .hero{
-    min-height:500px;
-  }
-
-  .hero h1{
-    font-size:48px;
-  }
-
-  .search-box{
-    flex-direction:column;
-  }
-
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
+    grid-template-columns:repeat(3,1fr);
   }
 
   .poster{
-    height:240px;
-  }
-
-  .card-body{
-    padding:11px;
-  }
-
-  .section-head{
-    display:block;
-  }
-
-  .section-head p{
-    margin-top:7px;
-  }
-
-  .episodes{
-    grid-template-columns:repeat(3,1fr);
+    height:230px;
   }
 }
 
-@media(max-width:380px){
+@media(max-width:700px){
+  .navbar{
+    height:auto;
+    min-height:68px;
+    padding:14px 5%;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  .nav-links{
+    order:3;
+    width:100%;
+    justify-content:center;
+    gap:17px;
+    overflow:auto;
+    padding-bottom:3px;
+  }
+
+  .search-box input{
+    width:130px;
+  }
+
+  .hero{
+    min-height:430px;
+    padding:65px 7%;
+  }
+
+  .hero h1{
+    letter-spacing:-2px;
+  }
+
+  main{
+    width:90%;
+  }
+
   .grid{
-    grid-template-columns:1fr;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+  }
+
+  .poster{
+    height:220px;
+  }
+
+  .section{
+    padding:32px 0;
+  }
+}
+
+@media(max-width:420px){
+  .logo{
+    font-size:20px;
+  }
+
+  .search-box input{
+    width:105px;
+  }
+
+  .hero h1{
+    font-size:42px;
+  }
+
+  .poster{
+    height:190px;
+  }
+
+  .card-info h3{
+    font-size:13px;
   }
 }
 </style>
@@ -472,123 +490,254 @@ footer{
 <body>
 
 <header class="navbar">
-  <div class="nav-inner">
-    <div class="logo">Anime<span>Hindi123</span></div>
+  <a href="#" class="logo">Anime<span>Hindi123</span></a>
 
-    <nav class="nav-links">
-      <a href="#home">Home</a>
-      <a href="#popular">Popular</a>
-      <a href="#latest">Latest</a>
-      <a href="#about">About</a>
-    </nav>
+  <nav class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#anime">Anime</a>
+    <a href="#genres">Genres</a>
+    <a href="#popular">Popular</a>
+  </nav>
+
+  <div class="search-box">
+    <input id="searchInput" type="search" placeholder="Search anime...">
+    <button onclick="searchAnime()">⌕</button>
   </div>
 </header>
 
 <section class="hero" id="home">
-  <div class="hero-inner">
-    <div class="hero-badge">✦ PREMIUM ANIME DISCOVERY</div>
+  <div class="hero-content">
+    <span class="badge">🇮🇳 HINDI DUBBED ANIME</span>
 
-    <h1>Discover Your Next <span>Anime.</span></h1>
+    <h1>Anime.<br><span>Your Way.</span></h1>
 
     <p>
-      Explore popular, trending and latest anime titles in one beautiful
-      anime discovery experience.
+      Discover trending anime, popular series and your next favourite
+      adventure — all in one clean and modern anime hub.
     </p>
 
     <div class="hero-buttons">
-      <a class="btn btn-primary" href="#popular">Explore Anime</a>
-      <a class="btn btn-secondary" href="#latest">Latest Releases</a>
+      <a href="#anime" class="btn btn-primary">Explore Anime →</a>
+      <a href="#popular" class="btn">Popular Now</a>
     </div>
   </div>
 </section>
 
-<main class="container">
+<main>
 
-<section id="popular">
+<section class="section" id="anime">
+  <div class="section-head">
+    <h2>🔥 Trending Anime</h2>
+    <span>Popular right now</span>
+  </div>
 
-<div class="section-head">
-  <div>
-    <h2>🔥 Popular Anime</h2>
-    <p>Fan-favorite anime worth watching</p>
+  <div class="grid anime-grid">
+
+    <article class="card" data-title="Demon Slayer">
+      <div class="poster one">
+        <span class="tag">HD</span>
+      </div>
+      <div class="card-info">
+        <h3>Demon Slayer</h3>
+        <div class="meta">Action • Fantasy • Hindi</div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Attack on Titan">
+      <div class="poster two">
+        <span class="tag">HD</span>
+      </div>
+      <div class="card-info">
+        <h3>Attack on Titan</h3>
+        <div class="meta">Action • Drama • Hindi</div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Jujutsu Kaisen">
+      <div class="poster three">
+        <span class="tag">NEW</span>
+      </div>
+      <div class="card-info">
+        <h3>Jujutsu Kaisen</h3>
+        <div class="meta">Action • Supernatural</div>
+      </div>
+    </article>
+
+    <article class="card" data-title="One Piece">
+      <div class="poster four">
+        <span class="tag">HD</span>
+      </div>
+      <div class="card-info">
+        <h3>One Piece</h3>
+        <div class="meta">Adventure • Fantasy</div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Solo Leveling">
+      <div class="poster five">
+        <span class="tag">NEW</span>
+      </div>
+      <div class="card-info">
+        <h3>Solo Leveling</h3>
+        <div class="meta">Action • Fantasy</div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="no-results" id="noResults">
+    No anime found. Try another search.
+  </div>
+</section>
+
+<section class="section" id="popular">
+  <div class="section-head">
+    <h2>⭐ Popular Picks</h2>
+    <span>Fan favourites</span>
+  </div>
+
+  <div class="grid">
+
+    <article class="card" data-title="Naruto">
+      <div class="poster two"></div>
+      <div class="card-info">
+        <h3>Naruto</h3>
+        <div class="meta">Action • Adventure</div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Dragon Ball">
+      <div class="poster three"></div>
+      <div class="card-info">
+        <h3>Dragon Ball</h3>
+        <div class="meta">Action • Shonen</div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Vinland Saga">
+      <div class="poster five"></div>
+      <div class="card-info">
+        <h3>Vinland Saga</h3>
+        <div class="meta">Drama • Historical</div>
+      </div>
+    </article>
+
+    <article class="card" data-title="Pokemon">
+      <div class="poster four"></div>
+      <div class="card-info">
+        <h3>Pokémon</h3>
+        <div class="meta">Adventure • Family</div>
+      </div>
+    </article>
+
+    <article class="card" data-title="My Hero Academia">
+      <div class="poster one"></div>
+      <div class="card-info">
+        <h3>My Hero Academia</h3>
+        <div class="meta">Action • Superhero</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="section" id="genres">
+  <div class="section-head">
+    <h2>🎭 Browse Genres</h2>
+    <span>Find your mood</span>
+  </div>
+
+  <div class="genres">
+    <div class="genre">Action</div>
+    <div class="genre">Adventure</div>
+    <div class="genre">Romance</div>
+    <div class="genre">Comedy</div>
+    <div class="genre">Fantasy</div>
+    <div class="genre">Drama</div>
+    <div class="genre">Psychological</div>
+    <div class="genre">School</div>
+    <div class="genre">Shonen</div>
+    <div class="genre">Slice of Life</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><strong>AnimeHindi123</strong> — Your Anime Discovery Hub</p>
+  <p style="margin-top:8px;">© 2026 AnimeHindi123. Built with passion for anime fans.</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal()">×</button>
+    <h2 id="modalTitle">Anime</h2>
+    <p>
+      Welcome to AnimeHindi123. This is an anime information page.
+      Add your own legal links, descriptions and official streaming
+      destinations here.
+    </p>
+
+    <div style="margin-top:20px;">
+      <a href="#anime" class="btn btn-primary" onclick="closeModal()">← Back to Anime</a>
+    </div>
   </div>
 </div>
 
-<div class="search-box">
-  <input id="search" type="text" placeholder="Search anime...">
+<script>
+const input = document.getElementById("searchInput");
+const cards = document.querySelectorAll(".card");
+const noResults = document.getElementById("noResults");
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modalTitle");
 
-  <select id="genre">
-    <option value="all">All Genres</option>
-    <option value="action">Action</option>
-    <option value="romance">Romance</option>
-    <option value="fantasy">Fantasy</option>
-    <option value="adventure">Adventure</option>
-    <option value="comedy">Comedy</option>
-  </select>
-</div>
+function searchAnime(){
+  const value = input.value.toLowerCase().trim();
+  let found = 0;
 
-<div class="grid" id="animeGrid">
+  cards.forEach(card=>{
+    const title = card.dataset.title.toLowerCase();
 
-<!-- ONE PIECE -->
-<article class="card" data-title="one piece" data-genre="adventure">
-  <div class="poster">
-    <img src="one-piece.jpg" alt="One Piece">
-    <span class="rating">⭐ 9.0</span>
-    <span class="poster-title">One Piece</span>
-  </div>
-  <div class="card-body">
-    <div class="card-meta">
-      <span class="tag">Adventure</span>
-      <span class="tag">Action</span>
-    </div>
-    <p>Monkey D. Luffy begins his legendary journey to become Pirate King.</p>
-    <button class="details-btn" onclick="openAnime('One Piece')">View Details</button>
-  </div>
-</article>
+    if(!value || title.includes(value)){
+      card.style.display = "";
+      found++;
+    }else{
+      card.style.display = "none";
+    }
+  });
 
-<!-- SOLO LEVELING -->
-<article class="card" data-title="solo leveling" data-genre="action">
-  <div class="poster">
-    <img src="solo-leveling.jpg" alt="Solo Leveling">
-    <span class="rating">⭐ 8.8</span>
-    <span class="poster-title">Solo Leveling</span>
-  </div>
-  <div class="card-body">
-    <div class="card-meta">
-      <span class="tag">Action</span>
-      <span class="tag">Fantasy</span>
-    </div>
-    <p>A weak hunter discovers a mysterious system that changes his fate.</p>
-    <button class="details-btn" onclick="openAnime('Solo Leveling')">View Details</button>
-  </div>
-</article>
+  noResults.style.display = found ? "none" : "block";
 
-<!-- ATTACK ON TITAN -->
-<article class="card" data-title="attack on titan" data-genre="action">
-  <div class="poster">
-    <img src="attack-on-titan.jpg" alt="Attack on Titan">
-    <span class="rating">⭐ 9.1</span>
-    <span class="poster-title">Attack on Titan</span>
-  </div>
-  <div class="card-body">
-    <div class="card-meta">
-      <span class="tag">Action</span>
-      <span class="tag">Drama</span>
-    </div>
-    <p>Humanity fights for survival behind enormous walls.</p>
-    <button class="details-btn" onclick="openAnime('Attack on Titan')">View Details</button>
-  </div>
-</article>
+  document.getElementById("anime").scrollIntoView({
+    behavior:"smooth"
+  });
+}
 
-<!-- COTE -->
-<article class="card" data-title="classroom of the elite" data-genre="action">
-  <div class="poster">
-    <img src="classroom-of-the-elite.jpg" alt="Classroom of the Elite">
-    <span class="rating">⭐ 8.4</span>
-    <span class="poster-title">Classroom of the Elite</span>
-  </div>
-  <div class="card-body">
-    <div class="card-meta">
-      <span class="tag">Psychological</span>
-      <span class="tag">Drama</span>
-    </div>
-    <p>A brilliant
+input.addEventListener("input",()=>{
+  if(input.value.trim()===""){
+    cards.forEach(card=>card.style.display="");
+    noResults.style.display="none";
+  }
+});
+
+cards.forEach(card=>{
+  card.addEventListener("click",()=>{
+    modalTitle.textContent = card.dataset.title;
+    modal.classList.add("active");
+  });
+});
+
+function closeModal(){
+  modal.classList.remove("active");
+}
+
+modal.addEventListener("click",(e)=>{
+  if(e.target===modal){
+    closeModal();
+  }
+});
+</script>
+
+</body>
+</html>
