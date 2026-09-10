@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Pro Anime Hindi - Discover your next anime adventure.">
+
+<meta name="description" content="Pro Anime Hindi - Discover anime, explore genres and build your personal watchlist.">
+<meta name="theme-color" content="#08090d">
+
 <title>Pro Anime Hindi</title>
 
 <style>
@@ -11,36 +14,55 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
+}
+
+:root{
+    --bg:#07080c;
+    --card:#11131a;
+    --card2:#171922;
+    --border:#252936;
+    --text:#ffffff;
+    --muted:#9699a6;
+    --accent:#8b5cf6;
+    --accent2:#a78bfa;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    background:#08090d;
-    color:#fff;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
 }
 
 /* NAVBAR */
+
 .navbar{
     height:70px;
+    padding:0 6%;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 6%;
-    background:#0c0d12;
-    border-bottom:1px solid #20222b;
+    background:rgba(7,8,12,.94);
+    border-bottom:1px solid var(--border);
     position:sticky;
     top:0;
     z-index:1000;
+    backdrop-filter:blur(15px);
 }
 
 .logo{
-    font-size:22px;
-    font-weight:800;
+    font-size:21px;
+    font-weight:900;
     letter-spacing:.5px;
+    white-space:nowrap;
 }
 
 .logo span{
-    color:#8b5cf6;
+    color:var(--accent2);
 }
 
 .nav-links{
@@ -49,26 +71,27 @@ body{
 }
 
 .nav-links a{
-    color:#bbb;
+    color:#b6b8c2;
     text-decoration:none;
     font-size:14px;
     transition:.2s;
 }
 
 .nav-links a:hover{
-    color:#fff;
+    color:white;
 }
 
-.search-btn{
-    background:#171922;
-    border:1px solid #292c38;
-    color:#fff;
-    padding:10px 15px;
+.search-button{
+    background:var(--card2);
+    border:1px solid var(--border);
+    color:white;
     border-radius:10px;
+    padding:10px 14px;
     cursor:pointer;
 }
 
 /* HERO */
+
 .hero{
     min-height:500px;
     display:flex;
@@ -77,39 +100,41 @@ body{
     position:relative;
     overflow:hidden;
     background:
-    radial-gradient(circle at 80% 40%,rgba(124,58,237,.35),transparent 35%),
-    linear-gradient(90deg,#08090d 20%,rgba(8,9,13,.75),rgba(8,9,13,.2));
+    radial-gradient(circle at 85% 45%,rgba(139,92,246,.35),transparent 30%),
+    linear-gradient(90deg,#07080c 25%,rgba(7,8,12,.7),rgba(7,8,12,.15));
 }
 
 .hero-content{
-    max-width:620px;
+    max-width:650px;
+    position:relative;
     z-index:2;
 }
 
 .badge{
     display:inline-block;
+    padding:7px 13px;
+    border:1px solid #40316a;
     background:#171321;
-    border:1px solid #3b2b63;
-    color:#b794ff;
-    padding:7px 12px;
-    border-radius:20px;
+    color:#c4a9ff;
+    border-radius:30px;
     font-size:12px;
-    margin-bottom:18px;
-}
-
-.hero h1{
-    font-size:clamp(42px,7vw,75px);
-    line-height:1;
     margin-bottom:20px;
 }
 
+.hero h1{
+    font-size:clamp(43px,7vw,76px);
+    line-height:.98;
+    margin-bottom:22px;
+}
+
 .hero h1 span{
-    color:#9b6cff;
+    color:var(--accent2);
 }
 
 .hero p{
-    color:#b8b8c2;
+    color:#a8aab5;
     line-height:1.7;
+    max-width:580px;
     margin-bottom:28px;
 }
 
@@ -119,46 +144,82 @@ body{
 }
 
 .btn{
-    padding:13px 22px;
+    border:0;
     border-radius:10px;
-    border:none;
-    cursor:pointer;
+    padding:13px 20px;
+    color:white;
     font-weight:700;
+    cursor:pointer;
+    transition:.2s;
 }
 
 .primary{
-    background:#8b5cf6;
-    color:#fff;
+    background:var(--accent);
+}
+
+.primary:hover{
+    transform:translateY(-2px);
 }
 
 .secondary{
-    background:#181a22;
-    color:#fff;
-    border:1px solid #2c2f3a;
+    background:var(--card2);
+    border:1px solid var(--border);
 }
 
 /* SECTIONS */
+
 section{
     padding:35px 6%;
 }
 
-.section-title{
+.section-head{
     display:flex;
     justify-content:space-between;
     align-items:center;
     margin-bottom:20px;
 }
 
-.section-title h2{
+.section-head h2{
     font-size:22px;
 }
 
-.view{
-    color:#9b6cff;
+.count{
+    color:var(--muted);
     font-size:13px;
 }
 
+/* SEARCH AREA */
+
+.search-area{
+    display:flex;
+    gap:10px;
+    margin-bottom:28px;
+}
+
+.search-input{
+    flex:1;
+    padding:14px 16px;
+    background:var(--card);
+    border:1px solid var(--border);
+    color:white;
+    border-radius:10px;
+    outline:none;
+}
+
+.search-input:focus{
+    border-color:var(--accent);
+}
+
+.filter{
+    background:var(--card);
+    color:white;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:0 14px;
+}
+
 /* CARDS */
+
 .cards{
     display:grid;
     grid-template-columns:repeat(5,1fr);
@@ -166,49 +227,89 @@ section{
 }
 
 .card{
-    background:#111219;
-    border:1px solid #20222b;
+    background:var(--card);
+    border:1px solid var(--border);
     border-radius:13px;
     overflow:hidden;
-    cursor:pointer;
     transition:.25s;
 }
 
 .card:hover{
     transform:translateY(-5px);
-    border-color:#7650ca;
+    border-color:#6846b4;
 }
 
 .poster{
-    width:100%;
     aspect-ratio:2/3;
+    background:
+    linear-gradient(145deg,#191b25,#292c3a);
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(145deg,#171922,#272a38);
-    color:#777;
+    color:#777b89;
+    font-weight:700;
     font-size:13px;
+    position:relative;
 }
 
-.card-info{
+.poster .type{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:rgba(0,0,0,.65);
+    padding:5px 8px;
+    border-radius:6px;
+    font-size:10px;
+    color:#ddd;
+}
+
+.card-body{
     padding:12px;
 }
 
-.card-title{
-    font-weight:700;
+.title{
     font-size:14px;
+    font-weight:800;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
 }
 
 .meta{
-    color:#8e909b;
+    color:var(--muted);
     font-size:11px;
     margin-top:7px;
 }
 
+.card-actions{
+    display:flex;
+    gap:7px;
+    margin-top:11px;
+}
+
+.details-btn,
+.list-btn{
+    flex:1;
+    border-radius:7px;
+    padding:8px 4px;
+    font-size:11px;
+    cursor:pointer;
+}
+
+.details-btn{
+    border:0;
+    background:var(--accent);
+    color:white;
+}
+
+.list-btn{
+    border:1px solid var(--border);
+    background:#171922;
+    color:white;
+}
+
 /* GENRES */
+
 .genres{
     display:flex;
     flex-wrap:wrap;
@@ -216,48 +317,125 @@ section{
 }
 
 .genre{
-    padding:10px 16px;
-    background:#111219;
-    border:1px solid #242632;
+    background:var(--card);
+    border:1px solid var(--border);
+    padding:10px 15px;
     border-radius:9px;
-    color:#bbb;
+    color:#bfc0c8;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.genre:hover,
+.genre.active{
+    background:#241c38;
+    border-color:var(--accent);
+    color:white;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:2000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(600px,100%);
+    background:#11131a;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:25px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:18px;
+    top:15px;
+    border:0;
+    background:none;
+    color:white;
+    font-size:22px;
     cursor:pointer;
 }
 
-.genre:hover{
-    border-color:#8b5cf6;
-    color:#fff;
+.modal-box h2{
+    margin-bottom:12px;
+}
+
+.modal-box p{
+    color:#a7a9b3;
+    line-height:1.7;
+}
+
+.modal-info{
+    margin-top:18px;
+    color:#c6c7ce;
+    font-size:13px;
+    line-height:1.8;
+}
+
+/* EMPTY */
+
+.empty{
+    display:none;
+    text-align:center;
+    color:var(--muted);
+    padding:40px;
 }
 
 /* FOOTER */
+
 footer{
-    margin-top:30px;
+    margin-top:35px;
     padding:35px 6%;
-    background:#0c0d12;
-    border-top:1px solid #20222b;
-    color:#777;
     text-align:center;
+    background:#0c0d12;
+    border-top:1px solid var(--border);
+    color:#777b88;
     font-size:13px;
 }
 
 /* MOBILE */
+
 @media(max-width:900px){
+
     .cards{
         grid-template-columns:repeat(3,1fr);
-    }
-}
-
-@media(max-width:600px){
-    .navbar{
-        padding:0 4%;
     }
 
     .nav-links{
         display:none;
     }
+}
+
+@media(max-width:600px){
+
+    .navbar{
+        padding:0 4%;
+    }
+
+    .logo{
+        font-size:17px;
+    }
+
+    .search-button{
+        padding:8px 10px;
+    }
 
     .hero{
-        min-height:450px;
+        min-height:440px;
         padding:55px 6%;
     }
 
@@ -265,13 +443,21 @@ footer{
         font-size:48px;
     }
 
+    section{
+        padding:28px 4%;
+    }
+
     .cards{
         grid-template-columns:repeat(2,1fr);
         gap:12px;
     }
 
-    section{
-        padding:28px 4%;
+    .search-area{
+        flex-direction:column;
+    }
+
+    .filter{
+        height:45px;
     }
 }
 </style>
@@ -280,166 +466,590 @@ footer{
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar">
-    <div class="logo">PRO <span>ANIME HINDI</span></div>
 
-    <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">Anime</a>
-        <a href="#">Genres</a>
-        <a href="#">My List</a>
+<nav class="navbar">
+
+    <div class="logo">
+        PRO <span>ANIME HINDI</span>
     </div>
 
-    <button class="search-btn">🔍 Search</button>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#anime">Anime</a>
+        <a href="#genres">Genres</a>
+        <a href="#mylist">My List</a>
+    </div>
+
+    <button class="search-button" onclick="focusSearch()">
+        🔍 Search
+    </button>
+
 </nav>
 
-<!-- HERO -->
-<header class="hero">
-    <div class="hero-content">
-        <div class="badge">✦ YOUR ANIME UNIVERSE</div>
 
-        <h1>Discover Your <span>Next Story.</span></h1>
+<!-- HERO -->
+
+<header class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            ✦ YOUR ANIME UNIVERSE
+        </div>
+
+        <h1>
+            Discover Your <span>Next Story.</span>
+        </h1>
 
         <p>
-            Explore anime, discover new worlds and keep track of
-            the stories you love — all in one place.
+            Explore anime, discover new worlds and create your personal
+            watchlist — all in one beautiful place.
         </p>
 
         <div class="hero-buttons">
-            <button class="btn primary">Explore Anime</button>
-            <button class="btn secondary">♡ My List</button>
+            <button class="btn primary" onclick="scrollToAnime()">
+                Explore Anime
+            </button>
+
+            <button class="btn secondary" onclick="showList()">
+                ♡ My List
+            </button>
         </div>
+
     </div>
+
 </header>
 
-<!-- TRENDING -->
-<section>
-    <div class="section-title">
-        <h2>🔥 Trending Anime</h2>
-        <span class="view">View All →</span>
+
+<!-- ANIME -->
+
+<section id="anime">
+
+    <div class="section-head">
+        <h2>🔥 Explore Anime</h2>
+        <span class="count" id="resultCount"></span>
     </div>
 
-    <div class="cards">
+    <div class="search-area">
 
-        <div class="card">
-            <div class="poster">POSTER</div>
-            <div class="card-info">
-                <div class="card-title">Anime Title One</div>
-                <div class="meta">TV • 24 Episodes</div>
-            </div>
-        </div>
+        <input
+            class="search-input"
+            id="search"
+            type="text"
+            placeholder="Search anime..."
+            oninput="searchAnime()"
+        >
 
-        <div class="card">
-            <div class="poster">POSTER</div>
-            <div class="card-info">
-                <div class="card-title">Anime Title Two</div>
-                <div class="meta">TV • 12 Episodes</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="poster">POSTER</div>
-            <div class="card-info">
-                <div class="card-title">Anime Title Three</div>
-                <div class="meta">TV • 24 Episodes</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="poster">POSTER</div>
-            <div class="card-info">
-                <div class="card-title">Anime Title Four</div>
-                <div class="meta">Movie • 1h 55m</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="poster">POSTER</div>
-            <div class="card-info">
-                <div class="card-title">Anime Title Five</div>
-                <div class="meta">TV • 13 Episodes</div>
-            </div>
-        </div>
+        <select class="filter" id="genreFilter" onchange="filterAnime()">
+            <option value="all">All Genres</option>
+            <option value="Action">Action</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Romance">Romance</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Drama">Drama</option>
+        </select>
 
     </div>
+
+    <div class="cards" id="animeGrid"></div>
+
+    <div class="empty" id="empty">
+        No anime found.
+    </div>
+
 </section>
 
-<!-- LATEST -->
-<section>
-    <div class="section-title">
-        <h2>🆕 Latest Releases</h2>
-        <span class="view">View All →</span>
-    </div>
-
-    <div class="cards">
-
-        <div class="card">
-            <div class="poster">POSTER</div>
-            <div class="card-info">
-                <div class="card-title">Latest Anime 01</div>
-                <div class="meta">Episode 12 • HD</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="poster">POSTER</div>
-            <div class="card-info">
-                <div class="card-title">Latest Anime 02</div>
-                <div class="meta">Episode 08 • HD</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="poster">POSTER</div>
-            <div class="card-info">
-                <div class="card-title">Latest Anime 03</div>
-                <div class="meta">Episode 06 • HD</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="poster">POSTER</div>
-            <div class="card-info">
-                <div class="card-title">Latest Anime 04</div>
-                <div class="meta">Episode 03 • HD</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="poster">POSTER</div>
-            <div class="card-info">
-                <div class="card-title">Latest Anime 05</div>
-                <div class="meta">Episode 01 • HD</div>
-            </div>
-        </div>
-
-    </div>
-</section>
 
 <!-- GENRES -->
-<section>
-    <div class="section-title">
+
+<section id="genres">
+
+    <div class="section-head">
         <h2>🎭 Explore Genres</h2>
     </div>
 
     <div class="genres">
-        <div class="genre">Action</div>
-        <div class="genre">Adventure</div>
-        <div class="genre">Romance</div>
-        <div class="genre">Comedy</div>
-        <div class="genre">Fantasy</div>
-        <div class="genre">Drama</div>
-        <div class="genre">Psychological</div>
-        <div class="genre">Sports</div>
-        <div class="genre">Mystery</div>
-        <div class="genre">Sci-Fi</div>
+
+        <div class="genre active" onclick="chooseGenre('all',this)">
+            All
+        </div>
+
+        <div class="genre" onclick="chooseGenre('Action',this)">
+            Action
+        </div>
+
+        <div class="genre" onclick="chooseGenre('Adventure',this)">
+            Adventure
+        </div>
+
+        <div class="genre" onclick="chooseGenre('Romance',this)">
+            Romance
+        </div>
+
+        <div class="genre" onclick="chooseGenre('Comedy',this)">
+            Comedy
+        </div>
+
+        <div class="genre" onclick="chooseGenre('Fantasy',this)">
+            Fantasy
+        </div>
+
+        <div class="genre" onclick="chooseGenre('Drama',this)">
+            Drama
+        </div>
+
     </div>
+
 </section>
 
-<!-- FOOTER -->
+
+<!-- MY LIST -->
+
+<section id="mylist">
+
+    <div class="section-head">
+        <h2>❤️ My List</h2>
+    </div>
+
+    <div class="cards" id="listGrid"></div>
+
+    <div class="empty" id="listEmpty" style="display:block">
+        Your watchlist is empty.
+        <br><br>
+        Add anime using the ♡ button.
+    </div>
+
+</section>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeModal()">×</button>
+
+        <h2 id="modalTitle"></h2>
+
+        <p id="modalDescription"></p>
+
+        <div class="modal-info" id="modalInfo"></div>
+
+    </div>
+
+</div>
+
+
 <footer>
-    <p>© 2026 Pro Anime Hindi • Your Anime Universe</p>
+    © 2026 Pro Anime Hindi • Built for anime lovers
 </footer>
 
+
+<script>
+
+/* DEMO ANIME DATA */
+
+const anime = [
+
+{
+    id:1,
+    title:"Anime Adventure",
+    genre:"Adventure",
+    year:"2026",
+    rating:"8.8",
+    type:"TV",
+    episodes:"12",
+    description:"A young hero begins an unforgettable journey through a mysterious world."
+},
+
+{
+    id:2,
+    title:"Shadow Warrior",
+    genre:"Action",
+    year:"2026",
+    rating:"9.0",
+    type:"TV",
+    episodes:"24",
+    description:"A warrior faces powerful enemies while discovering the truth about his past."
+},
+
+{
+    id:3,
+    title:"Moonlight Hearts",
+    genre:"Romance",
+    year:"2025",
+    rating:"8.5",
+    type:"TV",
+    episodes:"12",
+    description:"Two students slowly discover that their lives are connected in unexpected ways."
+},
+
+{
+    id:4,
+    title:"Magic Kingdom",
+    genre:"Fantasy",
+    year:"2025",
+    rating:"8.7",
+    type:"TV",
+    episodes:"24",
+    description:"A mysterious kingdom hides secrets that could change the entire world."
+},
+
+{
+    id:5,
+    title:"Laughing Days",
+    genre:"Comedy",
+    year:"2026",
+    rating:"8.1",
+    type:"TV",
+    episodes:"12",
+    description:"A group of friends turn ordinary school days into unforgettable adventures."
+},
+
+{
+    id:6,
+    title:"Final Horizon",
+    genre:"Action",
+    year:"2025",
+    rating:"9.1",
+    type:"Movie",
+    episodes:"1",
+    description:"Humanity prepares for its final battle against an unknown threat."
+},
+
+{
+    id:7,
+    title:"Blue Dreams",
+    genre:"Drama",
+    year:"2024",
+    rating:"8.6",
+    type:"TV",
+    episodes:"13",
+    description:"A quiet story about friendship, dreams and growing up."
+},
+
+{
+    id:8,
+    title:"Dragon Realm",
+    genre:"Fantasy",
+    year:"2026",
+    rating:"9.2",
+    type:"TV",
+    episodes:"24",
+    description:"A young adventurer enters a legendary realm filled with dragons and magic."
+},
+
+{
+    id:9,
+    title:"Future Code",
+    genre:"Action",
+    year:"2025",
+    rating:"8.9",
+    type:"TV",
+    episodes:"12",
+    description:"A teenager discovers a mysterious technology from the future."
+},
+
+{
+    id:10,
+    title:"Spring Memories",
+    genre:"Romance",
+    year:"2024",
+    rating:"8.4",
+    type:"TV",
+    episodes:"12",
+    description:"A gentle story of friendship and feelings during one unforgettable spring."
+}
+
+];
+
+
+/* STATE */
+
+let currentGenre = "all";
+
+let watchlist =
+    JSON.parse(localStorage.getItem("proAnimeList")) || [];
+
+
+/* RENDER */
+
+function renderAnime(){
+
+    const grid = document.getElementById("animeGrid");
+
+    const query =
+        document.getElementById("search").value.toLowerCase();
+
+    const filtered = anime.filter(a => {
+
+        const matchesSearch =
+            a.title.toLowerCase().includes(query);
+
+        const matchesGenre =
+            currentGenre === "all" ||
+            a.genre === currentGenre;
+
+        return matchesSearch && matchesGenre;
+
+    });
+
+    grid.innerHTML = "";
+
+    filtered.forEach(a => {
+
+        grid.innerHTML += createCard(a);
+
+    });
+
+    document.getElementById("resultCount").textContent =
+        filtered.length + " results";
+
+    document.getElementById("empty").style.display =
+        filtered.length ? "none" : "block";
+}
+
+
+/* CARD */
+
+function createCard(a){
+
+    const saved = watchlist.includes(a.id);
+
+    return `
+
+        <article class="card">
+
+            <div class="poster">
+
+                <span class="type">${a.type}</span>
+
+                POSTER
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="title">
+                    ${a.title}
+                </div>
+
+                <div class="meta">
+                    ⭐ ${a.rating} • ${a.year} • ${a.genre}
+                </div>
+
+                <div class="meta">
+                    📺 ${a.episodes} Episodes
+                </div>
+
+                <div class="card-actions">
+
+                    <button
+                        class="details-btn"
+                        onclick="openDetails(${a.id})">
+                        Details
+                    </button>
+
+                    <button
+                        class="list-btn"
+                        onclick="toggleList(${a.id})">
+                        ${saved ? "♥ Saved" : "♡ List"}
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `;
+}
+
+
+/* SEARCH */
+
+function searchAnime(){
+
+    renderAnime();
+
+}
+
+
+/* FILTER */
+
+function filterAnime(){
+
+    currentGenre =
+        document.getElementById("genreFilter").value;
+
+    renderAnime();
+
+}
+
+
+/* GENRE BUTTON */
+
+function chooseGenre(genre,element){
+
+    currentGenre = genre;
+
+    document.getElementById("genreFilter").value = genre;
+
+    document.querySelectorAll(".genre")
+        .forEach(x => x.classList.remove("active"));
+
+    element.classList.add("active");
+
+    renderAnime();
+
+}
+
+
+/* WATCHLIST */
+
+function toggleList(id){
+
+    if(watchlist.includes(id)){
+
+        watchlist =
+            watchlist.filter(x => x !== id);
+
+    }else{
+
+        watchlist.push(id);
+
+    }
+
+    localStorage.setItem(
+        "proAnimeList",
+        JSON.stringify(watchlist)
+    );
+
+    renderAnime();
+    renderList();
+
+}
+
+
+/* RENDER LIST */
+
+function renderList(){
+
+    const grid =
+        document.getElementById("listGrid");
+
+    const empty =
+        document.getElementById("listEmpty");
+
+    const saved =
+        anime.filter(a => watchlist.includes(a.id));
+
+    grid.innerHTML = "";
+
+    saved.forEach(a => {
+
+        grid.innerHTML += createCard(a);
+
+    });
+
+    empty.style.display =
+        saved.length ? "none" : "block";
+
+}
+
+
+/* DETAILS */
+
+function openDetails(id){
+
+    const a =
+        anime.find(x => x.id === id);
+
+    document.getElementById("modalTitle").textContent =
+        a.title;
+
+    document.getElementById("modalDescription").textContent =
+        a.description;
+
+    document.getElementById("modalInfo").innerHTML =
+
+        "⭐ Rating: " + a.rating +
+        "<br>📅 Year: " + a.year +
+        "<br>🎭 Genre: " + a.genre +
+        "<br>📺 Type: " + a.type +
+        "<br>🎬 Episodes: " + a.episodes;
+
+    document.getElementById("modal")
+        .classList.add("show");
+
+}
+
+
+/* CLOSE MODAL */
+
+function closeModal(){
+
+    document.getElementById("modal")
+        .classList.remove("show");
+
+}
+
+
+/* SEARCH BUTTON */
+
+function focusSearch(){
+
+    document.getElementById("search")
+        .focus();
+
+    document.getElementById("anime")
+        .scrollIntoView();
+
+}
+
+
+/* SCROLL */
+
+function scrollToAnime(){
+
+    document.getElementById("anime")
+        .scrollIntoView();
+
+}
+
+
+/* MY LIST */
+
+function showList(){
+
+    document.getElementById("mylist")
+        .scrollIntoView();
+
+}
+
+
+/* INITIAL */
+
+renderAnime();
+renderList();
+
+
+/* CLOSE ON BACKGROUND CLICK */
+
+document.getElementById("modal")
+.addEventListener("click",function(e){
+
+    if(e.target === this){
+
+        closeModal();
+
+    }
+
+});
+
+</script>
+
 </body>
-  </html>
+            </html>
