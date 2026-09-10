@@ -2,261 +2,168 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>AnimeHindi123</title>
-<meta name="description" content="AnimeHindi123 - Discover anime, search titles and explore popular series.">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
 body{
   background:#08080d;
   color:#fff;
+  font-family:Arial,sans-serif;
 }
-
-/* HEADER */
 header{
   position:sticky;
   top:0;
-  z-index:999;
-  background:rgba(8,8,13,.96);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid #242431;
+  z-index:10;
+  background:#101018;
+  border-bottom:1px solid #292936;
   padding:15px 5%;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
 }
-
 .logo{
+  color:#ff326d;
   font-size:25px;
   font-weight:900;
-  color:#ff2f6d;
 }
-
 nav a{
   color:#ddd;
   text-decoration:none;
-  margin-left:20px;
-  font-size:14px;
+  margin-left:18px;
 }
-
-nav a:hover{
-  color:#ff2f6d;
-}
-
-/* HERO */
 .hero{
-  min-height:430px;
   padding:80px 7%;
+  min-height:350px;
   display:flex;
   align-items:center;
   background:
-    linear-gradient(90deg,#08080d 15%,rgba(8,8,13,.7),rgba(8,8,13,.15)),
-    linear-gradient(0deg,#08080d,transparent),
-    url("https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1600&q=80")
-    center/cover;
+  linear-gradient(90deg,#08080d 15%,transparent),
+  url("https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1600&q=80")
+  center/cover;
 }
-
-.hero-content{
-  max-width:650px;
-}
-
 .hero h1{
   font-size:clamp(42px,7vw,75px);
-  margin-bottom:15px;
 }
-
-.hero h1 span{
-  color:#ff2f6d;
-}
-
+.hero span{color:#ff326d}
 .hero p{
+  max-width:600px;
   color:#ccc;
-  line-height:1.7;
-  font-size:17px;
-  margin-bottom:25px;
+  line-height:1.6;
+  margin:15px 0 25px;
 }
-
 .btn{
-  display:inline-block;
-  background:#ff2f6d;
-  color:#fff;
-  text-decoration:none;
+  background:#ff326d;
+  color:white;
   padding:13px 22px;
   border-radius:8px;
+  text-decoration:none;
   font-weight:bold;
 }
-
-/* MAIN */
-main{
-  padding:40px 5%;
-}
-
-.title{
-  font-size:28px;
-  margin-bottom:20px;
-}
-
-.search-box{
+main{padding:40px 5%}
+.search{
   display:flex;
   gap:10px;
-  margin-bottom:30px;
+  margin:20px 0 30px;
 }
-
-#search{
-  width:100%;
-  padding:14px 16px;
-  background:#15151f;
-  border:1px solid #30303e;
-  border-radius:8px;
+input{
+  flex:1;
+  background:#15151e;
+  border:1px solid #333342;
   color:white;
+  padding:14px;
+  border-radius:8px;
   outline:none;
-  font-size:15px;
 }
-
-#search:focus{
-  border-color:#ff2f6d;
-}
-
-#searchBtn{
-  padding:0 22px;
-  border:none;
-  border-radius:8px;
-  background:#ff2f6d;
+button{
+  border:0;
+  background:#ff326d;
   color:white;
+  padding:0 22px;
+  border-radius:8px;
   font-weight:bold;
   cursor:pointer;
 }
-
-/* GRID */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
   gap:20px;
 }
-
 .card{
-  background:#14141d;
-  border:1px solid #262634;
+  background:#15151e;
+  border:1px solid #292936;
   border-radius:12px;
   overflow:hidden;
-  transition:.25s;
 }
-
-.card:hover{
-  transform:translateY(-6px);
-  border-color:#ff2f6d;
-}
-
 .card img{
   width:100%;
   height:270px;
   object-fit:cover;
-  display:block;
-  background:#222;
 }
-
-.card-body{
-  padding:13px;
-}
-
-.card h3{
-  font-size:16px;
+.body{padding:13px}
+.body h3{
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
   margin-bottom:7px;
 }
-
 .info{
   color:#aaa;
-  font-size:12px;
+  font-size:13px;
   margin-bottom:12px;
 }
-
 .watch{
   display:block;
+  background:#ff326d;
+  color:white;
   text-align:center;
   padding:10px;
-  background:#ff2f6d;
-  color:#fff;
   text-decoration:none;
   border-radius:7px;
-  font-size:13px;
-  font-weight:bold;
 }
-
-.loading{
+.loading,.empty{
   text-align:center;
-  padding:50px;
+  padding:40px;
   color:#aaa;
 }
-
-.empty{
+#episodes{
   display:none;
-  text-align:center;
-  padding:50px;
-  color:#aaa;
+  margin-top:40px;
 }
-
-/* FOOTER */
+.episode-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:10px;
+  margin-top:20px;
+}
+.ep{
+  background:#191923;
+  border:1px solid #30303d;
+  color:white;
+  padding:13px;
+  border-radius:7px;
+  cursor:pointer;
+}
+.ep:hover{
+  border-color:#ff326d;
+}
 footer{
-  margin-top:50px;
-  padding:35px 5%;
-  border-top:1px solid #252532;
   text-align:center;
   color:#777;
-  line-height:1.7;
+  padding:35px;
+  border-top:1px solid #252532;
+  margin-top:40px;
 }
-
-/* MOBILE */
-@media(max-width:650px){
-
-  header{
-    padding:13px 4%;
-  }
-
-  .logo{
-    font-size:20px;
-  }
-
-  nav a{
-    margin-left:8px;
-    font-size:12px;
-  }
-
-  .hero{
-    min-height:370px;
-    padding:65px 5%;
-  }
-
-  main{
-    padding:30px 4%;
-  }
-
-  .search-box{
-    flex-direction:column;
-  }
-
-  #searchBtn{
-    padding:12px;
-  }
-
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-    gap:13px;
-  }
-
-  .card img{
-    height:230px;
-  }
+@media(max-width:600px){
+  header{padding:13px 4%}
+  nav a{font-size:12px;margin-left:8px}
+  .hero{padding:60px 5%}
+  main{padding:30px 4%}
+  .search{flex-direction:column}
+  button{padding:12px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:13px}
+  .card img{height:230px}
 }
 </style>
 </head>
@@ -264,155 +171,191 @@ footer{
 <body>
 
 <header>
-
   <div class="logo">AnimeHindi123</div>
-
   <nav>
     <a href="#home">Home</a>
     <a href="#anime">Anime</a>
   </nav>
-
 </header>
 
-
 <section class="hero" id="home">
-
-  <div class="hero-content">
-
+  <div>
     <h1>Anime<span>Hindi123</span></h1>
-
     <p>
-      Discover popular anime, search thousands of titles
-      and find your next favourite series.
+      Search anime, explore details and browse available episodes.
     </p>
-
     <a href="#anime" class="btn">Explore Anime</a>
-
   </div>
-
 </section>
-
 
 <main id="anime">
 
-  <h2 class="title">Anime Collection</h2>
+<h2>Anime Collection</h2>
 
-  <div class="search-box">
+<div class="search">
+  <input
+    id="search"
+    placeholder="Search One Piece, Naruto, Pokémon..."
+  >
+  <button onclick="searchAnime()">Search</button>
+</div>
 
-    <input
-      id="search"
-      type="text"
-      placeholder="Search anime..."
-    >
+<div id="loading" class="loading">
+  Loading anime...
+</div>
 
-    <button id="searchBtn">
-      Search
-    </button>
+<div id="grid" class="grid"></div>
 
+<div id="empty" class="empty" style="display:none">
+  No anime found.
+</div>
+
+<section id="episodes">
+
+  <h2 id="episodeTitle">Episodes</h2>
+
+  <div id="episodeLoading" class="loading">
+    Loading episodes...
   </div>
 
+  <div id="episodeGrid" class="episode-grid"></div>
 
-  <div id="loading" class="loading">
-    Loading anime...
-  </div>
-
-  <div id="grid" class="grid"></div>
-
-  <div id="empty" class="empty">
-    <h3>No anime found</h3>
-    <p>Try another anime name.</p>
-  </div>
+</section>
 
 </main>
 
-
 <footer>
-
-  <p>© 2026 AnimeHindi123</p>
-
-  <p>
-    Anime information and artwork belong to their respective owners.
-  </p>
-
+© 2026 AnimeHindi123
 </footer>
-
 
 <script>
 
-/*
-  AnimeHindi123
-  API: Jikan (MyAnimeList unofficial public API)
-*/
+const API="https://api.jikan.moe/v4";
 
-const API =
-  "https://api.jikan.moe/v4/top/anime?limit=24";
+const grid=document.getElementById("grid");
+const loading=document.getElementById("loading");
+const empty=document.getElementById("empty");
 
+async function request(url){
 
-const grid =
-  document.getElementById("grid");
+  const response=await fetch(url);
 
-const loading =
-  document.getElementById("loading");
+  if(!response.ok)
+    throw new Error("API error");
 
-const empty =
-  document.getElementById("empty");
-
-const search =
-  document.getElementById("search");
-
-const searchBtn =
-  document.getElementById("searchBtn");
+  return await response.json();
+}
 
 
-/* CREATE CARD */
+/* LOAD POPULAR ANIME */
+
+async function loadAnime(){
+
+  loading.style.display="block";
+  grid.innerHTML="";
+  empty.style.display="none";
+
+  try{
+
+    const result=await request(
+      API+"/top/anime?limit=24"
+    );
+
+    result.data.forEach(createCard);
+
+  }catch(error){
+
+    empty.textContent=
+      "Anime could not be loaded. Refresh and try again.";
+
+    empty.style.display="block";
+
+  }
+
+  loading.style.display="none";
+}
+
+
+/* SEARCH */
+
+async function searchAnime(){
+
+  const q=
+    document.getElementById("search")
+    .value.trim();
+
+  if(!q){
+    loadAnime();
+    return;
+  }
+
+  loading.style.display="block";
+  grid.innerHTML="";
+  empty.style.display="none";
+
+  try{
+
+    const result=await request(
+      API+"/anime?q="+
+      encodeURIComponent(q)+
+      "&limit=24"
+    );
+
+    if(!result.data.length){
+      empty.textContent="No anime found.";
+      empty.style.display="block";
+    }
+
+    result.data.forEach(createCard);
+
+  }catch(error){
+
+    empty.textContent=
+      "Search failed. Please try again.";
+
+    empty.style.display="block";
+
+  }
+
+  loading.style.display="none";
+}
+
+
+/* CARD */
 
 function createCard(anime){
 
-  const title =
-    anime.title || "Unknown Anime";
+  const card=document.createElement("div");
 
-  const image =
+  card.className="card";
+
+  const image=
     anime.images?.jpg?.large_image_url ||
     anime.images?.jpg?.image_url ||
     "";
 
-  const score =
+  const score=
     anime.score
-      ? "⭐ " + anime.score
-      : "⭐ N/A";
+    ? "⭐ "+anime.score
+    : "⭐ N/A";
 
-  const episodes =
+  const episodes=
     anime.episodes
-      ? anime.episodes + " Episodes"
-      : "Episodes N/A";
+    ? anime.episodes+" Episodes"
+    : "Episodes unknown";
 
-  /*
-    This button opens the anime's official/external
-    information page when available.
-  */
-
-  const watchLink =
-    anime.url || "#";
-
-
-  const card =
-    document.createElement("div");
-
-  card.className = "card";
-
-
-  card.innerHTML = `
+  card.innerHTML=`
 
     <img
       src="${image}"
-      alt="${title}"
+      alt="${escapeHTML(anime.title)}"
       loading="lazy"
     >
 
-    <div class="card-body">
+    <div class="body">
 
-      <h3 title="${title}">
-        ${title}
+      <h3 title="${escapeHTML(anime.title)}">
+        ${escapeHTML(anime.title)}
       </h3>
 
       <div class="info">
@@ -420,176 +363,135 @@ function createCard(anime){
       </div>
 
       <a
+        href="#episodes"
         class="watch"
-        href="${watchLink}"
-        target="_blank"
-        rel="noopener noreferrer"
+        onclick="loadEpisodes(${anime.mal_id}, '${escapeJS(anime.title)}')"
       >
         ▶ Watch Now
       </a>
 
     </div>
-
   `;
-
 
   grid.appendChild(card);
 }
 
 
-/* LOAD TOP ANIME */
+/* EPISODES */
 
-async function loadAnime(){
+async function loadEpisodes(id,title){
 
-  loading.style.display = "block";
-  empty.style.display = "none";
-  grid.innerHTML = "";
+  const section=document.getElementById("episodes");
 
+  const episodeGrid=
+    document.getElementById("episodeGrid");
 
-  try{
+  const episodeLoading=
+    document.getElementById("episodeLoading");
 
-    const response =
-      await fetch(API);
+  document.getElementById("episodeTitle")
+    .textContent=title+" — Episodes";
 
-    if(!response.ok){
-      throw new Error("API error");
-    }
+  section.style.display="block";
 
+  episodeGrid.innerHTML="";
+  episodeLoading.style.display="block";
 
-    const result =
-      await response.json();
-
-
-    const anime =
-      result.data || [];
-
-
-    if(anime.length === 0){
-
-      empty.style.display = "block";
-
-    }else{
-
-      anime.forEach(createCard);
-
-    }
-
-  }
-
-  catch(error){
-
-    grid.innerHTML = "";
-
-    empty.style.display = "block";
-
-    empty.innerHTML = `
-      <h3>Anime could not be loaded</h3>
-      <p>Please refresh the page and try again.</p>
-    `;
-
-    console.error(error);
-
-  }
-
-
-  loading.style.display = "none";
-}
-
-
-/* SEARCH ANIME */
-
-async function searchAnime(){
-
-  const query =
-    search.value.trim();
-
-
-  if(!query){
-
-    loadAnime();
-    return;
-
-  }
-
-
-  loading.style.display = "block";
-  empty.style.display = "none";
-  grid.innerHTML = "";
-
+  section.scrollIntoView({
+    behavior:"smooth"
+  });
 
   try{
 
-    const url =
-      "https://api.jikan.moe/v4/anime?q="
-      + encodeURIComponent(query)
-      + "&limit=24";
+    const result=await request(
+      API+"/anime/"+id+"/episodes"
+    );
 
+    if(!result.data.length){
 
-    const response =
-      await fetch(url);
-
-
-    if(!response.ok){
-      throw new Error("Search error");
-    }
-
-
-    const result =
-      await response.json();
-
-
-    const anime =
-      result.data || [];
-
-
-    if(anime.length === 0){
-
-      empty.style.display = "block";
+      episodeGrid.innerHTML=
+        "<p>No episode information available.</p>";
 
     }else{
 
-      anime.forEach(createCard);
+      result.data.forEach(ep=>{
+
+        const div=document.createElement("div");
+
+        div.className="ep";
+
+        div.innerHTML=`
+          <b>Episode ${ep.mal_id ? ep.mal_id : ""}</b>
+          <br>
+          <small>
+            ${escapeHTML(ep.title || "Episode")}
+          </small>
+        `;
+
+        /*
+          Jikan provides episode metadata.
+          It does not provide a guaranteed full Hindi
+          streaming URL for every episode.
+        */
+
+        div.onclick=()=>{
+
+          if(ep.url){
+
+            window.open(
+              ep.url,
+              "_blank",
+              "noopener,noreferrer"
+            );
+
+          }else{
+
+            alert(
+              "A video source is not available for this episode."
+            );
+
+          }
+
+        };
+
+        episodeGrid.appendChild(div);
+
+      });
 
     }
 
-  }
+  }catch(error){
 
-  catch(error){
-
-    empty.style.display = "block";
-
-    empty.innerHTML = `
-      <h3>Search failed</h3>
-      <p>Please try again in a moment.</p>
-    `;
-
-    console.error(error);
+    episodeGrid.innerHTML=
+      "<p>Episodes could not be loaded. Try again.</p>";
 
   }
 
-
-  loading.style.display = "none";
+  episodeLoading.style.display="none";
 }
 
 
-/* EVENTS */
+/* SECURITY HELPERS */
 
-searchBtn.addEventListener(
-  "click",
-  searchAnime
-);
+function escapeHTML(text){
 
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
-search.addEventListener(
-  "keydown",
-  function(event){
+}
 
-    if(event.key === "Enter"){
-      searchAnime();
-    }
+function escapeJS(text){
 
-  }
-);
+  return String(text)
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/"/g,'\\"');
+
+}
 
 
 /* START */
