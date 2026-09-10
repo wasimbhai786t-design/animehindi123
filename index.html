@@ -547,3 +547,639 @@ footer{
 }
 </style>
 </head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="#home" class="logo">Pro Anime <span>Hindi</span></a>
+
+  <div class="navlinks">
+    <a href="#home">Home</a>
+    <a href="#popular">Popular</a>
+    <a href="#latest">Latest</a>
+    <a href="#about">About</a>
+  </div>
+
+  <button class="nav-btn" onclick="scrollToSection('popular')">
+    Explore Anime
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <span class="badge">🇮🇳 Hindi Anime Discovery</span>
+
+    <h1>
+      Your World of <span>Anime</span>
+    </h1>
+
+    <p>
+      Discover popular anime, latest releases, genres and detailed
+      information — all in one clean anime discovery platform.
+    </p>
+
+    <div class="hero-actions">
+      <button class="primary" onclick="scrollToSection('popular')">
+        Explore Anime
+      </button>
+
+      <button class="secondary" onclick="scrollToSection('about')">
+        Learn More
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- POPULAR -->
+<section class="section" id="popular">
+  <div class="container">
+
+    <div class="section-head">
+      <div>
+        <h2>Popular Anime</h2>
+        <p>Fan-favorite anime worth discovering</p>
+      </div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-area">
+      <input
+        type="text"
+        id="searchInput"
+        class="search"
+        placeholder="Search anime..."
+        oninput="filterAnime()"
+      >
+
+      <select id="genreSelect" class="select" onchange="filterAnime()">
+        <option value="all">All Genres</option>
+        <option value="action">Action</option>
+        <option value="adventure">Adventure</option>
+        <option value="fantasy">Fantasy</option>
+        <option value="romance">Romance</option>
+        <option value="comedy">Comedy</option>
+        <option value="psychological">Psychological</option>
+      </select>
+    </div>
+
+    <div class="grid" id="animeGrid">
+
+      <!-- ONE PIECE -->
+      <article class="card" data-name="one piece" data-genre="adventure">
+        <div class="poster">
+          <div class="poster-title">ONE PIECE</div>
+          <div class="rating">⭐ 9.0</div>
+        </div>
+
+        <div class="card-body">
+          <h3>One Piece</h3>
+          <div class="meta">Adventure • Action • 1000+ Episodes</div>
+
+          <div class="card-actions">
+            <button onclick="showDetails('One Piece')">Details</button>
+            <button class="watch" onclick="showMessage()">Explore</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- SOLO LEVELING -->
+      <article class="card" data-name="solo leveling" data-genre="action">
+        <div class="poster">
+          <div class="poster-title">SOLO LEVELING</div>
+          <div class="rating">⭐ 8.8</div>
+        </div>
+
+        <div class="card-body">
+          <h3>Solo Leveling</h3>
+          <div class="meta">Action • Fantasy • 25+ Episodes</div>
+
+          <div class="card-actions">
+            <button onclick="showDetails('Solo Leveling')">Details</button>
+            <button class="watch" onclick="showMessage()">Explore</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- AOT -->
+      <article class="card" data-name="attack on titan aot" data-genre="action">
+        <div class="poster">
+          <div class="poster-title">ATTACK ON TITAN</div>
+          <div class="rating">⭐ 9.1</div>
+        </div>
+
+        <div class="card-body">
+          <h3>Attack on Titan</h3>
+          <div class="meta">Action • Drama • 89 Episodes</div>
+
+          <div class="card-actions">
+            <button onclick="showDetails('Attack on Titan')">Details</button>
+            <button class="watch" onclick="showMessage()">Explore</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- COTE -->
+      <article class="card" data-name="classroom of the elite cote" data-genre="psychological">
+        <div class="poster">
+          <div class="poster-title">CLASSROOM OF THE ELITE</div>
+          <div class="rating">⭐ 8.2</div>
+        </div>
+
+        <div class="card-body">
+          <h3>Classroom of the Elite</h3>
+          <div class="meta">Psychological • Drama • 38+ Episodes</div>
+
+          <div class="card-actions">
+            <button onclick="showDetails('Classroom of the Elite')">Details</button>
+            <button class="watch" onclick="showMessage()">Explore</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- DEMON SLAYER -->
+      <article class="card" data-name="demon slayer" data-genre="action">
+        <div class="poster">
+          <div class="poster-title">DEMON SLAYER</div>
+          <div class="rating">⭐ 8.6</div>
+        </div>
+
+        <div class="card-body">
+          <h3>Demon Slayer</h3>
+          <div class="meta">Action • Fantasy • 60+ Episodes</div>
+
+          <div class="card-actions">
+            <button onclick="showDetails('Demon Slayer')">Details</button>
+            <button class="watch" onclick="showMessage()">Explore</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- VINLAND SAGA -->
+      <article class="card" data-name="vinland saga" data-genre="action">
+        <div class="poster">
+          <div class="poster-title">VINLAND SAGA</div>
+          <div class="rating">⭐ 8.8</div>
+        </div>
+
+        <div class="card-body">
+          <h3>Vinland Saga</h3>
+          <div class="meta">Action • Drama • 48 Episodes</div>
+
+          <div class="card-actions">
+            <button onclick="showDetails('Vinland Saga')">Details</button>
+            <button class="watch" onclick="showMessage()">Explore</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- MUSHOKU -->
+      <article class="card" data-name="mushoku tensei" data-genre="fantasy">
+        <div class="poster">
+          <div class="poster-title">MUSHOKU TENSEI</div>
+          <div class="rating">⭐ 8.4</div>
+        </div>
+
+        <div class="card-body">
+          <h3>Mushoku Tensei</h3>
+          <div class="meta">Fantasy • Adventure • 48+ Episodes</div>
+
+          <div class="card-actions">
+            <button onclick="showDetails('Mushoku Tensei')">Details</button>
+            <button class="watch" onclick="showMessage()">Explore</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- KAGUYA -->
+      <article class="card" data-name="kaguya sama love is war" data-genre="romance">
+        <div class="poster">
+          <div class="poster-title">KAGUYA-SAMA</div>
+          <div class="rating">⭐ 8.5</div>
+        </div>
+
+        <div class="card-body">
+          <h3>Kaguya-sama</h3>
+          <div class="meta">Romance • Comedy • 37 Episodes</div>
+
+          <div class="card-actions">
+            <button onclick="showDetails('Kaguya-sama')">Details</button>
+            <button class="watch" onclick="showMessage()">Explore</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="empty" id="empty">
+      No anime found. Try another search.
+    </div>
+
+  </div>
+</section>
+
+<!-- GENRES -->
+<section class="section">
+  <div class="container">
+
+    <div class="section-head">
+      <div>
+        <h2>Browse Genres</h2>
+        <p>Find your next favorite anime</p>
+      </div>
+    </div>
+
+    <div class="genre-grid">
+      <button class="genre active" onclick="chooseGenre('all',this)">All</button>
+      <button class="genre" onclick="chooseGenre('action',this)">Action</button>
+      <button class="genre" onclick="chooseGenre('adventure',this)">Adventure</button>
+      <button class="genre" onclick="chooseGenre('fantasy',this)">Fantasy</button>
+      <button class="genre" onclick="chooseGenre('romance',this)">Romance</button>
+      <button class="genre" onclick="chooseGenre('comedy',this)">Comedy</button>
+      <button class="genre" onclick="chooseGenre('psychological',this)">Psychological</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- LATEST -->
+<section class="section" id="latest">
+  <div class="container">
+
+    <div class="section-head">
+      <div>
+        <h2>Latest Anime</h2>
+        <p>Recently added to AnimeHindi123</p>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div>
+        <h2>Discover More Anime</h2>
+        <p>
+          Explore anime information, genres, ratings and episode details
+          in one place.
+        </p>
+      </div>
+
+      <button class="primary" onclick="scrollToSection('popular')">
+        Browse Library
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="container">
+
+    <div class="section-head">
+      <div>
+        <h2>Why AnimeHindi123?</h2>
+        <p>A simple place for anime fans</p>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div>
+        <h2>Anime Discovery Made Simple</h2>
+
+        <p>
+          AnimeHindi123 is designed to help anime fans discover popular
+          shows, explore genres and learn more about their favorite series
+          through a clean and mobile-friendly interface.
+        </p>
+      </div>
+
+      <div class="stats">
+        <div class="stat">📱 Mobile Friendly</div>
+        <div class="stat">⚡ Fast Interface</div>
+        <div class="stat">🔎 Search</div>
+        <div class="stat">🎬 Anime Library</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal" id="modal" onclick="closeModal(event)">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeModal()">×</button>
+
+    <div class="modal-top">
+      <div>
+        <span class="badge">Anime Details</span>
+      </div>
+    </div>
+
+    <div class="modal-info">
+
+      <h2 id="modalTitle">Anime</h2>
+
+      <div class="stats">
+        <div class="stat" id="modalGenre">Genre</div>
+        <div class="stat" id="modalRating">⭐ Rating</div>
+        <div class="stat" id="modalEpisodes">Episodes</div>
+      </div>
+
+      <p id="modalDescription">
+        Anime information will appear here.
+      </p>
+
+      <h3>Episodes</h3>
+
+      <div class="episodes" id="episodes"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+
+  <div class="footer-logo">
+    Pro Anime <span style="color:var(--accent2)">Hindi</span>
+  </div>
+
+  <p>
+    Anime discovery platform • Made for anime fans
+  </p>
+
+  <p style="margin-top:8px">
+    © 2026 AnimeHindi123
+  </p>
+
+</footer>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav">
+
+  <button onclick="scrollToSection('home')">
+    🏠<br>Home
+  </button>
+
+  <button onclick="scrollToSection('popular')">
+    🔥<br>Popular
+  </button>
+
+  <button onclick="scrollToSection('latest')">
+    🆕<br>Latest
+  </button>
+
+  <button onclick="scrollToSection('about')">
+    ℹ️<br>About
+  </button>
+
+</div>
+
+<script>
+
+const animeData = {
+
+  "One Piece":{
+    genre:"Adventure • Action",
+    rating:"⭐ 9.0",
+    episodes:"1000+ Episodes",
+    description:"A legendary pirate adventure following Monkey D. Luffy and his crew as they search for the legendary One Piece.",
+    count:12
+  },
+
+  "Solo Leveling":{
+    genre:"Action • Fantasy",
+    rating:"⭐ 8.8",
+    episodes:"25+ Episodes",
+    description:"Sung Jin-Woo begins as one of the weakest hunters and gains a mysterious ability that changes his life.",
+    count:12
+  },
+
+  "Attack on Titan":{
+    genre:"Action • Drama",
+    rating:"⭐ 9.1",
+    episodes:"89 Episodes",
+    description:"Humanity fights for survival while uncovering the mysteries behind the Titans and their own world.",
+    count:12
+  },
+
+  "Classroom of the Elite":{
+    genre:"Psychological • Drama",
+    rating:"⭐ 8.2",
+    episodes:"38+ Episodes",
+    description:"Students compete inside an elite school where intelligence, strategy and psychological battles determine everything.",
+    count:12
+  },
+
+  "Demon Slayer":{
+    genre:"Action • Fantasy",
+    rating:"⭐ 8.6",
+    episodes:"60+ Episodes",
+    description:"Tanjiro begins a dangerous journey after tragedy strikes his family and his sister becomes a demon.",
+    count:12
+  },
+
+  "Vinland Saga":{
+    genre:"Action • Drama",
+    rating:"⭐ 8.8",
+    episodes:"48 Episodes",
+    description:"A mature historical story about revenge, war, freedom and the search for a true purpose in life.",
+    count:12
+  },
+
+  "Mushoku Tensei":{
+    genre:"Fantasy • Adventure",
+    rating:"⭐ 8.4",
+    episodes:"48+ Episodes",
+    description:"A second chance at life leads Rudeus into a vast fantasy world filled with magic, adventure and challenges.",
+    count:12
+  },
+
+  "Kaguya-sama":{
+    genre:"Romance • Comedy",
+    rating:"⭐ 8.5",
+    episodes:"37 Episodes",
+    description:"Two brilliant students like each other but turn romance into a hilarious battle of strategy and pride.",
+    count:12
+  }
+
+};
+
+
+function scrollToSection(id){
+
+  const element = document.getElementById(id);
+
+  if(element){
+    element.scrollIntoView({
+      behavior:"smooth"
+    });
+  }
+
+}
+
+
+function filterAnime(){
+
+  const search =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const genre =
+    document.getElementById("genreSelect").value;
+
+  const cards =
+    document.querySelectorAll(".card");
+
+  let visible = 0;
+
+  cards.forEach(card => {
+
+    const name =
+      card.dataset.name.toLowerCase();
+
+    const cardGenre =
+      card.dataset.genre;
+
+    const matchesSearch =
+      name.includes(search);
+
+    const matchesGenre =
+      genre === "all" ||
+      cardGenre === genre;
+
+    if(matchesSearch && matchesGenre){
+
+      card.style.display = "";
+
+      visible++;
+
+    }else{
+
+      card.style.display = "none";
+
+    }
+
+  });
+
+  document.getElementById("empty").style.display =
+    visible === 0 ? "block" : "none";
+
+}
+
+
+function chooseGenre(genre,button){
+
+  document.querySelectorAll(".genre")
+    .forEach(btn => btn.classList.remove("active"));
+
+  button.classList.add("active");
+
+  document.getElementById("genreSelect").value = genre;
+
+  filterAnime();
+
+  scrollToSection("popular");
+
+}
+
+
+function showDetails(name){
+
+  const data = animeData[name];
+
+  if(!data) return;
+
+  document.getElementById("modalTitle").textContent =
+    name;
+
+  document.getElementById("modalGenre").textContent =
+    data.genre;
+
+  document.getElementById("modalRating").textContent =
+    data.rating;
+
+  document.getElementById("modalEpisodes").textContent =
+    data.episodes;
+
+  document.getElementById("modalDescription").textContent =
+    data.description;
+
+  const episodes =
+    document.getElementById("episodes");
+
+  episodes.innerHTML = "";
+
+  for(let i = 1; i <= data.count; i++){
+
+    const button =
+      document.createElement("button");
+
+    button.className = "episode";
+
+    button.textContent =
+      "Episode " + i;
+
+    button.onclick = function(){
+      showMessage();
+    };
+
+    episodes.appendChild(button);
+
+  }
+
+  document.getElementById("modal")
+    .classList.add("show");
+
+  document.body.style.overflow = "hidden";
+
+}
+
+
+function closeModal(event){
+
+  if(
+    !event ||
+    event.target === document.getElementById("modal") ||
+    event.target.classList.contains("close")
+  ){
+
+    document.getElementById("modal")
+      .classList.remove("show");
+
+    document.body.style.overflow = "";
+
+  }
+
+}
+
+
+function showMessage(){
+
+  alert(
+    "This is an anime discovery website. Episode streaming links can be added later using legally licensed sources."
+  );
+
+}
+
+
+document.addEventListener("keydown",function(event){
+
+  if(event.key === "Escape"){
+
+    closeModal();
+
+  }
+
+});
+
+
+</script>
+
+</body>
+      </html>
