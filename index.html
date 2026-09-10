@@ -544,6 +544,63 @@ footer{
   .hero h1{font-size:40px}
 
   .section{padding:40px 0}
+}/* ===== PREMIUM ANIME POSTERS ===== */
+
+.card:nth-child(1) .poster{
+  background-image:url("one-piece.jpg");
+}
+
+.card:nth-child(2) .poster{
+  background-image:url("solo-leveling.jpg");
+}
+
+.card:nth-child(3) .poster{
+  background-image:url("attack-on-titan.jpg");
+}
+
+.card:nth-child(4) .poster{
+  background-image:url("classroom-of-the-elite.jpg");
+}
+
+.card:nth-child(5) .poster{
+  background-image:url("demon-slayer.jpg");
+}
+
+.card:nth-child(6) .poster{
+  background-image:url("vinland-saga.jpg");
+}
+
+.card:nth-child(7) .poster{
+  background-image:url("mushoku-tensei.jpg");
+}
+
+.card:nth-child(8) .poster{
+  background-image:url("kaguya-sama.jpg");
+}
+
+.poster{
+  background-size:cover !important;
+  background-position:center !important;
+  background-repeat:no-repeat !important;
+  position:relative;
+}
+
+/* Dark overlay for readable titles */
+.poster::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,.85),
+    rgba(0,0,0,.05) 65%
+  );
+  pointer-events:none;
+}
+
+.poster-title,
+.rating{
+  z-index:1;
 }
 </style>
 </head>
