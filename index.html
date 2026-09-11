@@ -788,65 +788,551 @@ function openAnime(id){
   document.getElementById("modalPoster").src=poster(a);
   document.getElementById("modalTitle").textContent=a.title||"Unknown";
   document.getElementById("modalText").textContent=
-    a.synopsis||"No synopsis available.";
+<script>
+const API = "https://api.jikan.moe/v4";
 
-  document.getElementById("modalScore").textContent=a.score||"N/A";
-  document.getElementById("modalYear").textContent=
-    a.year||a.aired?.prop?.from?.year||"N/A";
-  document.getElementById("modalEpisodes").textContent=
-    a.episodes||"Unknown";
-  document.getElementById("modalType").textContent=
-    a.type||"Anime";
+let allAnime = [];
+let currentAnime = [];
+let favorites = JSON.parse(localStorage.getItem("animeFavorites") || "[]");
 
-  document.getElementById("modalTags").innerHTML=
-    (a.genres||[]).map(g=>`<span class="tag">${escapeHTML(g.name)}</span>`).join("");
+const popularGrid = document.getElementById("popularGrid");
+const latestGrid = document.getElementById("latestGrid");
+const topGrid = document.getElementById("topGrid");
+const genreGrid = document.getElementById("genreGrid");
+const collectionGrid = document.getElementById("collectionGrid");
+const loading = document.getElementById("loading");
 
-  document.getElementById("malLink").href=
-    a.url||`https://myanimelist.net/anime/${a.mal_id}`;
-
-  document.getElementById("modal").classList.add("show");
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function closeModal(){
-  document.getElementById("modal").classList.remove("show");
+async function api(url, retries = 3) {
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      const response = await fetch(url);
+
+      if (response.ok) {
+        return await response.json();
+      }
+
+      if (response.status === 429) {
+        await sleep(1500 * (attempt + 1));
+        continue;
+      }
+
+      throw new Error("API error " + response.status);
+
+    } catch (error) {
+      if (attempt === retries - 1) {
+        throw error;
+      }
+
+      await sleep(1500 * (attempt + 1));
+    }
+  }
+
+  throw new Error("API unavailable");
 }
 
-document.getElementById("modal").addEventListener("click",e=>{
-  if(e.target.id==="modal")closeModal();
-});
+function unique(list) {
+  const map = new Map();
 
-function toggleFavorite(id,button){
-  if(favorites.includes(id)){
-    favorites=favorites.filter(x=>x!==id);
+  list.forEach(a => {
+    if (a && a.mal_id && !map.has(a.mal_id)) {
+      map.set(a.mal_id, a);
+    }
+  });
+
+  return [...map.values()];
+}
+
+function poster(a) {
+  return (
+    a.images?.jpg?.large_image_url ||
+    a.images?.jpg?.image_url ||
+    a.images?.webp?.large_image_url ||
+    "https://placehold.co/300x450/171923/ffffff?text=No+Poster"
+  );
+}
+
+function escapeHTML(str) {
+  return String(str || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function makeCard(a) {
+  const fav = favorites.includes(a.mal_id);
+
+  return `
+    <article class="card" onclick="openAnime(${a.mal_id})">
+
+      <img
+        class="poster"
+        src="${poster(a)}"
+        loading="lazy"
+        alt="${escapeHTML(a.title || "Anime")}"
+        onerror="this.src='https://placehold.co/300x450/171923/ffffff?text=No+Poster'"
+      >
+
+      <span class="type">
+        ${escapeHTML(a.type || "Anime")}
+      </span>
+
+      <button
+        class="fav ${fav ? "active" : ""}"
+        onclick="event.stopPropagation(); toggleFavorite(${a.mal_id}, this)"
+      >
+        ${fav ? "♥" : "♡"}
+      </button>
+
+      <div class="card-info">
+        <div class="title">
+          ${escapeHTML(a.title || "Unknown")}
+        </div>
+
+        <div class="meta">
+          <span>
+            ${a.year || a.aired?.prop?.from?.year || "—"}
+          </span>
+
+          <span class="rating">
+            ★ ${a.score || "N/A"}
+          </span>
+        </div>
+      </div>
+
+    </article>
+  `;
+}
+
+function render(grid, list) {
+  if (!list || !list.length) {
+    grid.innerHTML = `
+      <div style="color:#888;padding:20px 0">
+        No anime found.
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = list.map(makeCard).join("");
+}
+
+/* --------------------------------
+   LOAD ANIME
+-------------------------------- */
+
+async function loadHome() {
+
+  loading.style.display = "block";
+  loading.innerHTML = `
+    <div class="spinner"></div>
+    Loading anime...
+  `;
+
+  try {
+
+    /*
+      Requests are intentionally made
+      one-by-one to avoid Jikan rate limits.
+    */
+
+    const popular = await api(
+      API + "/top/anime?limit=25"
+    );
+
+    await sleep(700);
+
+    const popular2 = await api(
+      API + "/top/anime?limit=25&page=2"
+    );
+
+    await sleep(700);
+
+    const latest = await api(
+      API + "/anime?order_by=start_date&sort=desc&limit=25"
+    );
+
+    await sleep(700);
+
+    const topRated = await api(
+      API + "/anime?order_by=score&sort=desc&limit=25"
+    );
+
+    allAnime = unique([
+      ...(popular.data || []),
+      ...(popular2.data || []),
+      ...(latest.data || []),
+      ...(topRated.data || [])
+    ]);
+
+    currentAnime = allAnime;
+
+    /* POPULAR */
+
+    render(
+      popularGrid,
+      unique([
+        ...(popular.data || []),
+        ...(popular2.data || [])
+      ]).slice(0, 12)
+    );
+
+    /* LATEST */
+
+    render(
+      latestGrid,
+      (latest.data || [])
+        .sort((a, b) =>
+          (b.aired?.from || "")
+            .localeCompare(a.aired?.from || "")
+        )
+        .slice(0, 12)
+    );
+
+    /* TOP RATED */
+
+    render(
+      topGrid,
+      (topRated.data || [])
+        .filter(a => a.score)
+        .sort((a, b) =>
+          (b.score || 0) - (a.score || 0)
+        )
+        .slice(0, 12)
+    );
+
+    /* GENRES */
+
+    render(
+      genreGrid,
+      allAnime.slice(0, 18)
+    );
+
+    /* COLLECTION */
+
+    render(
+      collectionGrid,
+      allAnime
+    );
+
+    createAZ();
+
+    loading.style.display = "none";
+
+    console.log(
+      "Anime loaded:",
+      allAnime.length
+    );
+
+  } catch (error) {
+
+    console.error("Anime loading error:", error);
+
+    loading.innerHTML = `
+      <div style="font-size:35px;margin-bottom:10px">⚠️</div>
+      <div>Anime data could not be loaded.</div>
+      <button
+        onclick="loadHome()"
+        style="
+          margin-top:15px;
+          padding:10px 18px;
+          border:0;
+          border-radius:7px;
+          background:#ff3158;
+          color:white;
+          cursor:pointer;
+        "
+      >
+        Try Again
+      </button>
+    `;
+  }
+}
+
+/* --------------------------------
+   A-Z
+-------------------------------- */
+
+function createAZ() {
+
+  const az = document.getElementById("az");
+
+  az.innerHTML = "";
+
+  ["All", ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "#"]
+    .forEach(letter => {
+
+      const button = document.createElement("button");
+
+      button.textContent = letter;
+
+      button.onclick = () => {
+
+        if (letter === "All") {
+
+          render(
+            collectionGrid,
+            allAnime
+          );
+
+          return;
+        }
+
+        const list = allAnime.filter(a => {
+
+          const first =
+            (a.title || "")
+              .trim()
+              .charAt(0)
+              .toUpperCase();
+
+          if (letter === "#") {
+            return /[^A-Z]/.test(first);
+          }
+
+          return first === letter;
+        });
+
+        render(
+          collectionGrid,
+          list
+        );
+
+        collectionGrid.scrollIntoView({
+          behavior: "smooth"
+        });
+      };
+
+      az.appendChild(button);
+    });
+}
+
+/* --------------------------------
+   GENRE
+-------------------------------- */
+
+function genreFilter(genre, btn) {
+
+  document
+    .querySelectorAll(".filter")
+    .forEach(x => x.classList.remove("active"));
+
+  btn.classList.add("active");
+
+  if (genre === "all") {
+
+    render(
+      genreGrid,
+      allAnime.slice(0, 18)
+    );
+
+    return;
+  }
+
+  const list = allAnime.filter(a =>
+    (a.genres || [])
+      .some(g => g.name === genre)
+  );
+
+  render(
+    genreGrid,
+    list
+  );
+}
+
+/* --------------------------------
+   SEARCH
+-------------------------------- */
+
+function searchAnime() {
+
+  const q =
+    document
+      .getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  if (!q) {
+
+    render(
+      collectionGrid,
+      allAnime
+    );
+
+    return;
+  }
+
+  const list = allAnime.filter(a => {
+
+    const title =
+      (a.title || "").toLowerCase();
+
+    const japanese =
+      (a.title_japanese || "").toLowerCase();
+
+    return (
+      title.includes(q) ||
+      japanese.includes(q)
+    );
+  });
+
+  render(
+    collectionGrid,
+    list
+  );
+
+  collectionGrid.scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+document
+  .getElementById("searchInput")
+  .addEventListener("keydown", e => {
+
+    if (e.key === "Enter") {
+      searchAnime();
+    }
+
+  });
+
+/* --------------------------------
+   ANIME MODAL
+-------------------------------- */
+
+function openAnime(id) {
+
+  const a =
+    allAnime.find(x => x.mal_id === id);
+
+  if (!a) return;
+
+  document.getElementById("modalPoster").src =
+    poster(a);
+
+  document.getElementById("modalTitle").textContent =
+    a.title || "Unknown";
+
+  document.getElementById("modalText").textContent =
+    a.synopsis || "No synopsis available.";
+
+  document.getElementById("modalScore").textContent =
+    a.score || "N/A";
+
+  document.getElementById("modalYear").textContent =
+    a.year ||
+    a.aired?.prop?.from?.year ||
+    "N/A";
+
+  document.getElementById("modalEpisodes").textContent =
+    a.episodes || "Unknown";
+
+  document.getElementById("modalType").textContent =
+    a.type || "Anime";
+
+  document.getElementById("modalTags").innerHTML =
+    (a.genres || [])
+      .map(g =>
+        `<span class="tag">
+          ${escapeHTML(g.name)}
+        </span>`
+      )
+      .join("");
+
+  document.getElementById("malLink").href =
+    a.url ||
+    `https://myanimelist.net/anime/${a.mal_id}`;
+
+  document
+    .getElementById("modal")
+    .classList.add("show");
+}
+
+function closeModal() {
+
+  document
+    .getElementById("modal")
+    .classList.remove("show");
+}
+
+document
+  .getElementById("modal")
+  .addEventListener("click", e => {
+
+    if (e.target.id === "modal") {
+      closeModal();
+    }
+
+  });
+
+/* --------------------------------
+   FAVORITES
+-------------------------------- */
+
+function toggleFavorite(id, button) {
+
+  if (favorites.includes(id)) {
+
+    favorites =
+      favorites.filter(x => x !== id);
+
     button.classList.remove("active");
-    button.textContent="♡";
-  }else{
+    button.textContent = "♡";
+
+  } else {
+
     favorites.push(id);
+
     button.classList.add("active");
-    button.textContent="♥";
+    button.textContent = "♥";
   }
 
-  localStorage.setItem("animeFavorites",JSON.stringify(favorites));
+  localStorage.setItem(
+    "animeFavorites",
+    JSON.stringify(favorites)
+  );
 }
 
-function showFavorites(){
-  const list=allAnime.filter(a=>favorites.includes(a.mal_id));
+function showFavorites() {
 
-  render(collectionGrid,list);
-  collectionGrid.scrollIntoView({behavior:"smooth"});
+  const list =
+    allAnime.filter(a =>
+      favorites.includes(a.mal_id)
+    );
 
-  if(!list.length){
-    collectionGrid.innerHTML=
-      "<div style='color:#888'>Your favorites list is empty.</div>";
-  }
+  render(
+    collectionGrid,
+    list
+  );
+
+  collectionGrid.scrollIntoView({
+    behavior: "smooth"
+  });
 }
 
-window.addEventListener("scroll",()=>{
-  document.getElementById("topBtn").style.display=
-    window.scrollY>500?"block":"none";
+/* --------------------------------
+   TOP BUTTON
+-------------------------------- */
+
+window.addEventListener("scroll", () => {
+
+  document.getElementById("topBtn").style.display =
+    window.scrollY > 500
+      ? "block"
+      : "none";
+
 });
+
+/* START */
 
 loadHome();
+
 </script>
 
 </body>
