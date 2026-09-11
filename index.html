@@ -8,337 +8,309 @@
 <meta name="description" content="AnimeHindi123 - Discover popular and latest anime.">
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:#090b12;
-  color:#fff;
+font-family:Arial,Helvetica,sans-serif;
+background:#080a10;
+color:#fff;
 }
 
 header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:#10131d;
-  border-bottom:1px solid #242838;
-  padding:15px 5%;
+position:sticky;
+top:0;
+z-index:100;
+background:rgba(12,15,23,.97);
+border-bottom:1px solid #252b3a;
+padding:14px 5%;
+backdrop-filter:blur(12px);
 }
 
 .nav{
-  max-width:1400px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
+max-width:1400px;
+margin:auto;
+display:flex;
+align-items:center;
+gap:25px;
 }
 
 .logo{
-  font-size:25px;
-  font-weight:800;
-  color:#ff3d71;
-  white-space:nowrap;
+font-size:25px;
+font-weight:900;
+white-space:nowrap;
+color:#ff3d71;
 }
 
-.logo span{
-  color:#fff;
-}
+.logo span{color:#fff}
 
 .search{
-  width:360px;
-  max-width:55%;
-  background:#1a1e2a;
-  border:1px solid #303546;
-  color:#fff;
-  border-radius:25px;
-  padding:12px 18px;
-  outline:none;
+flex:1;
+max-width:500px;
+margin-left:auto;
+background:#191e2a;
+border:1px solid #303747;
+border-radius:25px;
+padding:12px 18px;
+color:#fff;
+outline:none;
+font-size:15px;
 }
 
-.search:focus{
-  border-color:#ff3d71;
-}
+.search:focus{border-color:#ff3d71}
 
 .hero{
-  min-height:330px;
-  display:flex;
-  align-items:center;
-  padding:50px 6%;
-  background:
-    linear-gradient(90deg,#090b12 15%,rgba(9,11,18,.78),rgba(9,11,18,.25)),
-    radial-gradient(circle at 80% 30%,#53203b,#090b12 60%);
+min-height:330px;
+display:flex;
+align-items:center;
+padding:50px 6%;
+background:
+linear-gradient(90deg,#080a10 10%,rgba(8,10,16,.8),rgba(8,10,16,.25)),
+radial-gradient(circle at 80% 40%,#57223f,#080a10 65%);
 }
 
 .hero-content{
-  max-width:650px;
+max-width:700px;
 }
 
 .hero h1{
-  font-size:48px;
-  margin-bottom:15px;
+font-size:48px;
+margin-bottom:15px;
 }
 
-.hero h1 span{
-  color:#ff3d71;
-}
+.hero h1 span{color:#ff3d71}
 
 .hero p{
-  color:#b7bdcc;
-  line-height:1.7;
-  font-size:16px;
+color:#b4bbca;
+line-height:1.7;
 }
 
 .container{
-  max-width:1400px;
-  margin:auto;
-  padding:30px 5%;
+max-width:1400px;
+margin:auto;
+padding:30px 5%;
 }
 
 .section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:20px;
 }
 
-.section-title h2{
-  font-size:25px;
-}
+.section-title h2{font-size:25px}
 
 .section-title span{
-  color:#8991a5;
-  font-size:13px;
+color:#8992a5;
+font-size:13px;
 }
 
 .grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:18px;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:18px;
 }
 
 .card{
-  background:#121621;
-  border:1px solid #222838;
-  border-radius:12px;
-  overflow:hidden;
-  cursor:pointer;
-  transition:.25s;
+background:#121620;
+border:1px solid #232a39;
+border-radius:12px;
+overflow:hidden;
+cursor:pointer;
+transition:.2s;
 }
 
 .card:hover{
-  transform:translateY(-6px);
-  border-color:#ff3d71;
-  box-shadow:0 10px 30px rgba(0,0,0,.35);
+transform:translateY(-5px);
+border-color:#ff3d71;
 }
 
 .poster{
-  width:100%;
-  height:280px;
-  object-fit:cover;
-  display:block;
-  background:#181c28;
+width:100%;
+aspect-ratio:2/3;
+object-fit:cover;
+display:block;
+background:#191d28;
 }
 
-.info{
-  padding:12px;
-}
+.info{padding:12px}
 
 .title{
-  font-weight:700;
-  font-size:15px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  margin-bottom:8px;
+font-size:14px;
+font-weight:700;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+margin-bottom:8px;
 }
 
 .meta{
-  color:#9299aa;
-  font-size:12px;
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
+display:flex;
+justify-content:space-between;
+gap:5px;
+color:#929aab;
+font-size:12px;
 }
 
-.rating{
-  color:#ffd15c;
-}
+.rating{color:#ffd15c}
 
 .loading,
 .error,
 .empty{
-  text-align:center;
-  padding:50px 20px;
-  color:#aab1c1;
+text-align:center;
+padding:45px 20px;
+color:#aeb5c4;
 }
 
-.error button{
-  margin-top:15px;
-  padding:10px 18px;
-  border:0;
-  border-radius:20px;
-  background:#ff3d71;
-  color:white;
-  cursor:pointer;
+button{
+border:0;
+cursor:pointer;
+}
+
+.action{
+display:block;
+margin:25px auto 5px;
+padding:12px 22px;
+border-radius:25px;
+background:#ff3d71;
+color:white;
+font-weight:bold;
+}
+
+.action:disabled{
+opacity:.5;
+cursor:not-allowed;
 }
 
 .modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:500;
-  background:rgba(0,0,0,.82);
-  padding:20px;
-  overflow:auto;
+display:none;
+position:fixed;
+inset:0;
+z-index:500;
+background:rgba(0,0,0,.85);
+padding:20px;
+overflow:auto;
 }
 
+.modal.show{display:block}
+
 .modal-box{
-  max-width:850px;
-  margin:40px auto;
-  background:#151925;
-  border:1px solid #303647;
-  border-radius:15px;
-  overflow:hidden;
-  position:relative;
+max-width:900px;
+margin:35px auto;
+background:#151925;
+border:1px solid #303747;
+border-radius:15px;
+position:relative;
 }
 
 .close{
-  position:absolute;
-  right:15px;
-  top:12px;
-  z-index:2;
-  width:38px;
-  height:38px;
-  border:0;
-  border-radius:50%;
-  background:rgba(0,0,0,.65);
-  color:#fff;
-  font-size:22px;
-  cursor:pointer;
+position:absolute;
+right:15px;
+top:12px;
+width:38px;
+height:38px;
+border-radius:50%;
+background:#272d3a;
+color:white;
+font-size:22px;
+z-index:2;
 }
 
 .modal-content{
-  display:flex;
-  gap:25px;
-  padding:30px;
+display:flex;
+gap:25px;
+padding:30px;
 }
 
 .modal-poster{
-  width:230px;
-  height:330px;
-  object-fit:cover;
-  border-radius:10px;
+width:230px;
+height:330px;
+object-fit:cover;
+border-radius:10px;
 }
 
-.modal-info{
-  flex:1;
-}
+.modal-info{flex:1}
 
 .modal-info h2{
-  font-size:30px;
-  margin-bottom:12px;
+font-size:29px;
+padding-right:40px;
+margin-bottom:15px;
 }
 
 .tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin:15px 0;
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin:15px 0;
 }
 
 .tag{
-  background:#242a3a;
-  color:#cbd1df;
-  padding:6px 10px;
-  border-radius:15px;
-  font-size:12px;
+background:#252b3a;
+padding:6px 10px;
+border-radius:15px;
+font-size:12px;
+color:#d1d6e0;
 }
 
 .synopsis{
-  color:#b7bdca;
-  line-height:1.7;
-  font-size:14px;
+color:#b6bdcb;
+line-height:1.7;
+font-size:14px;
 }
 
 footer{
-  margin-top:40px;
-  padding:30px;
-  text-align:center;
-  border-top:1px solid #222838;
-  color:#777f92;
-  font-size:13px;
+margin-top:40px;
+padding:30px;
+text-align:center;
+border-top:1px solid #222838;
+color:#777f91;
+font-size:13px;
 }
 
 @media(max-width:1100px){
-  .grid{
-    grid-template-columns:repeat(4,1fr);
-  }
+.grid{grid-template-columns:repeat(4,1fr)}
 }
 
 @media(max-width:800px){
-  .grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .poster{
-    height:240px;
-  }
-
-  .hero h1{
-    font-size:36px;
-  }
-
-  .modal-content{
-    flex-direction:column;
-  }
-
-  .modal-poster{
-    width:180px;
-    height:260px;
-    margin:auto;
-  }
+.grid{grid-template-columns:repeat(3,1fr)}
+.hero h1{font-size:37px}
+.modal-content{flex-direction:column}
+.modal-poster{
+width:180px;
+height:260px;
+margin:auto;
+}
 }
 
 @media(max-width:560px){
-  header{
-    padding:12px 4%;
-  }
+header{padding:12px 4%}
 
-  .nav{
-    flex-direction:column;
-  }
+.nav{
+flex-direction:column;
+gap:10px;
+}
 
-  .search{
-    max-width:none;
-    width:100%;
-  }
+.search{
+width:100%;
+max-width:none;
+}
 
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-  }
+.hero{
+min-height:280px;
+padding:35px 6%;
+}
 
-  .poster{
-    height:250px;
-  }
+.hero h1{font-size:32px}
 
-  .hero{
-    min-height:280px;
-    padding:35px 6%;
-  }
+.container{
+padding:25px 4%;
+}
 
-  .hero h1{
-    font-size:32px;
-  }
+.grid{
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
 
-  .container{
-    padding:25px 4%;
-  }
+.modal-content{padding:20px}
 }
 </style>
 </head>
@@ -346,429 +318,532 @@ footer{
 <body>
 
 <header>
-  <div class="nav">
-    <div class="logo">Anime<span>Hindi123</span></div>
-    <input
-      id="search"
-      class="search"
-      type="search"
-      placeholder="Search anime..."
-      autocomplete="off"
-    >
-  </div>
+<div class="nav">
+
+<div class="logo">
+Anime<span>Hindi123</span>
+</div>
+
+<input
+id="search"
+class="search"
+type="search"
+placeholder="Search anime..."
+autocomplete="off">
+
+</div>
 </header>
 
 <section class="hero">
-  <div class="hero-content">
-    <h1>Discover <span>Anime</span></h1>
-    <p>
-      Explore popular, highly rated and latest anime.
-      Search thousands of anime titles and open their details.
-    </p>
-  </div>
+
+<div class="hero-content">
+
+<h1>Discover <span>Anime</span></h1>
+
+<p>
+Explore popular, highly rated and latest anime.
+Search anime and open detailed information instantly.
+</p>
+
+</div>
+
 </section>
 
 <main class="container">
 
-  <section>
-    <div class="section-title">
-      <h2>🔥 Popular Anime</h2>
-      <span id="count">Loading...</span>
-    </div>
+<section>
 
-    <div id="grid" class="grid"></div>
+<div class="section-title">
+<h2>🔥 Popular Anime</h2>
+<span id="count">Loading...</span>
+</div>
 
-    <div id="loading" class="loading">
-      Loading anime... Please wait.
-    </div>
+<div id="grid" class="grid"></div>
 
-    <div id="error" class="error" style="display:none;">
-      Anime could not be loaded.
-      <br>
-      <button onclick="start()">Try Again</button>
-    </div>
+<div id="loading" class="loading">
+Loading anime...
+</div>
 
-    <div id="empty" class="empty" style="display:none;">
-      No anime found.
-    </div>
-  </section>
+<div id="error" class="error" style="display:none">
+Anime could not be loaded.
+<br>
+<button class="action" onclick="start()">Try Again</button>
+</div>
+
+<button
+id="loadMore"
+class="action"
+style="display:none">
+Load More Anime
+</button>
+
+</section>
 
 </main>
 
 <div id="modal" class="modal">
-  <div class="modal-box">
 
-    <button class="close" onclick="closeModal()">×</button>
+<div class="modal-box">
 
-    <div class="modal-content">
+<button id="close" class="close">×</button>
 
-      <img id="modalPoster" class="modal-poster" src="" alt="Anime Poster">
+<div class="modal-content">
 
-      <div class="modal-info">
+<img
+id="modalPoster"
+class="modal-poster"
+src=""
+alt="Anime poster">
 
-        <h2 id="modalTitle">Anime</h2>
+<div class="modal-info">
 
-        <div class="tags">
-          <span id="modalYear" class="tag"></span>
-          <span id="modalScore" class="tag"></span>
-          <span id="modalEpisodes" class="tag"></span>
-          <span id="modalStatus" class="tag"></span>
-        </div>
+<h2 id="modalTitle">Anime</h2>
 
-        <p id="modalGenres" class="synopsis"></p>
+<div class="tags">
 
-        <br>
+<span id="modalYear" class="tag"></span>
 
-        <p id="modalSynopsis" class="synopsis">
-          No description available.
-        </p>
+<span id="modalScore" class="tag"></span>
 
-      </div>
+<span id="modalEpisodes" class="tag"></span>
 
-    </div>
-  </div>
+<span id="modalStatus" class="tag"></span>
+
+</div>
+
+<p id="modalGenres" class="synopsis"></p>
+
+<br>
+
+<p id="modalSynopsis" class="synopsis">
+No description available.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 <footer>
-  AnimeHindi123 © 2026 — Anime Discovery
+AnimeHindi123 © 2026 — Anime Discovery
 </footer>
 
 <script>
 
-const API = "https://api.jikan.moe/v4";
+const API="https://api.jikan.moe/v4";
 
-const grid = document.getElementById("grid");
-const loading = document.getElementById("loading");
-const errorBox = document.getElementById("error");
-const empty = document.getElementById("empty");
-const search = document.getElementById("search");
-const count = document.getElementById("count");
+const grid=document.getElementById("grid");
+const loading=document.getElementById("loading");
+const errorBox=document.getElementById("error");
+const count=document.getElementById("count");
+const search=document.getElementById("search");
+const loadMore=document.getElementById("loadMore");
+const modal=document.getElementById("modal");
 
-let allAnime = [];
-let cache = new Map();
+let page=1;
+let allAnime=[];
+let cache=new Map();
+let searchTimer;
+
+/* ---------- API ---------- */
 
 function sleep(ms){
-  return new Promise(resolve => setTimeout(resolve,ms));
+return new Promise(resolve=>setTimeout(resolve,ms));
 }
 
 async function getData(url){
 
-  if(cache.has(url)){
-    return cache.get(url);
-  }
-
-  let lastError;
-
-  for(let attempt = 0; attempt < 3; attempt++){
-
-    try{
-
-      const response = await fetch(url);
-
-      if(response.status === 429){
-        await sleep(1200);
-        continue;
-      }
-
-      if(!response.ok){
-        throw new Error("API Error " + response.status);
-      }
-
-      const data = await response.json();
-
-      cache.set(url,data);
-
-      return data;
-
-    }catch(err){
-      lastError = err;
-      await sleep(800);
-    }
-  }
-
-  throw lastError;
+if(cache.has(url)){
+return cache.get(url);
 }
+
+let lastError;
+
+for(let attempt=0;attempt<3;attempt++){
+
+try{
+
+const response=await fetch(url);
+
+if(response.status===429){
+
+await sleep(1500*(attempt+1));
+continue;
+
+}
+
+if(!response.ok){
+throw new Error("API "+response.status);
+}
+
+const data=await response.json();
+
+cache.set(url,data);
+
+return data;
+
+}catch(error){
+
+lastError=error;
+
+await sleep(1000*(attempt+1));
+
+}
+
+}
+
+throw lastError;
+
+}
+
+/* ---------- POSTER ---------- */
 
 function getPoster(anime){
 
-  return (
-    anime.images?.webp?.large_image_url ||
-    anime.images?.jpg?.large_image_url ||
-    anime.images?.webp?.image_url ||
-    anime.images?.jpg?.image_url ||
-    "https://placehold.co/400x600/151925/ffffff?text=No+Poster"
-  );
+return anime.images?.webp?.large_image_url ||
+anime.images?.jpg?.large_image_url ||
+anime.images?.webp?.image_url ||
+anime.images?.jpg?.image_url ||
+"https://placehold.co/400x600/151925/ffffff?text=Anime";
+
 }
+
+/* ---------- CARD ---------- */
 
 function createCard(anime){
 
-  const card = document.createElement("article");
-  card.className = "card";
+const card=document.createElement("article");
+card.className="card";
 
-  const poster = document.createElement("img");
-  poster.className = "poster";
-  poster.loading = "lazy";
-  poster.alt = anime.title || "Anime";
-  poster.src = getPoster(anime);
+const img=document.createElement("img");
 
-  poster.onerror = function(){
-    this.src = "https://placehold.co/400x600/151925/ffffff?text=No+Poster";
-  };
+img.className="poster";
+img.loading="lazy";
+img.alt=anime.title||"Anime";
+img.src=getPoster(anime);
 
-  const info = document.createElement("div");
-  info.className = "info";
+img.onerror=function(){
 
-  const title = document.createElement("div");
-  title.className = "title";
-  title.textContent = anime.title || "Unknown Anime";
+this.src="https://placehold.co/400x600/151925/ffffff?text=Anime";
 
-  const meta = document.createElement("div");
-  meta.className = "meta";
+};
 
-  const year = anime.year || anime.aired?.prop?.from?.year || "N/A";
-  const score = anime.score ? "⭐ " + anime.score : "⭐ N/A";
+const info=document.createElement("div");
+info.className="info";
 
-  meta.innerHTML =
-    "<span>" + year + "</span>" +
-    "<span class='rating'>" + score + "</span>";
+const title=document.createElement("div");
+title.className="title";
+title.textContent=anime.title||"Unknown Anime";
 
-  info.appendChild(title);
-  info.appendChild(meta);
+const meta=document.createElement("div");
+meta.className="meta";
 
-  card.appendChild(poster);
-  card.appendChild(info);
+const year=
+anime.year||
+anime.aired?.prop?.from?.year||
+"N/A";
 
-  card.addEventListener("click",()=>{
-    openModal(anime);
-  });
+const score=
+anime.score?
+"⭐ "+Number(anime.score).toFixed(1):
+"⭐ N/A";
 
-  return card;
+meta.innerHTML=
+"<span>"+year+"</span>"+
+"<span class='rating'>"+score+"</span>";
+
+info.appendChild(title);
+info.appendChild(meta);
+
+card.appendChild(img);
+card.appendChild(info);
+
+card.onclick=()=>{
+openModal(anime);
+};
+
+return card;
+
 }
+
+/* ---------- RENDER ---------- */
 
 function render(list){
 
-  grid.innerHTML = "";
+grid.innerHTML="";
 
-  if(!list.length){
+const fragment=document.createDocumentFragment();
 
-    empty.style.display = "block";
-    count.textContent = "0 anime";
-    return;
-  }
+list.forEach(anime=>{
+fragment.appendChild(createCard(anime));
+});
 
-  empty.style.display = "none";
+grid.appendChild(fragment);
 
-  const fragment = document.createDocumentFragment();
+count.textContent=allAnime.length+" anime";
 
-  list.forEach(anime=>{
-    fragment.appendChild(createCard(anime));
-  });
-
-  grid.appendChild(fragment);
-
-  count.textContent = list.length + " anime";
 }
 
-async function loadPopular(){
+/* ---------- LOAD PAGE ---------- */
 
-  const results = [];
+async function loadPage(){
 
-  // Four pages × 25 = up to 100 anime
-  for(let page = 1; page <= 4; page++){
+const url=
+API+
+"/top/anime?filter=bypopularity&page="+
+page+
+"&limit=25&sfw=true";
 
-    try{
+const data=await getData(url);
 
-      const data = await getData(
-        API + "/top/anime?filter=bypopularity&page=" +
-        page +
-        "&limit=25"
-      );
+const newAnime=data.data||[];
 
-      if(data.data){
-        results.push(...data.data);
-      }
+const ids=new Set(
+allAnime.map(a=>a.mal_id)
+);
 
-      // Small delay helps avoid API rate limits
-      if(page < 4){
-        await sleep(350);
-      }
+newAnime.forEach(anime=>{
 
-    }catch(err){
+if(!ids.has(anime.mal_id)){
 
-      console.log("Page failed:",page,err);
+allAnime.push(anime);
+ids.add(anime.mal_id);
 
-    }
-  }
-
-  // Remove duplicate anime IDs
-  const unique = [];
-  const ids = new Set();
-
-  for(const anime of results){
-
-    if(!anime.mal_id || ids.has(anime.mal_id)){
-      continue;
-    }
-
-    ids.add(anime.mal_id);
-    unique.push(anime);
-  }
-
-  allAnime = unique;
-
-  if(allAnime.length === 0){
-    throw new Error("No anime returned");
-  }
-
-  render(allAnime);
 }
-
-async function start(){
-
-  loading.style.display = "block";
-  errorBox.style.display = "none";
-  empty.style.display = "none";
-  grid.innerHTML = "";
-
-  try{
-
-    await loadPopular();
-
-  }catch(err){
-
-    console.error(err);
-
-    errorBox.style.display = "block";
-
-  }finally{
-
-    loading.style.display = "none";
-
-  }
-}
-
-let searchTimer;
-
-search.addEventListener("input",function(){
-
-  clearTimeout(searchTimer);
-
-  searchTimer = setTimeout(async()=>{
-
-    const query = search.value.trim();
-
-    if(!query){
-
-      render(allAnime);
-      return;
-    }
-
-    // First search currently loaded anime
-    const local = allAnime.filter(anime =>
-      (anime.title || "").toLowerCase().includes(query.toLowerCase())
-    );
-
-    if(local.length){
-
-      render(local);
-      return;
-    }
-
-    // If not found locally, search Jikan
-    loading.style.display = "block";
-    empty.style.display = "none";
-
-    try{
-
-      const data = await getData(
-        API + "/anime?q=" +
-        encodeURIComponent(query) +
-        "&limit=25&sfw=true"
-      );
-
-      render(data.data || []);
-
-    }catch(err){
-
-      console.error(err);
-      render([]);
-
-    }finally{
-
-      loading.style.display = "none";
-
-    }
-
-  },500);
 
 });
 
+render(allAnime);
+
+if(newAnime.length>0){
+
+loadMore.style.display="block";
+
+}
+
+if(newAnime.length<25){
+
+loadMore.style.display="none";
+
+}
+
+}
+
+/* ---------- START ---------- */
+
+async function start(){
+
+page=1;
+allAnime=[];
+grid.innerHTML="";
+count.textContent="Loading...";
+loading.style.display="block";
+errorBox.style.display="none";
+loadMore.style.display="none";
+
+try{
+
+await loadPage();
+
+}catch(error){
+
+console.error(error);
+
+errorBox.style.display="block";
+
+}finally{
+
+loading.style.display="none";
+
+}
+
+}
+
+/* ---------- LOAD MORE ---------- */
+
+loadMore.onclick=async function(){
+
+loadMore.disabled=true;
+loadMore.textContent="Loading...";
+
+try{
+
+page++;
+
+await sleep(600);
+
+await loadPage();
+
+}catch(error){
+
+console.error(error);
+
+page--;
+
+alert("Could not load more anime. Please try again.");
+
+}finally{
+
+loadMore.disabled=false;
+loadMore.textContent="Load More Anime";
+
+}
+
+};
+
+/* ---------- SEARCH ---------- */
+
+search.addEventListener("input",function(){
+
+clearTimeout(searchTimer);
+
+const query=this.value.trim();
+
+if(!query){
+
+render(allAnime);
+return;
+
+}
+
+searchTimer=setTimeout(async()=>{
+
+loading.style.display="block";
+
+try{
+
+const data=await getData(
+API+
+"/anime?q="+
+encodeURIComponent(query)+
+"&limit=25&sfw=true"
+);
+
+const results=data.data||[];
+
+grid.innerHTML="";
+
+if(!results.length){
+
+count.textContent="0 anime";
+
+grid.innerHTML=
+"<div class='empty'>No anime found.</div>";
+
+return;
+
+}
+
+const fragment=document.createDocumentFragment();
+
+results.forEach(anime=>{
+fragment.appendChild(createCard(anime));
+});
+
+grid.appendChild(fragment);
+
+count.textContent=results.length+" results";
+
+}catch(error){
+
+console.error(error);
+
+grid.innerHTML=
+"<div class='empty'>Search failed. Try again.</div>";
+
+}finally{
+
+loading.style.display="none";
+
+}
+
+},500);
+
+});
+
+/* ---------- MODAL ---------- */
+
 function openModal(anime){
 
-  const year =
-    anime.year ||
-    anime.aired?.prop?.from?.year ||
-    "N/A";
+document.getElementById("modalPoster").src=getPoster(anime);
 
-  document.getElementById("modalPoster").src = getPoster(anime);
+document.getElementById("modalTitle").textContent=
+anime.title||"Unknown Anime";
 
-  document.getElementById("modalTitle").textContent =
-    anime.title || "Unknown Anime";
+const year=
+anime.year||
+anime.aired?.prop?.from?.year||
+"N/A";
 
-  document.getElementById("modalYear").textContent =
-    "Year: " + year;
+document.getElementById("modalYear").textContent=
+"Year: "+year;
 
-  document.getElementById("modalScore").textContent =
-    anime.score ? "⭐ " + anime.score : "⭐ N/A";
+document.getElementById("modalScore").textContent=
+anime.score?
+"⭐ "+Number(anime.score).toFixed(1):
+"⭐ N/A";
 
-  document.getElementById("modalEpisodes").textContent =
-    anime.episodes ? anime.episodes + " Episodes" : "Episodes N/A";
+document.getElementById("modalEpisodes").textContent=
+anime.episodes?
+anime.episodes+" Episodes":
+"Episode N/A";
 
-  document.getElementById("modalStatus").textContent =
-    anime.status || "Status N/A";
+document.getElementById("modalStatus").textContent=
+anime.status||"Status N/A";
 
-  const genres = (anime.genres || [])
-    .map(g => g.name)
-    .join(" • ");
+const genres=(anime.genres||[])
+.map(g=>g.name)
+.join(" • ");
 
-  document.getElementById("modalGenres").textContent =
-    genres ? "Genres: " + genres : "Genres: N/A";
+document.getElementById("modalGenres").textContent=
+genres?
+"Genres: "+genres:
+"Genres: N/A";
 
-  document.getElementById("modalSynopsis").textContent =
-    anime.synopsis ||
-    "No description available for this anime.";
+document.getElementById("modalSynopsis").textContent=
+anime.synopsis||
+"No description available.";
 
-  document.getElementById("modal").style.display = "block";
+modal.classList.add("show");
 
-  document.body.style.overflow = "hidden";
+document.body.style.overflow="hidden";
+
 }
 
 function closeModal(){
 
-  document.getElementById("modal").style.display = "none";
+modal.classList.remove("show");
 
-  document.body.style.overflow = "";
+document.body.style.overflow="";
+
 }
 
-document.getElementById("modal").addEventListener("click",function(e){
+document.getElementById("close").onclick=closeModal;
 
-  if(e.target === this){
-    closeModal();
-  }
+modal.onclick=function(event){
+
+if(event.target===modal){
+closeModal();
+}
+
+};
+
+document.addEventListener("keydown",function(event){
+
+if(event.key==="Escape"){
+closeModal();
+}
 
 });
 
-document.addEventListener("keydown",function(e){
-
-  if(e.key === "Escape"){
-    closeModal();
-  }
-
-});
+/* ---------- RUN ---------- */
 
 start();
 
 </script>
 
 </body>
-</html>
+  </html>
