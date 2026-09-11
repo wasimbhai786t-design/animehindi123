@@ -430,420 +430,582 @@ No description available.
 <footer>
 AnimeHindi123 © 2026 — Anime Discovery
 </footer>
-
 <script>
+const JIKAN = "https://api.jikan.moe/v4";
+const KITSU = "https://kitsu.io/api/edge";
 
-const API="https://api.jikan.moe/v4";
+const grid = document.getElementById("grid");
+const loading = document.getElementById("loading");
+const errorBox = document.getElementById("error");
+const count = document.getElementById("count");
+const search = document.getElementById("search");
+const loadMore = document.getElementById("loadMore");
+const modal = document.getElementById("modal");
 
-const grid=document.getElementById("grid");
-const loading=document.getElementById("loading");
-const errorBox=document.getElementById("error");
-const count=document.getElementById("count");
-const search=document.getElementById("search");
-const loadMore=document.getElementById("loadMore");
-const modal=document.getElementById("modal");
+let page = 1;
+let allAnime = [];
+let searchTimer = null;
 
-let page=1;
-let allAnime=[];
-let cache=new Map();
-let searchTimer;
+/* =========================
+   FETCH WITH TIMEOUT
+========================= */
 
-/* ---------- API ---------- */
+async function fetchJSON(url, timeout = 10000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeout);
 
-function sleep(ms){
-return new Promise(resolve=>setTimeout(resolve,ms));
+  try {
+    const response = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        "Accept": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    return await response.json();
+
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
-async function getData(url){
+/* =========================
+   POSTER
+========================= */
 
-if(cache.has(url)){
-return cache.get(url);
+function getPoster(anime) {
+  return anime.poster ||
+    anime.images?.webp?.large_image_url ||
+    anime.images?.jpg?.large_image_url ||
+    anime.images?.webp?.image_url ||
+    anime.images?.jpg?.image_url ||
+    "https://placehold.co/400x600/151925/ffffff?text=Anime";
 }
 
-let lastError;
+/* =========================
+   NORMALIZE KITSU
+========================= */
 
-for(let attempt=0;attempt<3;attempt++){
+function normalizeKitsu(item) {
+  const a = item.attributes || {};
 
-try{
+  return {
+    mal_id: "kitsu-" + item.id,
+    title: a.titles?.en_jp ||
+           a.titles?.en ||
+           a.titles?.ja_jp ||
+           a.canonicalTitle ||
+           "Unknown Anime",
 
-const response=await fetch(url);
+    poster:
+      a.posterImage?.large ||
+      a.posterImage?.medium ||
+      a.posterImage?.small ||
+      "",
 
-if(response.status===429){
+    year: a.startDate
+      ? new Date(a.startDate).getFullYear()
+      : "N/A",
 
-await sleep(1500*(attempt+1));
-continue;
+    score: a.averageRating
+      ? Number(a.averageRating) / 10
+      : null,
 
+    episodes: a.episodeCount || null,
+
+    status: a.status || "Unknown",
+
+    synopsis:
+      a.synopsis ||
+      "No description available.",
+
+    genres: []
+  };
 }
 
-if(!response.ok){
-throw new Error("API "+response.status);
+/* =========================
+   LOAD POPULAR
+========================= */
+
+async function loadPopular() {
+
+  loading.style.display = "block";
+  errorBox.style.display = "none";
+
+  try {
+
+    /* First try Jikan */
+    try {
+
+      const url =
+        JIKAN +
+        "/top/anime?filter=bypopularity&page=" +
+        page +
+        "&limit=25&sfw=true";
+
+      const data = await fetchJSON(url, 9000);
+
+      if (data && Array.isArray(data.data) && data.data.length) {
+
+        addAnime(data.data);
+
+        loading.style.display = "none";
+
+        loadMore.style.display =
+          data.pagination?.has_next_page ? "block" : "none";
+
+        return;
+      }
+
+    } catch (jikanError) {
+      console.log("Jikan failed, trying backup API...");
+    }
+
+    /* Backup API */
+    const offset = (page - 1) * 25;
+
+    const backupURL =
+      KITSU +
+      "/anime?page[limit]=25&page[offset]=" +
+      offset +
+      "&sort=-averageRating";
+
+    const backup = await fetchJSON(backupURL, 10000);
+
+    const backupAnime =
+      (backup.data || []).map(normalizeKitsu);
+
+    if (!backupAnime.length) {
+      throw new Error("No anime received");
+    }
+
+    addAnime(backupAnime);
+
+    loading.style.display = "none";
+    loadMore.style.display =
+      backupAnime.length >= 25 ? "block" : "none";
+
+  } catch (error) {
+
+    console.error("Anime loading failed:", error);
+
+    loading.style.display = "none";
+    errorBox.style.display = "block";
+
+    count.textContent = "Unable to load";
+
+  }
 }
 
-const data=await response.json();
+/* =========================
+   ADD ANIME
+========================= */
 
-cache.set(url,data);
+function addAnime(list) {
 
-return data;
+  const existing = new Set(
+    allAnime.map(a => String(a.mal_id))
+  );
 
-}catch(error){
+  list.forEach(anime => {
 
-lastError=error;
+    const id = String(anime.mal_id);
 
-await sleep(1000*(attempt+1));
+    if (!existing.has(id)) {
+      allAnime.push(anime);
+      existing.add(id);
+    }
 
+  });
+
+  render(allAnime);
 }
 
+/* =========================
+   CREATE CARD
+========================= */
+
+function createCard(anime) {
+
+  const card = document.createElement("article");
+  card.className = "card";
+
+  const img = document.createElement("img");
+
+  img.className = "poster";
+  img.loading = "lazy";
+  img.alt = anime.title || "Anime";
+  img.src = getPoster(anime);
+
+  img.onerror = function() {
+    this.onerror = null;
+    this.src =
+      "https://placehold.co/400x600/151925/ffffff?text=Anime";
+  };
+
+  const info = document.createElement("div");
+  info.className = "info";
+
+  const title = document.createElement("div");
+  title.className = "title";
+  title.textContent =
+    anime.title || "Unknown Anime";
+
+  const meta = document.createElement("div");
+  meta.className = "meta";
+
+  const year =
+    anime.year ||
+    anime.aired?.prop?.from?.year ||
+    "N/A";
+
+  const score =
+    anime.score
+      ? "⭐ " + Number(anime.score).toFixed(1)
+      : "⭐ N/A";
+
+  meta.innerHTML =
+    "<span>" + year + "</span>" +
+    "<span class='rating'>" + score + "</span>";
+
+  info.appendChild(title);
+  info.appendChild(meta);
+
+  card.appendChild(img);
+  card.appendChild(info);
+
+  card.onclick = function() {
+    openModal(anime);
+  };
+
+  return card;
 }
 
-throw lastError;
+/* =========================
+   RENDER
+========================= */
 
+function render(list) {
+
+  grid.innerHTML = "";
+
+  if (!list.length) {
+
+    grid.innerHTML =
+      "<div class='empty'>No anime found.</div>";
+
+    count.textContent = "0 anime";
+
+    return;
+  }
+
+  const fragment =
+    document.createDocumentFragment();
+
+  list.forEach(anime => {
+    fragment.appendChild(
+      createCard(anime)
+    );
+  });
+
+  grid.appendChild(fragment);
+
+  count.textContent =
+    list.length + " anime";
 }
 
-/* ---------- POSTER ---------- */
+/* =========================
+   START
+========================= */
 
-function getPoster(anime){
+async function start() {
 
-return anime.images?.webp?.large_image_url ||
-anime.images?.jpg?.large_image_url ||
-anime.images?.webp?.image_url ||
-anime.images?.jpg?.image_url ||
-"https://placehold.co/400x600/151925/ffffff?text=Anime";
+  page = 1;
+  allAnime = [];
 
+  grid.innerHTML = "";
+
+  count.textContent = "Loading...";
+
+  loading.style.display = "block";
+  errorBox.style.display = "none";
+  loadMore.style.display = "none";
+
+  await loadPopular();
 }
 
-/* ---------- CARD ---------- */
+/* =========================
+   LOAD MORE
+========================= */
 
-function createCard(anime){
+loadMore.onclick = async function() {
 
-const card=document.createElement("article");
-card.className="card";
+  if (loadMore.disabled) return;
 
-const img=document.createElement("img");
+  loadMore.disabled = true;
+  loadMore.textContent = "Loading...";
 
-img.className="poster";
-img.loading="lazy";
-img.alt=anime.title||"Anime";
-img.src=getPoster(anime);
+  page++;
 
-img.onerror=function(){
+  try {
 
-this.src="https://placehold.co/400x600/151925/ffffff?text=Anime";
+    await loadPopular();
 
+  } catch (error) {
+
+    page--;
+
+  } finally {
+
+    loadMore.disabled = false;
+    loadMore.textContent =
+      "Load More Anime";
+
+  }
 };
 
-const info=document.createElement("div");
-info.className="info";
+/* =========================
+   SEARCH
+========================= */
 
-const title=document.createElement("div");
-title.className="title";
-title.textContent=anime.title||"Unknown Anime";
+search.addEventListener("input", function() {
 
-const meta=document.createElement("div");
-meta.className="meta";
+  clearTimeout(searchTimer);
 
-const year=
-anime.year||
-anime.aired?.prop?.from?.year||
-"N/A";
+  const query =
+    this.value.trim();
 
-const score=
-anime.score?
-"⭐ "+Number(anime.score).toFixed(1):
-"⭐ N/A";
+  if (!query) {
 
-meta.innerHTML=
-"<span>"+year+"</span>"+
-"<span class='rating'>"+score+"</span>";
+    render(allAnime);
 
-info.appendChild(title);
-info.appendChild(meta);
+    return;
+  }
 
-card.appendChild(img);
-card.appendChild(info);
+  searchTimer = setTimeout(async function() {
 
-card.onclick=()=>{
-openModal(anime);
-};
+    loading.style.display = "block";
+    errorBox.style.display = "none";
 
-return card;
+    try {
 
-}
+      /* Jikan search */
 
-/* ---------- RENDER ---------- */
+      try {
 
-function render(list){
+        const url =
+          JIKAN +
+          "/anime?q=" +
+          encodeURIComponent(query) +
+          "&limit=25&sfw=true";
 
-grid.innerHTML="";
+        const data =
+          await fetchJSON(url, 9000);
 
-const fragment=document.createDocumentFragment();
+        const results =
+          data.data || [];
 
-list.forEach(anime=>{
-fragment.appendChild(createCard(anime));
+        if (results.length) {
+
+          grid.innerHTML = "";
+
+          const fragment =
+            document.createDocumentFragment();
+
+          results.forEach(anime => {
+            fragment.appendChild(
+              createCard(anime)
+            );
+          });
+
+          grid.appendChild(fragment);
+
+          count.textContent =
+            results.length + " results";
+
+          loading.style.display = "none";
+
+          return;
+        }
+
+      } catch (e) {
+        console.log("Jikan search failed");
+      }
+
+      /* Kitsu search backup */
+
+      const backupURL =
+        KITSU +
+        "/anime?filter[text]=" +
+        encodeURIComponent(query) +
+        "&page[limit]=25";
+
+      const backup =
+        await fetchJSON(backupURL, 10000);
+
+      const results =
+        (backup.data || [])
+          .map(normalizeKitsu);
+
+      grid.innerHTML = "";
+
+      if (!results.length) {
+
+        grid.innerHTML =
+          "<div class='empty'>No anime found.</div>";
+
+        count.textContent =
+          "0 results";
+
+      } else {
+
+        const fragment =
+          document.createDocumentFragment();
+
+        results.forEach(anime => {
+          fragment.appendChild(
+            createCard(anime)
+          );
+        });
+
+        grid.appendChild(fragment);
+
+        count.textContent =
+          results.length + " results";
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+      grid.innerHTML =
+        "<div class='empty'>" +
+        "Search failed. Please try again." +
+        "</div>";
+
+      count.textContent =
+        "Search error";
+
+    } finally {
+
+      loading.style.display = "none";
+
+    }
+
+  }, 450);
+
 });
 
-grid.appendChild(fragment);
+/* =========================
+   MODAL
+========================= */
 
-count.textContent=allAnime.length+" anime";
+function openModal(anime) {
 
+  document.getElementById(
+    "modalPoster"
+  ).src = getPoster(anime);
+
+  document.getElementById(
+    "modalTitle"
+  ).textContent =
+    anime.title || "Unknown Anime";
+
+  const year =
+    anime.year ||
+    anime.aired?.prop?.from?.year ||
+    "N/A";
+
+  document.getElementById(
+    "modalYear"
+  ).textContent =
+    "Year: " + year;
+
+  document.getElementById(
+    "modalScore"
+  ).textContent =
+    anime.score
+      ? "⭐ " + Number(anime.score).toFixed(1)
+      : "⭐ N/A";
+
+  document.getElementById(
+    "modalEpisodes"
+  ).textContent =
+    anime.episodes
+      ? anime.episodes + " Episodes"
+      : "Episode N/A";
+
+  document.getElementById(
+    "modalStatus"
+  ).textContent =
+    anime.status || "Status N/A";
+
+  const genres =
+    (anime.genres || [])
+      .map(g => g.name)
+      .join(" • ");
+
+  document.getElementById(
+    "modalGenres"
+  ).textContent =
+    genres
+      ? "Genres: " + genres
+      : "Genres: N/A";
+
+  document.getElementById(
+    "modalSynopsis"
+  ).textContent =
+    anime.synopsis ||
+    "No description available.";
+
+  modal.classList.add("show");
+
+  document.body.style.overflow =
+    "hidden";
 }
 
-/* ---------- LOAD PAGE ---------- */
+/* =========================
+   CLOSE MODAL
+========================= */
 
-async function loadPage(){
+function closeModal() {
 
-const url=
-API+
-"/top/anime?filter=bypopularity&page="+
-page+
-"&limit=25&sfw=true";
+  modal.classList.remove("show");
 
-const data=await getData(url);
+  document.body.style.overflow = "";
+}
 
-const newAnime=data.data||[];
+document.getElementById(
+  "close"
+).onclick = closeModal;
 
-const ids=new Set(
-allAnime.map(a=>a.mal_id)
+modal.onclick = function(event) {
+
+  if (event.target === modal) {
+    closeModal();
+  }
+
+};
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (event.key === "Escape") {
+      closeModal();
+    }
+
+  }
 );
 
-newAnime.forEach(anime=>{
-
-if(!ids.has(anime.mal_id)){
-
-allAnime.push(anime);
-ids.add(anime.mal_id);
-
-}
-
-});
-
-render(allAnime);
-
-if(newAnime.length>0){
-
-loadMore.style.display="block";
-
-}
-
-if(newAnime.length<25){
-
-loadMore.style.display="none";
-
-}
-
-}
-
-/* ---------- START ---------- */
-
-async function start(){
-
-page=1;
-allAnime=[];
-grid.innerHTML="";
-count.textContent="Loading...";
-loading.style.display="block";
-errorBox.style.display="none";
-loadMore.style.display="none";
-
-try{
-
-await loadPage();
-
-}catch(error){
-
-console.error(error);
-
-errorBox.style.display="block";
-
-}finally{
-
-loading.style.display="none";
-
-}
-
-}
-
-/* ---------- LOAD MORE ---------- */
-
-loadMore.onclick=async function(){
-
-loadMore.disabled=true;
-loadMore.textContent="Loading...";
-
-try{
-
-page++;
-
-await sleep(600);
-
-await loadPage();
-
-}catch(error){
-
-console.error(error);
-
-page--;
-
-alert("Could not load more anime. Please try again.");
-
-}finally{
-
-loadMore.disabled=false;
-loadMore.textContent="Load More Anime";
-
-}
-
-};
-
-/* ---------- SEARCH ---------- */
-
-search.addEventListener("input",function(){
-
-clearTimeout(searchTimer);
-
-const query=this.value.trim();
-
-if(!query){
-
-render(allAnime);
-return;
-
-}
-
-searchTimer=setTimeout(async()=>{
-
-loading.style.display="block";
-
-try{
-
-const data=await getData(
-API+
-"/anime?q="+
-encodeURIComponent(query)+
-"&limit=25&sfw=true"
-);
-
-const results=data.data||[];
-
-grid.innerHTML="";
-
-if(!results.length){
-
-count.textContent="0 anime";
-
-grid.innerHTML=
-"<div class='empty'>No anime found.</div>";
-
-return;
-
-}
-
-const fragment=document.createDocumentFragment();
-
-results.forEach(anime=>{
-fragment.appendChild(createCard(anime));
-});
-
-grid.appendChild(fragment);
-
-count.textContent=results.length+" results";
-
-}catch(error){
-
-console.error(error);
-
-grid.innerHTML=
-"<div class='empty'>Search failed. Try again.</div>";
-
-}finally{
-
-loading.style.display="none";
-
-}
-
-},500);
-
-});
-
-/* ---------- MODAL ---------- */
-
-function openModal(anime){
-
-document.getElementById("modalPoster").src=getPoster(anime);
-
-document.getElementById("modalTitle").textContent=
-anime.title||"Unknown Anime";
-
-const year=
-anime.year||
-anime.aired?.prop?.from?.year||
-"N/A";
-
-document.getElementById("modalYear").textContent=
-"Year: "+year;
-
-document.getElementById("modalScore").textContent=
-anime.score?
-"⭐ "+Number(anime.score).toFixed(1):
-"⭐ N/A";
-
-document.getElementById("modalEpisodes").textContent=
-anime.episodes?
-anime.episodes+" Episodes":
-"Episode N/A";
-
-document.getElementById("modalStatus").textContent=
-anime.status||"Status N/A";
-
-const genres=(anime.genres||[])
-.map(g=>g.name)
-.join(" • ");
-
-document.getElementById("modalGenres").textContent=
-genres?
-"Genres: "+genres:
-"Genres: N/A";
-
-document.getElementById("modalSynopsis").textContent=
-anime.synopsis||
-"No description available.";
-
-modal.classList.add("show");
-
-document.body.style.overflow="hidden";
-
-}
-
-function closeModal(){
-
-modal.classList.remove("show");
-
-document.body.style.overflow="";
-
-}
-
-document.getElementById("close").onclick=closeModal;
-
-modal.onclick=function(event){
-
-if(event.target===modal){
-closeModal();
-}
-
-};
-
-document.addEventListener("keydown",function(event){
-
-if(event.key==="Escape"){
-closeModal();
-}
-
-});
-
-/* ---------- RUN ---------- */
+/* =========================
+   RUN WEBSITE
+========================= */
 
 start();
 
 </script>
-
-</body>
-  </html>
