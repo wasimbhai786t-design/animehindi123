@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,13 +91,14 @@ main{padding-top:20px}
 .card small.gen{color:var(--acc);font-weight:600;font-size:.95rem}
 #theme{position:fixed;right:16px;bottom:16px;z-index:30;width:56px;height:56px;border-radius:16px;border:0;background:#2b2b32;color:#fff;font-size:1.7rem}
 .card{cursor:pointer;text-align:left}.dt{margin-top:12px;padding:6px 14px;font-size:.9rem}
+[hidden]{display:none!important}
 </style>
 </head>
 <body>
 <header><div class="wrap bar">
   <button class="ib" id="mb" aria-label="Menu" aria-expanded="false">☰</button>
   <a class="logo" href="./">Anime<b>Hindi</b>123</a>
-  <button class="ib" id="sb" aria-label="Search">⌕</button>
+  <button class="ib" id="sb" aria-label="Search"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></button>
 </div>
 <div class="wrap" id="sbar" hidden><input id="search" type="search" placeholder="Search anime…" aria-label="Search anime" autocomplete="off"></div>
 <div class="wrap" id="menu" hidden>
@@ -263,28 +265,6 @@ async function openDetail(id) {
 $("#dlg").addEventListener("click", e => { if (e.target.id === "dlg") e.target.close(); });
 $("#dlg").addEventListener("close", () => { $("#dlg").innerHTML = ""; });
 
-/* hero */
-let slides = [], cur = 0, timer;
-function showSlide(i) {
-  cur = (i + slides.length) % slides.length;
-  const a = slides[cur], h = $("#hero"), s = slim(a);
-  h.querySelector(".bg").style.backgroundImage = `url("${a.bannerImage || a.coverImage.extraLarge}")`;
-  h.querySelector(".in").innerHTML = `<div class="meta">Airing now${s.score ? " · ★ " + s.score : ""}${s.genres.length ? " · " + esc(s.genres.slice(0, 3).join(", ")) : ""}</div><h1>${esc(s.title)}</h1><p>${esc(clean(a.description))}</p><button class="btn primary">View details</button>`;
-  h.querySelector(".in button").onclick = () => openDetail(a.id);
-  h.querySelectorAll(".dots button").forEach((d, k) => d.setAttribute("aria-current", k === cur));
-}
-function restart() {
-  clearInterval(timer);
-  if (!matchMedia("(prefers-reduced-motion:reduce)").matches) timer = setInterval(() => showSlide(cur + 1), 7000);
-}
-async function initHero() {
-  try {
-    slides = (await gql(`{Page(perPage:8){media(type:ANIME,status:RELEASING,isAdult:false,sort:TRENDING_DESC){${L}}}}`)).Page.media;
-    slides.forEach((_, i) => { const b = document.createElement("button"); b.setAttribute("aria-label", "Slide " + (i + 1)); b.onclick = () => { showSlide(i); restart(); }; $(".dots").append(b); });
-    showSlide(0); restart();
-  } catch { $("#hero").hidden = true; }
-}
-
 /* wiring */
 GENRES.forEach(name => {
   const b = document.createElement("button");
@@ -314,4 +294,11 @@ $("#mb").onclick = () => { const m = $("#menu"); m.hidden = !m.hidden; $("#mb").
 $("#sb").onclick = () => { const s = $("#sbar"); s.hidden = !s.hidden; if (!s.hidden) $("#search").focus(); };
 $("#menu").addEventListener("click", e => { if (e.target.closest(".chip,#rand,#favBtn")) $("#menu").hidden = true; });
 const th = $("#theme"), root = document.documentElement;
-const setTh = t 
+const setTh = t => { root.dataset.theme = t; th.textContent = t === "dark" ? "☀" : "☾"; try { localStorage.setItem("ah123-theme", t); } catch {} };
+let t0; try { t0 = localStorage.getItem("ah123-theme"); } catch {}
+setTh(t0 || (matchMedia("(prefers-color-scheme:light)").matches ? "light" : "dark"));
+th.onclick = () => setTh(root.dataset.theme === "dark" ? "light" : "dark");
+favLabel(); load(true);
+</script>
+</body>
+</html>
