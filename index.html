@@ -124,7 +124,6 @@ async function fetchAnime(search = "") {
       Page (page: 1, perPage: 30) {
         media (search: $search, type: ANIME, sort: POPULARITY_DESC) {
           id
-          idMal
           title { romaji english }
           coverImage { large extraLarge }
           averageScore
@@ -179,28 +178,27 @@ async function fetchAnime(search = "") {
   }
 }
 
-function cleanTitle(t) {
-  return t.toLowerCase().replace(/[^a-z0-9]/g, '');
+function getSlug(title) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
 function openWatchRoom(anime) {
   const title = anime.title.english || anime.title.romaji;
-  const malId = anime.idMal || anime.id;
+  const slug = getSlug(title);
   const totalEps = anime.episodes || 24;
-  const qTitle = encodeURIComponent(title);
 
   const renderModal = (ep, server) => {
     let embedUrl = "";
 
-    // Reliable fallback embed links
-    if (server === 'vidsrc-icu') {
-      embedUrl = `https://vidsrc.icu/embed/anime/${malId}/${ep}`;
-    } else if (server === 'vidlink') {
-      embedUrl = `https://vidlink.pro/anime/${malId}/${ep}`;
-    } else if (server === 'embedsu') {
-      embedUrl = `https://embed.su/embed/anime/${malId}/${ep}`;
-    } else if (server === 'autoembed') {
-      embedUrl = `https://player.autoembed.cc/embed/anime/${malId}/${ep}`;
+    // Direct working iframe player routing using slug / gogoanime embed standards
+    if (server === 'server1') {
+      embedUrl = `https://megacloud.tv/embed-2/e-1/${slug}-episode-${ep}`;
+    } else if (server === 'server2') {
+      embedUrl = `https://vidstreaming.io/embed.php?id=${slug}-episode-${ep}`;
+    } else if (server === 'server3') {
+      embedUrl = `https://anitaku.pe/embed/${slug}-episode-${ep}`;
+    } else if (server === 'server4') {
+      embedUrl = `https://plyr.redtube.video/embed?v=${slug}-${ep}`;
     }
 
     modalContent.innerHTML = `
@@ -209,16 +207,16 @@ function openWatchRoom(anime) {
       </div>
       <div class="watch-body">
         <div class="servers-box">
-          <div class="servers-title">Select Server (Switch if stream shows unavailable)</div>
+          <div class="servers-title">Select Server (If video shows unavailable, switch server)</div>
           <div class="server-row">
             <span class="server-label">SUB:</span>
-            <button class="server-btn ${server==='vidsrc-icu'?'active':''}" onclick="switchServer(${ep}, 'vidsrc-icu')">Server 1 (VidSrc ICU)</button>
-            <button class="server-btn ${server==='vidlink'?'active':''}" onclick="switchServer(${ep}, 'vidlink')">Server 2 (VidLink)</button>
-            <button class="server-btn ${server==='embedsu'?'active':''}" onclick="switchServer(${ep}, 'embedsu')">Server 3 (EmbedSU)</button>
+            <button class="server-btn ${server==='server1'?'active':''}" onclick="switchServer(${ep}, 'server1')">MegaCloud (HD)</button>
+            <button class="server-btn ${server==='server2'?'active':''}" onclick="switchServer(${ep}, 'server2')">VidStream (Fast)</button>
+            <button class="server-btn ${server==='server3'?'active':''}" onclick="switchServer(${ep}, 'server3')">Anitaku (Alt)</button>
           </div>
           <div class="server-row">
             <span class="server-label">DUB:</span>
-            <button class="server-btn ${server==='autoembed'?'active':''}" onclick="switchServer(${ep}, 'autoembed')">Server 4 (AutoEmbed Dub)</button>
+            <button class="server-btn ${server==='server4'?'active':''}" onclick="switchServer(${ep}, 'server4')">Server Dub</button>
           </div>
         </div>
 
@@ -246,7 +244,7 @@ function openWatchRoom(anime) {
     renderModal(ep, server);
   };
 
-  renderModal(1, 'vidsrc-icu');
+  renderModal(1, 'server1');
   modal.showModal();
 }
 
