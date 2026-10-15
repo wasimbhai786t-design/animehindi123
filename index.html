@@ -35,16 +35,11 @@ header{position:sticky;top:0;z-index:100;background:rgba(13,14,18,0.9);backdrop-
 .search-bar input{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:10px 20px 10px 45px;color:#fff;font-size:0.95rem;outline:none;transition:border .2s}
 .search-bar input:focus{border-color:var(--primary)}
 .search-bar svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);fill:var(--mute);width:18px;height:18px}
-.nav-actions{display:flex;gap:15px;align-items:center}
-.nav-btn{background:var(--surface);border:1px solid var(--line);padding:8px 16px;border-radius:99px;font-weight:600;font-size:0.9rem;transition:all .2s}
-.nav-btn:hover{background:var(--primary);border-color:var(--primary);color:#fff}
 
-/* Main Layout */
+/* Catalog Grid */
 main{padding:30px 0 60px}
 .section-title{font-size:1.4rem;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px}
 .section-title span{color:var(--primary)}
-
-/* Catalog Grid */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px}
 .anime-card{background:var(--surface);border-radius:var(--r);overflow:hidden;border:1px solid var(--line);transition:transform .2s, border-color .2s;cursor:pointer;display:flex;flex-direction:column}
 .anime-card:hover{transform:translateY(-5px);border-color:var(--primary)}
@@ -61,7 +56,7 @@ main{padding:30px 0 60px}
 
 /* Watch Modal */
 dialog{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:16px;padding:0;width:min(1000px,96vw);max-height:92vh;overflow-y:auto;margin:auto}
-dialog::backdrop{background:rgba(0,0,0,0.8);backdrop-filter:blur(5px)}
+dialog::backdrop{background:rgba(0,0,0,0.85);backdrop-filter:blur(6px)}
 .modal-close{position:absolute;top:15px;right:15px;background:rgba(255,255,255,0.1);border:0;width:36px;height:36px;border-radius:50%;font-size:1.2rem;color:#fff;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center}
 .modal-close:hover{background:var(--primary)}
 
@@ -69,8 +64,8 @@ dialog::backdrop{background:rgba(0,0,0,0.8);backdrop-filter:blur(5px)}
 .watch-container{background:#000;position:relative;width:100%;aspect-ratio:16/9}
 .watch-container iframe{width:100%;height:100%;border:0}
 .watch-body{padding:25px}
-.anime-heading{font-size:1.8rem;font-weight:800;margin-bottom:10px}
-.anime-desc{color:var(--mute);font-size:0.95rem;margin-bottom:20px;max-height:100px;overflow-y:auto}
+.anime-heading{font-size:1.6rem;font-weight:800;margin-bottom:10px}
+.anime-desc{color:var(--mute);font-size:0.9rem;margin-bottom:20px;max-height:90px;overflow-y:auto}
 
 /* Server Selector Panel */
 .servers-box{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:15px;margin-bottom:20px}
@@ -82,7 +77,7 @@ dialog::backdrop{background:rgba(0,0,0,0.8);backdrop-filter:blur(5px)}
 
 /* Episode Buttons */
 .episodes-box{margin-top:20px}
-.episodes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:8px;max-height:200px;overflow-y:auto;padding-right:5px;margin-top:10px}
+.episodes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:8px;max-height:180px;overflow-y:auto;padding-right:5px;margin-top:10px}
 .ep-btn{background:var(--bg);border:1px solid var(--line);padding:8px;text-align:center;border-radius:6px;font-size:0.9rem;font-weight:600}
 .ep-btn:hover,.ep-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
 
@@ -97,10 +92,7 @@ dialog::backdrop{background:rgba(0,0,0,0.8);backdrop-filter:blur(5px)}
     <a href="#" class="logo">free anime<span>.com</span></a>
     <div class="search-bar">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-      <input type="text" id="search" placeholder="Search anime (e.g. Naruto, One Piece, Attack on Titan)..." autocomplete="off">
-    </div>
-    <div class="nav-actions">
-      <button class="nav-btn">Watchlist</button>
+      <input type="text" id="search" placeholder="Search anime (e.g. Jujutsu Kaisen, Naruto, Solo Leveling)..." autocomplete="off">
     </div>
   </div>
 </header>
@@ -187,46 +179,46 @@ async function fetchAnime(search = "") {
   }
 }
 
-function getSlug(title) {
-  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+function cleanTitle(t) {
+  return t.toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
 function openWatchRoom(anime) {
   const title = anime.title.english || anime.title.romaji;
   const malId = anime.idMal || anime.id;
-  const slug = getSlug(title);
   const totalEps = anime.episodes || 24;
+  const qTitle = encodeURIComponent(title);
 
-  const renderModal = (ep, provider) => {
+  const renderModal = (ep, server) => {
     let embedUrl = "";
 
-    // Updated Active Embed Routes (LiteSpeed error fix)
-    if(provider === 'vidsrc-pro') {
-      embedUrl = `https://vidsrc.me/embed/anime?id=${malId}&ep=${ep}`;
-    } else if(provider === 'superembed') {
-      embedUrl = `https://multiembed.mov/?video_id=${malId}&tmdb=1&s=1&e=${ep}`;
-    } else if(provider === 'playerfx') {
-      embedUrl = `https://vidsrc.pro/embed/anime/${malId}/${ep}`;
-    } else if(provider === 'gogofast') {
-      embedUrl = `https://emg.streamtape.com/e/${malId}`;
+    // Reliable fallback embed links
+    if (server === 'vidsrc-icu') {
+      embedUrl = `https://vidsrc.icu/embed/anime/${malId}/${ep}`;
+    } else if (server === 'vidlink') {
+      embedUrl = `https://vidlink.pro/anime/${malId}/${ep}`;
+    } else if (server === 'embedsu') {
+      embedUrl = `https://embed.su/embed/anime/${malId}/${ep}`;
+    } else if (server === 'autoembed') {
+      embedUrl = `https://player.autoembed.cc/embed/anime/${malId}/${ep}`;
     }
 
     modalContent.innerHTML = `
       <div class="watch-container">
-        <iframe src="${embedUrl}" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+        <iframe id="main-player" src="${embedUrl}" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
       </div>
       <div class="watch-body">
         <div class="servers-box">
-          <div class="servers-title">Streaming Servers (If stream buffers, switch server)</div>
+          <div class="servers-title">Select Server (Switch if stream shows unavailable)</div>
           <div class="server-row">
             <span class="server-label">SUB:</span>
-            <button class="server-btn ${provider==='vidsrc-pro'?'active':''}" onclick="switchServer(${ep}, 'vidsrc-pro')">Server 1 (VidSrc Pro)</button>
-            <button class="server-btn ${provider==='superembed'?'active':''}" onclick="switchServer(${ep}, 'superembed')">Server 2 (SuperEmbed)</button>
-            <button class="server-btn ${provider==='playerfx'?'active':''}" onclick="switchServer(${ep}, 'playerfx')">Server 3 (PlayerFX)</button>
+            <button class="server-btn ${server==='vidsrc-icu'?'active':''}" onclick="switchServer(${ep}, 'vidsrc-icu')">Server 1 (VidSrc ICU)</button>
+            <button class="server-btn ${server==='vidlink'?'active':''}" onclick="switchServer(${ep}, 'vidlink')">Server 2 (VidLink)</button>
+            <button class="server-btn ${server==='embedsu'?'active':''}" onclick="switchServer(${ep}, 'embedsu')">Server 3 (EmbedSU)</button>
           </div>
           <div class="server-row">
             <span class="server-label">DUB:</span>
-            <button class="server-btn ${provider==='gogofast'?'active':''}" onclick="switchServer(${ep}, 'gogofast')">Server 4 (StreamTape)</button>
+            <button class="server-btn ${server==='autoembed'?'active':''}" onclick="switchServer(${ep}, 'autoembed')">Server 4 (AutoEmbed Dub)</button>
           </div>
         </div>
 
@@ -241,20 +233,20 @@ function openWatchRoom(anime) {
     `;
 
     const epGridList = document.getElementById('ep-grid-list');
-    for(let i=1; i<=Math.min(totalEps, 150); i++) {
+    for(let i=1; i<=Math.min(totalEps, 100); i++) {
       const eb = document.createElement('button');
       eb.className = `ep-btn ${i===ep?'active':''}`;
       eb.textContent = i;
-      eb.onclick = () => renderModal(i, provider);
+      eb.onclick = () => renderModal(i, server);
       epGridList.appendChild(eb);
     }
   };
 
-  window.switchServer = (ep, provider) => {
-    renderModal(ep, provider);
+  window.switchServer = (ep, server) => {
+    renderModal(ep, server);
   };
 
-  renderModal(1, 'vidsrc-pro');
+  renderModal(1, 'vidsrc-icu');
   modal.showModal();
 }
 
