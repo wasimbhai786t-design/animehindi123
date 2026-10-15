@@ -44,27 +44,35 @@ select{background:var(--surface);color:var(--text);border:1px solid var(--line);
 .state{text-align:center;color:var(--mute);padding:40px 0}
 .more{display:block;margin:28px auto 40px}
 footer{border-top:1px solid var(--line);color:var(--mute);text-align:center;padding:24px 16px;font-size:.9rem}
-dialog{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:var(--r);padding:0;width:min(880px,94vw);max-height:92vh;overflow:auto}
+dialog{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:var(--r);padding:0;width:min(900px,94vw);max-height:92vh;overflow:auto}
 dialog::backdrop{background:#000a}
 .d{display:grid;grid-template-columns:200px 1fr;gap:20px;padding:20px}
 .d img.p{width:100%;border-radius:10px}
 .d h2{font-size:1.6rem;margin-bottom:6px}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
 .tags span{border:1px solid var(--line);border-radius:99px;padding:2px 10px;font-size:.85rem}
-.syn{color:#ddd7ea;margin:10px 0;max-height:140px;overflow:auto}
+.syn{color:#ddd7ea;margin:10px 0;max-height:120px;overflow:auto}
 .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .x{position:sticky;top:0;float:right;margin:10px;z-index:2;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--bg)}
 
-/* Video Streaming Container styling */
-.player-box { margin: 0 20px 20px; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
-.video-container { position: relative; width: 100%; aspect-ratio: 16/9; background: #0b0a0f; }
+/* AniWave Style Player & Servers UI */
+.player-box { margin: 0 20px 10px; background: #0b0910; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+.video-container { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; }
 .video-container iframe { position: absolute; top:0; left:0; width: 100%; height: 100%; border: 0; }
-.episodes-section { padding: 0 20px 20px; }
-.episodes-grid { display: flex; gap: 8px; flex-wrap: wrap; max-height: 160px; overflow-y: auto; margin-top: 8px; padding-right: 4px; }
-.ep-btn { background: var(--bg); border: 1px solid var(--line); padding: 6px 12px; border-radius: 6px; color: var(--text); font-size: 0.9rem; }
-.ep-btn:hover, .ep-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; font-weight: 600; }
+.server-panel { padding: 15px 20px; background: #161320; border-top: 1px solid var(--line); }
+.server-notice { font-size: 0.85rem; color: var(--mute); margin-bottom: 10px; }
+.server-group { margin-bottom: 12px; }
+.server-group-title { font-size: 0.9rem; font-weight: 600; color: var(--sky); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.server-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.srv-btn { background: var(--bg); border: 1px solid var(--line); padding: 6px 14px; border-radius: 6px; color: var(--text); font-size: 0.85rem; }
+.srv-btn:hover, .srv-btn.active { background: var(--pink); border-color: var(--pink); color: #fff; font-weight: 600; }
 
-@media(max-width:600px){.d{grid-template-columns:1fr}.d img.p{max-width:180px}}
+.episodes-section { padding: 0 20px 20px; }
+.episodes-grid { display: flex; gap: 8px; flex-wrap: wrap; max-height: 140px; overflow-y: auto; margin-top: 8px; padding-right: 4px; }
+.ep-btn { background: var(--bg); border: 1px solid var(--line); padding: 6px 12px; border-radius: 6px; color: var(--text); font-size: 0.9rem; }
+.ep-btn:hover, .ep-btn.active { background: var(--sky); border-color: var(--sky); color: #0c2a31; font-weight: 600; }
+
+@media(max-width:600px){.d{grid-template-columns:1fr}.d img.p{max-width:160px}}
 
 :root{--acc:#7bdff2;--hd:linear-gradient(90deg,#2a2540,#1f3a4a)}
 :root[data-theme=light]{--bg:#eef2f7;--surface:#fff;--line:#dde3ee;--text:#18213a;--mute:#5c6785;--acc:#1769c9;--hd:linear-gradient(90deg,#a9dfe9,#c3d9f5)}
@@ -217,13 +225,31 @@ function updateTitle() { $("#title").textContent = st.q ? `Results for “${st.q
 
 async function openDetail(id) {
   const dlg = $("#dlg"), shell = '<button class="x" aria-label="Close">×</button>';
-  dlg.innerHTML = shell + '<div class="state" style="padding:40px">Loading Anime & Stream...</div>';
+  dlg.innerHTML = shell + '<div class="state" style="padding:40px">Loading Anime & Servers...</div>';
   if (!dlg.open) dlg.showModal();
   try {
     const a = (await gql(`query($id:Int){Media(id:$id,type:ANIME){${L} idMal}}`, {id})).Media;
     const s = slim(a);
     const totalEps = a.episodes || 12;
     const malId = a.idMal || a.id;
+    let currentEp = 1;
+    let currentType = "sub"; // sub or dub
+
+    // Function to update stream iframe based on selected server, type and episode
+    const updateStream = (serverType, type, ep) => {
+      let url = "";
+      if(serverType === 'vidplay') {
+        url = `https://vidsrc.to/embed/anime/${malId}/${ep}`;
+      } else if(serverType === 'datsav') {
+        url = `https://vidsrc.cc/v2/embed/anime/${malId}/${ep}`;
+      } else if(serverType === 'megacloud') {
+        url = `https://vidembed.cc/streaming.php?id=${malId}&ep=${ep}`;
+      } else {
+        url = `https://vidsrc.to/embed/anime/${malId}/${ep}`;
+      }
+      $("#anime-stream").src = url;
+      $("#watch-info").textContent = `You're watching Episode ${ep} (${type.toUpperCase()}). If current server doesn't work, please try other servers beside.`;
+    };
 
     dlg.innerHTML = `${shell}
       <div class="d">
@@ -242,11 +268,35 @@ async function openDetail(id) {
         <div class="video-container">
           <iframe id="anime-stream" src="https://vidsrc.to/embed/anime/${malId}/1" allowfullscreen></iframe>
         </div>
+        
+        <!-- AniWave Style Servers Panel -->
+        <div class="server-panel">
+          <div class="server-notice" id="watch-info">You're watching Episode 1. If current servers doesn't work, please try other servers beside.</div>
+          
+          <!-- SUB SERVERS -->
+          <div class="server-group">
+            <div class="server-group-title">💬 SUB</div>
+            <div class="server-buttons">
+              <button class="srv-btn active" onclick="changeServer('vidplay', 'sub', 1, this)">Vidplay</button>
+              <button class="srv-btn" onclick="changeServer('datsav', 'sub', 1, this)">DatSaV</button>
+              <button class="srv-btn" onclick="changeServer('megacloud', 'sub', 1, this)">MegaCloud</button>
+            </div>
+          </div>
+
+          <!-- DUB SERVERS -->
+          <div class="server-group">
+            <div class="server-group-title">🎙️ DUB</div>
+            <div class="server-buttons">
+              <button class="srv-btn" onclick="changeServer('vidplay', 'dub', 1, this)">Vidplay (Dub)</button>
+              <button class="srv-btn" onclick="changeServer('datsav', 'dub', 1, this)">DatSaV (Dub)</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Episode Selector -->
       <div class="episodes-section">
-        <h3 style="font-size:1.1rem; margin-bottom:6px;">Select Episode</h3>
+        <h3 style="font-size:1.1rem; margin-bottom:6px;">Episodes</h3>
         <div class="episodes-grid" id="epGrid"></div>
       </div>`;
 
@@ -255,6 +305,14 @@ async function openDetail(id) {
     const fv = $("#fv"), setFv = () => fv.textContent = isFav(s.id) ? "♥ Saved in Favorites" : "♡ Add to favorites";
     setFv(); fv.onclick = () => { toggleFav(s); setFv(); };
 
+    // Global helper for server switching inside dialog
+    window.changeServer = (srvName, type, ep, btn) => {
+      currentType = type;
+      document.querySelectorAll(".srv-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      updateStream(srvName, type, currentEp);
+    };
+
     // Build episode buttons dynamically
     const epGrid = $("#epGrid");
     for(let i = 1; i <= Math.min(totalEps, 100); i++) {
@@ -262,9 +320,17 @@ async function openDetail(id) {
       eb.className = "ep-btn" + (i === 1 ? " active" : "");
       eb.textContent = i;
       eb.onclick = () => {
+        currentEp = i;
         document.querySelectorAll(".ep-btn").forEach(b => b.classList.remove("active"));
         eb.classList.add("active");
-        $("#anime-stream").src = `https://vidsrc.to/embed/anime/${malId}/${i}`;
+        const activeSrvBtn = document.querySelector(".srv-btn.active");
+        let srvName = 'vidplay';
+        if(activeSrvBtn) {
+          const txt = activeSrvBtn.textContent.toLowerCase();
+          if(txt.includes('datsav')) srvName = 'datsav';
+          else if(txt.includes('megacloud')) srvName = 'megacloud';
+        }
+        updateStream(srvName, currentType, currentEp);
       };
       epGrid.append(eb);
     }
