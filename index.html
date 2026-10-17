@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AnimeHindi - Watch Anime Online</title>
+  
+  <!-- Plyr Video Player CSS -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  
   <style>
     :root {
       --bg-color: #0f0f13;
@@ -27,7 +31,7 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
     }
 
@@ -35,6 +39,9 @@
       margin-bottom: 15px;
       padding-bottom: 10px;
       border-bottom: 1px solid #282835;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .logo {
@@ -43,78 +50,68 @@
       color: var(--accent-color);
     }
 
-    /* Player Wrapper */
-    .player-wrapper {
+    /* Video Player Wrapper */
+    .player-container {
       position: relative;
-      width: 100%;
-      padding-top: 56.25%; /* 16:9 Aspect Ratio */
-      background-color: #000;
+      background: #000;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.7);
     }
 
-    .player-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
+    video {
       width: 100%;
-      height: 100%;
-      border: none;
+      max-height: 500px;
+      display: block;
     }
 
-    /* Server Box matching AniWave style */
-    .server-box {
+    /* Episode Selector Grid */
+    .episodes-box {
       background-color: var(--card-bg);
       margin-top: 15px;
       padding: 15px;
       border-radius: 8px;
     }
 
-    .server-title {
-      font-size: 0.8rem;
+    .section-title {
+      font-size: 0.85rem;
       color: var(--text-muted);
       margin-bottom: 10px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    .server-group {
+    .episode-grid {
       display: flex;
-      align-items: center;
       gap: 8px;
-      margin-bottom: 10px;
       flex-wrap: wrap;
+      max-height: 140px;
+      overflow-y: auto;
+      padding-right: 5px;
     }
 
-    .server-label {
-      font-size: 0.8rem;
-      font-weight: bold;
-      color: var(--accent-color);
-      min-width: 45px;
-    }
-
-    .server-btn {
+    .ep-btn {
       background-color: #23232f;
       color: var(--text-color);
       border: 1px solid #323242;
-      padding: 7px 12px;
-      border-radius: 5px;
+      padding: 6px 12px;
+      border-radius: 4px;
       cursor: pointer;
-      font-size: 0.8rem;
-      transition: all 0.2s ease;
+      font-size: 0.85rem;
+      transition: all 0.2s;
     }
 
-    .server-btn:hover {
+    .ep-btn:hover {
       background-color: #2d2d3d;
     }
 
-    .server-btn.active {
+    .ep-btn.active {
       background-color: var(--accent-color);
       border-color: var(--accent-color);
       color: #fff;
     }
 
+    /* Anime Info Section */
     .anime-info {
       margin-top: 15px;
       background-color: var(--card-bg);
@@ -141,50 +138,97 @@
       <div class="logo">AnimeHindi</div>
     </header>
 
-    <!-- Video Player Frame -->
-    <div class="player-wrapper">
-      <iframe id="anime-player" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+    <!-- Direct HTML5 Video Player with Plyr Controls -->
+    <div class="player-container">
+      <video id="player" playsinline controls data-poster=""></video>
     </div>
 
-    <!-- Server Controls -->
-    <div class="server-box">
-      <div class="server-title">Select Server (If video shows unavailable, switch server)</div>
-      
-      <div class="server-group">
-        <span class="server-label">SUB:</span>
-        <button class="server-btn active" onclick="switchServer('https://vidsrc.xyz/embed/anime/tt11234342/1-1', this)">MegaCloud (HD)</button>
-        <button class="server-btn" onclick="switchServer('https://multiembed.mov/?video_id=tt11234342&s=1&e=1', this)">VidStream (Fast)</button>
-        <button class="server-btn" onclick="switchServer('https://iframe.grandmaster.quest/embed/anime/37854/1', this)">Anitaku (Alt)</button>
-      </div>
-
-      <div class="server-group">
-        <span class="server-label">DUB:</span>
-        <button class="server-btn" onclick="switchServer('https://vidsrc.to/embed/anime/37854/1', this)">Server Dub</button>
+    <!-- Episodes List -->
+    <div class="episodes-box">
+      <div class="section-title">Episodes</div>
+      <div class="episode-grid" id="episode-list">
+        <!-- Dynamic Episodes Loaded via JS -->
       </div>
     </div>
 
-    <!-- Anime Meta Info -->
+    <!-- Details -->
     <div class="anime-info">
-      <h1 class="anime-title">Attack on Titan - Episode 1</h1>
-      <p class="anime-desc">Several hundred years ago, humans were nearly exterminated by titans. Titans are typically several stories tall, seem to have no intelligence, devour...</p>
+      <h1 class="anime-title" id="anime-title">Loading Anime...</h1>
+      <p class="anime-desc" id="anime-desc">Please wait while we connect to the streaming server.</p>
     </div>
   </div>
 
+  <!-- Scripts for HLS & Plyr Player -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+
   <script>
-    const iframe = document.getElementById('anime-player');
+    // Initialize Plyr Video Player
+    const player = new Plyr('#player', { controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'] });
 
-    function switchServer(url, btn) {
-      // Update button active states
-      document.querySelectorAll('.server-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+    // Public Consumet / Gogoanime API Base URL
+    const API_BASE = "https://api.consumet.org/anime/gogoanime";
+    
+    // Default anime ID to load on startup (e.g., Attack on Titan / shingeki-no-kyojin)
+    const animeId = "shingeki-no-kyojin";
 
-      // Change iframe source
-      iframe.src = url;
+    async function loadAnimeData() {
+      try {
+        const res = await fetch(`${API_BASE}/info/${animeId}`);
+        const data = await res.json();
+
+        document.getElementById('anime-title').innerText = data.title;
+        document.getElementById('anime-desc').innerText = data.description || "No description available.";
+
+        const episodeGrid = document.getElementById('episode-list');
+        episodeGrid.innerHTML = "";
+
+        data.episodes.forEach((ep) => {
+          const btn = document.createElement('button');
+          btn.className = `ep-btn ${ep.number === 1 ? 'active' : ''}`;
+          btn.innerText = `EP ${ep.number}`;
+          btn.onclick = () => {
+            document.querySelectorAll('.ep-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadEpisodeStream(ep.id);
+          };
+          episodeGrid.appendChild(btn);
+        });
+
+        // Load Episode 1 by default
+        if (data.episodes.length > 0) {
+          loadEpisodeStream(data.episodes[0].id);
+        }
+      } catch (err) {
+        console.error("API Error:", err);
+        document.getElementById('anime-title').innerText = "Connection Error";
+        document.getElementById('anime-desc').innerText = "Could not reach streaming servers. Try refreshing in a moment.";
+      }
     }
 
-    // Set default initial server load on page open
-    iframe.src = 'https://vidsrc.xyz/embed/anime/tt11234342/1-1';
-  </script>
+    async function loadEpisodeStream(episodeId) {
+      try {
+        const res = await fetch(`${API_BASE}/watch/${episodeId}`);
+        const data = await res.json();
+        
+        // Find the best source (usually standard HLS .m3u8 link)
+        const sourceUrl = data.sources.find(s => s.quality === 'default' || s.quality === '1040p' || s.quality === '720p')?.url || data.sources[0].url;
 
+        if (Hls.isSupported()) {
+          const hls = new Hls();
+          hls.loadSource(sourceUrl);
+          hls.attachMedia(player.media);
+          window.hls = hls;
+        } else if (player.media.canPlayType('application/vnd.apple.mpegurl')) {
+          player.media.src = sourceUrl;
+        }
+      } catch (err) {
+        console.error("Stream Error:", err);
+      }
+    }
+
+    // Run on page load
+    loadAnimeData();
+  </script>
 </body>
 </html>
