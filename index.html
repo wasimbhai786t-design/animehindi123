@@ -3,232 +3,347 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AnimeHindi - Watch Anime Online</title>
-  
-  <!-- Plyr Video Player CSS -->
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-  
+  <title>AnimeHindi - Watch Anime Online Free</title>
   <style>
     :root {
-      --bg-color: #0f0f13;
-      --card-bg: #181820;
-      --accent-color: #6366f1;
-      --text-color: #e2e2e8;
-      --text-muted: #8c8c9e;
+      --bg-main: #0f0f15;
+      --bg-card: #161622;
+      --bg-hover: #1f1f2e;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border-color: #262638;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     }
 
     body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      padding: 15px;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    .container {
-      max-width: 950px;
-      margin: 0 auto;
-    }
-
+    /* Header Bar */
     header {
-      margin-bottom: 15px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #282835;
+      background-color: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .logo {
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: var(--accent-color);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #fff;
+    }
+
+    /* Main Container Layout */
+    .watch-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 15px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
     /* Video Player Wrapper */
-    .player-container {
-      position: relative;
-      background: #000;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.7);
-    }
-
-    video {
+    .player-section {
       width: 100%;
-      max-height: 500px;
-      display: block;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--border-color);
     }
 
-    /* Episode Selector Grid */
-    .episodes-box {
-      background-color: var(--card-bg);
-      margin-top: 15px;
-      padding: 15px;
-      border-radius: 8px;
+    .player-ratio {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
     }
 
-    .section-title {
+    .player-ratio iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Streaming Servers Panel (AniWave Style) */
+    .servers-panel {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 15px 20px;
+    }
+
+    .panel-title {
       font-size: 0.85rem;
       color: var(--text-muted);
-      margin-bottom: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
+      margin-bottom: 12px;
+      font-weight: 600;
     }
 
-    .episode-grid {
+    .server-row {
       display: flex;
-      gap: 8px;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
       flex-wrap: wrap;
-      max-height: 140px;
+    }
+
+    .server-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .server-type {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 50px;
+    }
+
+    .server-btn {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .server-btn:hover {
+      background-color: var(--bg-hover);
+      border-color: var(--accent);
+    }
+
+    .server-btn.active {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Episodes Section */
+    .episodes-section {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .episodes-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .episodes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+      gap: 8px;
+      max-height: 180px;
       overflow-y: auto;
       padding-right: 5px;
     }
 
-    .ep-btn {
-      background-color: #23232f;
-      color: var(--text-color);
-      border: 1px solid #323242;
-      padding: 6px 12px;
-      border-radius: 4px;
+    .episodes-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+    .episodes-grid::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
+    }
+
+    .ep-pill {
+      background-color: var(--bg-main);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 0;
+      text-align: center;
+      border-radius: 6px;
       cursor: pointer;
       font-size: 0.85rem;
+      font-weight: 600;
       transition: all 0.2s;
     }
 
-    .ep-btn:hover {
-      background-color: #2d2d3d;
+    .ep-pill:hover {
+      background-color: var(--bg-hover);
+      border-color: var(--accent);
     }
 
-    .ep-btn.active {
-      background-color: var(--accent-color);
-      border-color: var(--accent-color);
+    .ep-pill.active {
+      background-color: var(--accent);
+      border-color: var(--accent);
       color: #fff;
     }
 
-    /* Anime Info Section */
-    .anime-info {
-      margin-top: 15px;
-      background-color: var(--card-bg);
-      padding: 15px;
-      border-radius: 8px;
+    /* Anime Meta Info Panel */
+    .info-section {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
     }
 
     .anime-title {
-      font-size: 1.2rem;
-      margin-bottom: 6px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
     .anime-desc {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.5;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <div class="logo">AnimeHindi</div>
-    </header>
-
-    <!-- Direct HTML5 Video Player with Plyr Controls -->
-    <div class="player-container">
-      <video id="player" playsinline controls data-poster=""></video>
+  <!-- Top Navbar -->
+  <header>
+    <div class="logo-area">
+      <a href="#" class="logo">Anime<span>Hindi</span></a>
     </div>
+  </header>
 
-    <!-- Episodes List -->
-    <div class="episodes-box">
-      <div class="section-title">Episodes</div>
-      <div class="episode-grid" id="episode-list">
-        <!-- Dynamic Episodes Loaded via JS -->
+  <!-- Content Layout -->
+  <div class="watch-container">
+    
+    <!-- Video Player -->
+    <div class="player-section">
+      <div class="player-ratio">
+        <iframe id="main-iframe" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
       </div>
     </div>
 
-    <!-- Details -->
-    <div class="anime-info">
-      <h1 class="anime-title" id="anime-title">Loading Anime...</h1>
-      <p class="anime-desc" id="anime-desc">Please wait while we connect to the streaming server.</p>
+    <!-- Server Selector Box -->
+    <div class="servers-panel">
+      <div class="panel-title">Streaming Servers (Switch if current buffers)</div>
+      
+      <div class="server-row">
+        <span class="server-type">SUB:</span>
+        <button class="server-btn active" onclick="setServer('vidsrc-cc', this)">Server 1 (VidSrc)</button>
+        <button class="server-btn" onclick="setServer('multiembed', this)">Server 2 (MultiEmbed)</button>
+        <button class="server-btn" onclick="setServer('vidsrc-me', this)">Server 3 (VidSrc VIP)</button>
+      </div>
+
+      <div class="server-row">
+        <span class="server-type">DUB:</span>
+        <button class="server-btn" onclick="setServer('vidsrc-dub', this)">Server 4 (Dubbed)</button>
+      </div>
     </div>
+
+    <!-- Episodes Grid Box -->
+    <div class="episodes-section">
+      <div class="episodes-header">
+        <div class="panel-title" style="margin-bottom:0;">List of Episodes</div>
+      </div>
+      <div class="episodes-grid" id="episodes-container">
+        <!-- Javascript will populate episode buttons here -->
+      </div>
+    </div>
+
+    <!-- Anime Details Box -->
+    <div class="info-section">
+      <h1 class="anime-title" id="display-title">Attack on Titan - Episode 1</h1>
+      <p class="anime-desc" id="display-desc">Several hundred years ago, humans were nearly exterminated by titans. Titans are typically several stories tall, seem to have no intelligence, devour human beings purely out of gusto rather than as a food source.</p>
+    </div>
+
   </div>
 
-  <!-- Scripts for HLS & Plyr Player -->
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
-
   <script>
-    // Initialize Plyr Video Player
-    const player = new Plyr('#player', { controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'] });
+    // Configuration for active anime
+    let currentEpisode = 1;
+    let currentServerType = 'vidsrc-cc';
 
-    // Public Consumet / Gogoanime API Base URL
-    const API_BASE = "https://api.consumet.org/anime/gogoanime";
-    
-    // Default anime ID to load on startup (e.g., Attack on Titan / shingeki-no-kyojin)
-    const animeId = "shingeki-no-kyojin";
+    // Different streaming provider patterns
+    const servers = {
+      'vidsrc-cc': (ep) => `https://vidsrc.cc/v2/embed/anime/1553/${ep}-1`,
+      'multiembed': (ep) => `https://multiembed.mov/?video_id=tt11234342&s=1&e=${ep}`,
+      'vidsrc-me': (ep) => `https://vidsrc.net/embed/anime?tmdb=1429&season=1&episode=${ep}`,
+      'vidsrc-dub': (ep) => `https://vidsrc.to/embed/anime/37854/${ep}`
+    };
 
-    async function loadAnimeData() {
-      try {
-        const res = await fetch(`${API_BASE}/info/${animeId}`);
-        const data = await res.json();
-
-        document.getElementById('anime-title').innerText = data.title;
-        document.getElementById('anime-desc').innerText = data.description || "No description available.";
-
-        const episodeGrid = document.getElementById('episode-list');
-        episodeGrid.innerHTML = "";
-
-        data.episodes.forEach((ep) => {
-          const btn = document.createElement('button');
-          btn.className = `ep-btn ${ep.number === 1 ? 'active' : ''}`;
-          btn.innerText = `EP ${ep.number}`;
-          btn.onclick = () => {
-            document.querySelectorAll('.ep-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            loadEpisodeStream(ep.id);
-          };
-          episodeGrid.appendChild(btn);
-        });
-
-        // Load Episode 1 by default
-        if (data.episodes.length > 0) {
-          loadEpisodeStream(data.episodes[0].id);
-        }
-      } catch (err) {
-        console.error("API Error:", err);
-        document.getElementById('anime-title').innerText = "Connection Error";
-        document.getElementById('anime-desc').innerText = "Could not reach streaming servers. Try refreshing in a moment.";
+    function updatePlayer() {
+      const iframe = document.getElementById('main-iframe');
+      if (servers[currentServerType]) {
+        iframe.src = servers[currentServerType](currentEpisode);
       }
     }
 
-    async function loadEpisodeStream(episodeId) {
-      try {
-        const res = await fetch(`${API_BASE}/watch/${episodeId}`);
-        const data = await res.json();
-        
-        // Find the best source (usually standard HLS .m3u8 link)
-        const sourceUrl = data.sources.find(s => s.quality === 'default' || s.quality === '1040p' || s.quality === '720p')?.url || data.sources[0].url;
+    function setServer(serverKey, btnElement) {
+      // Toggle active states on server buttons
+      document.querySelectorAll('.server-btn').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
 
-        if (Hls.isSupported()) {
-          const hls = new Hls();
-          hls.loadSource(sourceUrl);
-          hls.attachMedia(player.media);
-          window.hls = hls;
-        } else if (player.media.canPlayType('application/vnd.apple.mpegurl')) {
-          player.media.src = sourceUrl;
-        }
-      } catch (err) {
-        console.error("Stream Error:", err);
+      currentServerType = serverKey;
+      updatePlayer();
+    }
+
+    function selectEpisode(epNum, btnElement) {
+      // Toggle active states on episode buttons
+      document.querySelectorAll('.ep-pill').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      currentEpisode = epNum;
+      document.getElementById('display-title').innerText = `Attack on Titan - Episode ${epNum}`;
+      updatePlayer();
+    }
+
+    // Generate 25 episodes automatically like a real anime page
+    function buildEpisodesList() {
+      const container = document.getElementById('episodes-container');
+      container.innerHTML = '';
+
+      for (let i = 1; i <= 25; i++) {
+        const pill = document.createElement('div');
+        pill.className = `ep-pill ${i === 1 ? 'active' : ''}`;
+        pill.innerText = i;
+        pill.onclick = (e) => selectEpisode(i, pill);
+        container.appendChild(pill);
       }
     }
 
-    // Run on page load
-    loadAnimeData();
+    // Initialize on page load
+    buildEpisodesList();
+    updatePlayer();
   </script>
 </body>
 </html>
